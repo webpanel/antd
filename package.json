@@ -1,0 +1,32 @@
+{
+  "name": "webpanel-antd",
+  "version": "0.0.1",
+  "main": "lib/index.js",
+  "module": "lib/index.js",
+  "scripts": {
+    "patch-release": "npm version patch && git push --follow-tags && npm publish"
+  },
+  "dependencies": {
+    "ant-design-pro": "^1.2.1",
+    "antd": "^3.6.1",
+    "jsonwebtoken": "^8.2.2",
+    "lodash": "^4.17.10",
+    "mobx": "^5.0.0",
+    "mobx-react": "^5.2.0",
+    "node-fetch": "^2.1.2",
+    "react": "^16.4.0",
+    "react-router-dom": "^4.3.1"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^7.2.7",
+    "@types/lodash": "^4.14.109",
+    "@types/node": "^10.3.2",
+    "@types/node-fetch": "^2.1.1",
+    "@types/react": "^16.3.17",
+    "@types/react-router-dom": "^4.2.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/webpanel/antd.git"
+  }
+}
