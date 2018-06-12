@@ -16,9 +16,7 @@
     "mobx-react": "^5.2.0",
     "node-fetch": "^2.1.2",
     "react": "^16.4.0",
-    "react-router-dom": "^4.3.1"
-  },
-  "devDependencies": {
+    "react-router-dom": "^4.3.1",
     "@types/jsonwebtoken": "^7.2.7",
     "@types/lodash": "^4.14.109",
     "@types/node": "^10.3.2",
