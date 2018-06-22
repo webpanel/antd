@@ -5,24 +5,37 @@
   "module": "lib/index.js",
   "typings": "lib/index.d.ts",
   "scripts": {
-    "patch-release": "npm version patch && git push --follow-tags && npm publish"
+    "patch-release": "npm version patch && git push --follow-tags && npm publish",
+    "test": "react-scripts-ts test --env=jsdom"
   },
   "dependencies": {
     "ant-design-pro": "^1.2.1",
     "antd": "^3.6.1",
     "jsonwebtoken": "^8.2.2",
     "lodash": "^4.17.10",
-    "mobx": "^5.0.0",
-    "mobx-react": "^5.2.0",
     "node-fetch": "^2.1.2",
     "react": "^16.4.0",
-    "react-router-dom": "^4.3.1",
+    "react-router-dom": "^4.3.1"
+  },
+  "peerDependencies": {
+    "mobx-react": "^5.2.0",
+    "webpanel-data": "*"
+  },
+  "devDependencies": {
+    "@types/jest": "^23.1.1",
     "@types/jsonwebtoken": "^7.2.7",
     "@types/lodash": "^4.14.109",
     "@types/node": "^10.3.2",
     "@types/node-fetch": "^2.1.1",
     "@types/react": "^16.3.17",
-    "@types/react-router-dom": "^4.2.7"
+    "@types/react-dom": "^16.0.6",
+    "@types/react-router-dom": "^4.2.7",
+    "mobx": "^5.0.3",
+    "mobx-react": "^5.2.0",
+    "react-dom": "^16.4.1",
+    "react-scripts-ts": "^2.16.0",
+    "typescript": "^2.9.2",
+    "webpanel-data": "0.0.6"
   },
   "repository": {
     "type": "git",

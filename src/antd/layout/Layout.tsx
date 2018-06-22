@@ -9,7 +9,7 @@ import locale from 'antd/lib/locale-provider/cs_CZ';
 import { LocaleProvider } from 'antd';
 
 import 'antd/dist/antd.css';
-import '../../styles/Layout.css';
+import '../../../styles/Layout.css';
 
 import { Menu, MenuItem } from './Menu';
 import { Header } from './Header';
