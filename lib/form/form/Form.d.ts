@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FormComponentProps, WrappedFormUtils } from 'antd/lib/form/Form';
-interface FormProps extends FormComponentProps {
+interface FormProps {
     render: (context: FormContext) => React.ReactNode;
     initialValues?: {
         [key: string]: any;
@@ -16,7 +16,7 @@ export interface FormContext {
         [key: string]: any;
     };
 }
-export declare class FormComponent extends React.Component<FormProps, FormState> {
+export declare class FormComponent extends React.Component<FormProps & FormComponentProps, FormState> {
     isForceUpdated: boolean;
     resetFields: () => void;
     sanitizeValues(values: {
@@ -28,5 +28,5 @@ export declare class FormComponent extends React.Component<FormProps, FormState>
     updateFieldValues(values: any): void;
     render(): JSX.Element;
 }
-export declare const Form: React.ComponentClass<import("../../../../../../../../../Users/jakubknejzlik/Projects/github/webpanel/antd/node_modules/antd/lib/form/Form").RcBaseFormProps & Pick<FormProps, "onError" | "render" | "initialValues" | "onSave">>;
+export declare const Form: React.ComponentClass<FormProps>;
 export {};

@@ -5,7 +5,7 @@ import { FormComponentProps, WrappedFormUtils } from 'antd/lib/form/Form';
 import { observer } from 'mobx-react';
 import { Broadcast } from 'react-broadcast';
 
-interface FormProps extends FormComponentProps {
+interface FormProps {
   render: (context: FormContext) => React.ReactNode;
   initialValues?: { [key: string]: any };
   onSave?: (values: any) => Promise<void>;
@@ -20,7 +20,10 @@ export interface FormContext {
 }
 
 @observer
-export class FormComponent extends React.Component<FormProps, FormState> {
+export class FormComponent extends React.Component<
+  FormProps & FormComponentProps,
+  FormState
+> {
   isForceUpdated = false;
 
   resetFields = () => {
@@ -94,11 +97,6 @@ export class FormComponent extends React.Component<FormProps, FormState> {
   }
 }
 
-export const Form = AForm.create({
-  // onValuesChange: (props: {}, values) => {
-  //   // const { onChange } = props.config;
-  //   // if (typeof onChange === 'string') {
-  //   //   evaluate(onChange, { ...props, values });
-  //   // }
-  // }
-})(FormComponent);
+export const Form: React.ComponentClass<FormProps> = AForm.create()(
+  FormComponent
+);

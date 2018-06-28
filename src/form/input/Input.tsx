@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Input as AntdInput } from 'antd';
 import { InputProps as AInputProps } from 'antd/lib/input/Input';
-// import { get } from 'lodash';
 import { Subscriber } from 'react-broadcast';
 import { observer } from 'mobx-react';
 
