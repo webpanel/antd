@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import * as React from 'react';
 import { ClickParam } from 'antd/lib/menu';
 import 'antd/dist/antd.css';

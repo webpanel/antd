@@ -1,7 +1,7 @@
-/// <reference types="react" />
 import * as React from 'react';
 import { TableProps } from 'antd/lib/table';
 import { ResourceCollection } from 'webpanel-data';
+import '../../styles/Table.css';
 export declare class Table extends React.Component<TableProps<any> & {
     resourceCollection?: ResourceCollection;
 }> {

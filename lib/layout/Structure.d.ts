@@ -1,9 +1,9 @@
-/// <reference types="react" />
 import * as React from 'react';
 import { BreadcrumbItem } from './page';
+export declare type StructureItemContent = string | React.ReactNode | ((props: any) => React.ReactNode);
 export interface StructureItem {
     name: string;
-    content?: React.ReactNode | string;
+    content?: StructureItemContent;
     subitems?: {
         [key: string]: StructureItem;
     };
@@ -21,6 +21,7 @@ export declare class Structure extends React.Component<ContentProps, ContentStat
         error: null;
     };
     componentDidCatch(error: Error | null, info: object): void;
+    renderContent(content: StructureItemContent, props: any): React.ReactNode;
     getRoutes(items: {
         [key: string]: StructureItem;
     }, routes?: JSX.Element[] | null, parentPath?: string, breadcrumbs?: BreadcrumbItem[]): JSX.Element[];

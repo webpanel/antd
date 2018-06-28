@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import * as React from 'react';
 import 'ant-design-pro/dist/ant-design-pro.css';
 export interface LoginFormAuthorizationInfo {

@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import * as React from 'react';
 import { match as Match } from 'react-router-dom';
 export interface MenuItem {
