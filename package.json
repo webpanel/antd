@@ -18,12 +18,7 @@
     "react": "^16.4.0",
     "react-broadcast": "^0.7.1",
     "react-router-dom": "^4.3.1",
-    "webpanel-data": "0.0.10"
-  },
-  "peerDependencies": {
-    "mobx-react": "^5.2.0"
-  },
-  "devDependencies": {
+    "webpanel-data": "0.0.10",
     "@types/jest": "^23.1.1",
     "@types/jsonwebtoken": "^7.2.7",
     "@types/lodash": "^4.14.109",
@@ -32,9 +27,14 @@
     "@types/react": "^16.3.17",
     "@types/react-dom": "^16.0.6",
     "@types/react-router-dom": "^4.2.7",
+    "react-dom": "^16.4.1"
+  },
+  "peerDependencies": {
+    "mobx-react": "^5.2.0"
+  },
+  "devDependencies": {
     "mobx": "^5.0.3",
     "mobx-react": "^5.2.0",
-    "react-dom": "^16.4.1",
     "react-scripts-ts": "^2.16.0",
     "typescript": "^2.9.2"
   },
