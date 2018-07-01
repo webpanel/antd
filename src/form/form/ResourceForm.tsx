@@ -1,29 +1,30 @@
 import * as React from 'react';
 import { Form as AForm, message, Button, /*Spin,*/ Popconfirm } from 'antd';
+import { FormProps } from 'antd/lib/form/Form';
 
 import { observer } from 'mobx-react';
 import { Resource } from 'webpanel-data';
 
 import { Form, FormContext } from './Form';
 
-export interface ResourceFormProps {
-  resource: Resource;
+export interface ResourceFormProps extends FormProps {
+  formResource: Resource;
 }
 
 @observer
 export class ResourceForm extends React.Component<ResourceFormProps> {
   onSave = async (values: any) => {
-    await this.props.resource.save(values);
+    await this.props.formResource.save(values);
     message.success('Form saved');
   };
 
   render() {
-    const { resource, ...formProps } = this.props;
+    const { formResource, ...formProps } = this.props;
 
     return (
       <Form
         onSave={this.onSave}
-        initialValues={resource.data}
+        initialValues={formResource.data}
         {...formProps}
         render={(context: FormContext) => {
           const hasChanges = context.form.isFieldsTouched();

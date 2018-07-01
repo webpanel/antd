@@ -1,6 +1,7 @@
 import * as React from 'react';
+import { RouteComponentProps } from 'react-router';
 import { BreadcrumbItem } from './page';
-export declare type StructureItemContent = string | React.ReactNode | ((props: any) => React.ReactNode);
+export declare type StructureItemContent = string | React.ReactNode | ((props: RouteComponentProps<any>) => React.ReactNode);
 export interface StructureItem {
     name: string;
     content?: StructureItemContent;

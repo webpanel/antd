@@ -10,7 +10,7 @@ export interface HeaderProps {
 }
 
 export interface HeaderConfig {
-  username: string | null;
+  username?: string;
 }
 
 export class Header extends React.Component<HeaderProps & HeaderConfig> {

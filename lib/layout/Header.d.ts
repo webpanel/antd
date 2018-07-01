@@ -4,7 +4,7 @@ export interface HeaderProps {
     onMenuSelect: (param: ClickParam) => void;
 }
 export interface HeaderConfig {
-    username: string | null;
+    username?: string;
 }
 export declare class Header extends React.Component<HeaderProps & HeaderConfig> {
     handleMenuClick(param: ClickParam): void;

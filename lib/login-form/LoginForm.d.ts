@@ -17,7 +17,7 @@ export declare class LoginForm extends React.Component<LoginFormProps> {
     onSubmit: (err: any, values: {
         username: string;
         password: string;
-    }) => void;
+    }) => Promise<void>;
     onTabChange: (key: any) => void;
     changeAutoLogin: (e: any) => void;
     render(): JSX.Element;

@@ -1,15 +1,19 @@
 import * as React from 'react';
 import { Form as AForm /*, message, Button, Spin, Popconfirm*/ } from 'antd';
-import { FormComponentProps, WrappedFormUtils } from 'antd/lib/form/Form';
+import {
+  FormComponentProps,
+  WrappedFormUtils,
+  FormProps as AFormProps
+} from 'antd/lib/form/Form';
 
 import { observer } from 'mobx-react';
 import { Broadcast } from 'react-broadcast';
 
-interface FormProps {
+interface FormProps extends AFormProps {
   render: (context: FormContext) => React.ReactNode;
   initialValues?: { [key: string]: any };
   onSave?: (values: any) => Promise<void>;
-  onError?: (err: Error) => Promise<void>;
+  onValidationError?: (err: Error) => Promise<void>;
 }
 
 interface FormState {}
@@ -49,8 +53,8 @@ export class FormComponent extends React.Component<
     const { form /*, config, context*/ } = this.props;
     form.validateFields(async (err, values) => {
       if (err) {
-        if (this.props.onError) {
-          this.props.onError(err);
+        if (this.props.onValidationError) {
+          this.props.onValidationError(err);
         }
       } else {
         form.setFieldsValue(values);
@@ -77,10 +81,21 @@ export class FormComponent extends React.Component<
       form,
       initialValues,
       onSave,
-      onError,
+      onValidationError,
       render,
       ...formProps
     } = this.props;
+
+    // const formItemLayout =
+    //   this.props.layout === 'horizontal'
+    //     ? {
+    //         labelCol: { span: 4 },
+    //         wrapperCol: { span: 14 }
+    //       }
+    //     : null;
+    // const buttonItemLayout = formLayout === 'horizontal' ? {
+    //   wrapperCol: { span: 14, offset: 4 },
+    // } : null;
 
     const formContext: FormContext = {
       form: this.props.form,
@@ -88,11 +103,11 @@ export class FormComponent extends React.Component<
     };
 
     return (
-      <AForm onSubmit={this.submit} {...formProps}>
-        <Broadcast channel="form-context" value={formContext}>
+      <Broadcast channel="form-context" value={formContext}>
+        <AForm onSubmit={this.submit} {...formProps}>
           {render(formContext)}
-        </Broadcast>
-      </AForm>
+        </AForm>
+      </Broadcast>
     );
   }
 }

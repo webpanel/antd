@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { FormComponentProps, WrappedFormUtils } from 'antd/lib/form/Form';
-interface FormProps {
+import { FormComponentProps, WrappedFormUtils, FormProps as AFormProps } from 'antd/lib/form/Form';
+interface FormProps extends AFormProps {
     render: (context: FormContext) => React.ReactNode;
     initialValues?: {
         [key: string]: any;
     };
     onSave?: (values: any) => Promise<void>;
-    onError?: (err: Error) => Promise<void>;
+    onValidationError?: (err: Error) => Promise<void>;
 }
 interface FormState {
 }

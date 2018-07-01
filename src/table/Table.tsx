@@ -2,43 +2,13 @@ import * as React from 'react';
 import { Table as AntdTable } from 'antd';
 import { TableProps } from 'antd/lib/table';
 // import { TablePaginationConfig } from 'antd/lib/pagination';
-// import { toJS } from 'mobx';
 import { observer } from 'mobx-react';
 
 import { ResourceCollection } from 'webpanel-data';
 
-// import { Subscriber, Broadcast } from 'react-broadcast';
+import { TableActionButtons } from './TableActionButtons';
 
 import '../../styles/Table.css';
-
-// interface TableColumn<T> extends ColumnProps<T> {
-//   content?: string;
-//   width: string | number;
-// }
-// interface TableConfig<T> {
-//   resource: string;
-//   size?: 'default' | 'middle' | 'small';
-//   columns?: TableColumn<T>[];
-//   pagination?: TablePaginationConfig;
-//   bordered?: boolean;
-//   title?: any;
-// }
-
-// interface TableRow {
-//   [index: string]: any;
-//   id: string;
-// }
-// interface TableSortedInfo {
-//   columnKey?: string;
-//   order?: 'ascend' | 'descend' | boolean;
-// }
-// interface TableState {
-//   sortedInfo: TableSortedInfo;
-//   selectedRowKeys: any[];
-// }
-
-// type TableProps = RendererComponentProps<TableConfig<TableRow>> &
-//   ContextObserver<any>;
 
 // const columnSorter = (columnKey: string) => (a: any, b: any) => {
 //   if (a[columnKey] && a[columnKey].localeCompare) {
@@ -65,77 +35,64 @@ export class Table extends React.Component<
     // this.setState({ sortedInfo: sorter as TableSortedInfo });
   };
 
-  // getCollection(): ResourceCollection | undefined {
-  //   return this.props.context.resources[this.props.config.resource];
-  // }
-
   onSelectChange = (selectedRowKeys: any[]) => {
     // console.log('selectedRowKeys changed: ', selectedRowKeys);
     this.setState({ selectedRowKeys });
   };
 
-  componentDidMount() {
+  reloadData = () => {
+    console.log('?????reload');
     if (this.props.resourceCollection) {
       this.props.resourceCollection.get().then(() => {
         this.forceUpdate();
       });
     }
+  };
+
+  componentDidMount() {
+    this.reloadData();
   }
 
+  getRecordKey = (record: any, index: number) => {
+    const rowKey = this.props.rowKey;
+    const recordKey =
+      typeof rowKey === 'function'
+        ? rowKey(record, index)
+        : (record as any)[rowKey as string];
+    return recordKey === undefined ? index : recordKey;
+  };
+
   render() {
-    // const config = this.props.config;
-    // const { sortedInfo } = this.state;
-    // const { context } = this.props;
-
-    // const columns = (config.columns || []).map(col => {
-    //   if (col.content) {
-    //     col.render = (text: any, record: Object, index: number) => {
-    //       // const props = { record };
-    //       const ctx = Object.assign({}, context, { record });
-    //       return (
-    //         <Broadcast channel="context" value={ctx}>
-    //           <Renderer content={col.content} />
-    //         </Broadcast>
-    //       );
-    //     };
-    //   }
-
-    //   const columnKey = col.key;
-
-    //   col.dataIndex =
-    //     col.dataIndex ||
-    //     (typeof columnKey === 'number' ? columnKey.toString() : columnKey);
-
-    //   if (typeof columnKey === 'string') {
-    //     col.sorter = columnSorter(columnKey);
-    //   }
-    //   col.sortOrder = sortedInfo.columnKey === col.key && sortedInfo.order;
-
-    //   return col;
-    // });
-
-    // const rowSelection = {
-    //   selectedRowKeys: this.state.selectedRowKeys,
-    //   onChange: this.onSelectChange
-    // };
-
-    // let data = this.props.dataSource;
-    // const resource = this.getCollection();
-    // if (resource) {
-    //   data = toJS(resource.data && resource.data.items) || [];
-    // }
-
-    // const title = config.title
-    //   ? () => <Renderer content={config.title} />
-    //   : undefined;
-
-    const { rowKey, dataSource, resourceCollection, ...restProps } = this.props;
+    const {
+      rowKey,
+      dataSource,
+      resourceCollection,
+      columns,
+      ...restProps
+    } = this.props;
     const rowSelection = undefined;
 
     let data = dataSource;
     if (resourceCollection) {
       data = resourceCollection.data || undefined;
     }
+
+    const _columns = [
+      ...(columns || []),
+      {
+        className: 'schrink',
+        title: 'Actions',
+        render: (value: any, record: any, index: number) => {
+          return (
+            <TableActionButtons
+              resourceCollection={resourceCollection}
+              id={this.getRecordKey(record, index)}
+              onDelete={this.reloadData}
+            />
+          );
+        }
+      }
+    ];
 
     return (
       <AntdTable
@@ -146,6 +103,7 @@ export class Table extends React.Component<
             ? this.props.resourceCollection.loading
             : false
         }
+        columns={_columns}
         dataSource={data}
         {...restProps}
         // onChange={this.handleChange}
@@ -158,13 +116,3 @@ export class Table extends React.Component<
     );
   }
 }
-
-// export class Table extends React.Component<TableProps> {
-//   render() {
-//     return (
-//       <Subscriber channel="context">
-//         {ctx => <TableComponent {...this.props} context={ctx} />}
-//       </Subscriber>
-//     );
-//   }
-// }

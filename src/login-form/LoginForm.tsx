@@ -22,9 +22,14 @@ export class LoginForm extends React.Component<LoginFormProps> {
     type: 'tab1',
     autoLogin: true
   };
-  onSubmit = (err: any, values: { username: string; password: string }) => {
-    // console.log(err, values);
-    this.props.authorizationInfo.authorize(values.username, values.password);
+  onSubmit = async (
+    err: any,
+    values: { username: string; password: string }
+  ) => {
+    await this.props.authorizationInfo.authorize(
+      values.username,
+      values.password
+    );
   };
   onTabChange = (key: any) => {
     this.setState({

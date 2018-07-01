@@ -2,3 +2,6 @@ td.schrink {
   width: 20px;
   white-space: nowrap;
 }
+td.schrink button {
+  margin-left: 5px;
+}

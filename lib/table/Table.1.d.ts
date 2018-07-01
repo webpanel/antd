@@ -14,7 +14,6 @@ export declare class Table extends React.Component<TableProps<any> & {
     };
     handleChange: (filters: string[], sorter: Object) => void;
     onSelectChange: (selectedRowKeys: any[]) => void;
-    reloadData: () => void;
     componentDidMount(): void;
     getRecordKey: (record: any, index: number) => any;
     render(): JSX.Element;

@@ -16,6 +16,7 @@ export interface LayoutProps {
         [key: string]: StructureItem;
     };
     logout: () => void;
+    userName?: string;
 }
 export interface LayoutState {
     collapsed: boolean;

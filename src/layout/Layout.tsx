@@ -26,6 +26,7 @@ export interface LayoutProps {
   menu?: MenuItem[];
   structure?: { [key: string]: StructureItem };
   logout: () => void;
+  userName?: string;
 }
 
 export interface LayoutState {
@@ -70,7 +71,7 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
             <LayoutComponent>
               <Header
                 onMenuSelect={param => this.handleMenuClick(param)}
-                username={'john doe'}
+                username={this.props.userName}
               />
               <Structure items={this.props.structure} />
               <Footer style={{ textAlign: 'center' }}>
