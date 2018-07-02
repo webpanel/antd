@@ -1,6 +1,6 @@
 {
   "name": "webpanel-antd",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "main": "lib/index.js",
   "module": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -26,17 +26,19 @@
     "react": "*",
     "react-broadcast": "^0.7.1",
     "react-dom": "^16.4.1",
-    "react-router-dom": "^4.3.1",
-    "webpanel-data": "*"
+    "react-router-dom": "^4.3.1"
   },
   "peerDependencies": {
-    "mobx-react": "^5.2.0"
+    "mobx-react": "*",
+    "mobx": "*",
+    "webpanel-data": "*"
   },
   "devDependencies": {
     "mobx": "^5.0.3",
     "mobx-react": "^5.2.0",
     "react-scripts-ts": "^2.16.0",
-    "typescript": "^2.9.2"
+    "typescript": "^2.9.2",
+    "webpanel-data": "*"
   },
   "repository": {
     "type": "git",

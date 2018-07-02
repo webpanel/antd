@@ -41,17 +41,14 @@ export class Table extends React.Component<
   };
 
   reloadData = () => {
-    console.log('?????reload');
     if (this.props.resourceCollection) {
-      this.props.resourceCollection.get().then(() => {
-        this.forceUpdate();
-      });
+      this.props.resourceCollection.get();
     }
   };
 
-  componentDidMount() {
-    this.reloadData();
-  }
+  // componentDidMount() {
+  //   this.reloadData();
+  // }
 
   getRecordKey = (record: any, index: number) => {
     const rowKey = this.props.rowKey;
