@@ -21,7 +21,7 @@ export class TableActionButtons extends React.Component<
   };
 
   deleteResource = (id: string | number) => {
-    const modal = Modal.confirm({
+    Modal.confirm({
       title: 'Are you sure?',
       content: 'Do you want to delete this item?',
       okText: 'Yes',

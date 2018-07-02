@@ -13,7 +13,7 @@ export declare class TableActionButtons extends React.Component<TableActionButto
         };
         selectedRowKeys: never[];
     };
-    deleteResource: (id: string | number) => void;
+    deleteResource: (id: import("../../../../../../../../Users/jakubknejzlik/Projects/github/webpanel/antd/node_modules/csstype").AnimationIterationCountProperty) => void;
     render(): JSX.Element;
 }
 export {};

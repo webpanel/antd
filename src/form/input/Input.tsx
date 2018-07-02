@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { get } from 'lodash';
 import { Input as AntdInput } from 'antd';
 import { InputProps as AInputProps } from 'antd/lib/input/Input';
 import { Subscriber } from 'react-broadcast';
@@ -22,8 +23,13 @@ export class InputComponent extends React.Component<
 
     const { form, initialValues } = this.props.formContext;
 
+    const namePath = this.props.name
+      .replace(/\]\[/g, '.')
+      .replace(']', '.')
+      .replace('[', '.');
+
     const initialValue =
-      this.props.initialValue || initialValues[this.props.name];
+      this.props.initialValue || get(initialValues, namePath);
 
     return form.getFieldDecorator(this.props.name, {
       initialValue

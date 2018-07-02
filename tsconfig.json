@@ -20,7 +20,7 @@
   },
   "exclude": [
     "node_modules",
-    "form",
+    "form-todo",
     "lib",
     "build",
     "scripts",
