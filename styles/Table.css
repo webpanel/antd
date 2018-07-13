@@ -5,3 +5,8 @@ td.schrink {
 td.schrink button {
   margin-left: 5px;
 }
+
+.ant-table-thead > tr > th,
+.ant-table-tbody > tr > td {
+  word-break: normal;
+}

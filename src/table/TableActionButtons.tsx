@@ -5,10 +5,13 @@ import { Link } from 'react-router-dom';
 
 import { ResourceCollection } from 'webpanel-data';
 
+export type TablePropsActionButton = 'edit' | 'delete' | React.ReactNode;
+
 interface TableActionButtonsProps {
   resourceCollection?: ResourceCollection;
   id: string | number;
   onDelete: ((id: string | number) => void);
+  buttons: TablePropsActionButton[];
 }
 
 @observer
@@ -39,15 +42,33 @@ export class TableActionButtons extends React.Component<
     });
   };
 
+  getButton(id: string | number, type: TablePropsActionButton) {
+    if (typeof type === 'string') {
+      switch (type) {
+        case 'edit':
+          return (
+            <Link to={id.toString()}>
+              <Button>Edit</Button>
+            </Link>
+          );
+        case 'delete':
+          return (
+            <Button onClick={() => this.deleteResource(id)}>Delete</Button>
+          );
+        default:
+      }
+    }
+    return type;
+  }
+
   render() {
-    const { id } = this.props;
+    const { id, buttons } = this.props;
 
     return (
       <div>
-        <Link to={id.toString()}>
-          <Button>Edit</Button>
-        </Link>
-        <Button onClick={() => this.deleteResource(id)}>Delete</Button>
+        {buttons.map(button => {
+          return this.getButton(id, button);
+        })}
       </div>
     );
   }

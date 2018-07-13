@@ -1,10 +1,13 @@
 import * as React from 'react';
-import { TableProps } from 'antd/lib/table';
+import { TableProps as ATableProps } from 'antd/lib/table';
 import { ResourceCollection } from 'webpanel-data';
+import { TablePropsActionButton } from './TableActionButtons';
 import '../../styles/Table.css';
-export declare class Table extends React.Component<TableProps<any> & {
+export interface TableProps extends ATableProps<any> {
     resourceCollection?: ResourceCollection;
-}> {
+    actionButtons?: TablePropsActionButton[];
+}
+export declare class Table extends React.Component<TableProps> {
     state: {
         sortedInfo: {
             columnKey: undefined;

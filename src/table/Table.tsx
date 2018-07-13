@@ -1,12 +1,15 @@
 import * as React from 'react';
 import { Table as AntdTable } from 'antd';
-import { TableProps } from 'antd/lib/table';
+import { TableProps as ATableProps, ColumnProps } from 'antd/lib/table';
 // import { TablePaginationConfig } from 'antd/lib/pagination';
 import { observer } from 'mobx-react';
 
 import { ResourceCollection } from 'webpanel-data';
 
-import { TableActionButtons } from './TableActionButtons';
+import {
+  TableActionButtons,
+  TablePropsActionButton
+} from './TableActionButtons';
 
 import '../../styles/Table.css';
 
@@ -17,10 +20,13 @@ import '../../styles/Table.css';
 //   return a[columnKey] - b[columnKey];
 // };
 
+export interface TableProps extends ATableProps<any> {
+  resourceCollection?: ResourceCollection;
+  actionButtons?: TablePropsActionButton[];
+}
+
 @observer
-export class Table extends React.Component<
-  TableProps<any> & { resourceCollection?: ResourceCollection }
-> {
+export class Table extends React.Component<TableProps> {
   state = {
     sortedInfo: { columnKey: undefined, order: undefined },
     selectedRowKeys: []
@@ -65,6 +71,7 @@ export class Table extends React.Component<
       dataSource,
       resourceCollection,
       columns,
+      actionButtons,
       ...restProps
     } = this.props;
     const rowSelection = undefined;
@@ -74,7 +81,7 @@ export class Table extends React.Component<
       data = resourceCollection.data || undefined;
     }
 
-    const _columns = [
+    const _columns: ColumnProps<any>[] = [
       ...(columns || []),
       {
         className: 'schrink',
@@ -85,6 +92,7 @@ export class Table extends React.Component<
               resourceCollection={resourceCollection}
               id={this.getRecordKey(record, index)}
               onDelete={this.reloadData}
+              buttons={actionButtons || ['edit', 'delete']}
             />
           );
         }
