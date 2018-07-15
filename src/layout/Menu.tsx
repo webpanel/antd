@@ -34,7 +34,9 @@ export class Menu extends React.Component<MenuProps> {
         <AntdMenu.Item key={item.path}>
           <Link to={item.path}>
             <Icon type={item.icon || 'folder'} />
-            <span className="nav-text">{item.title}</span>
+            <span className="nav-text">
+              {item.title} ({item.path})
+            </span>
           </Link>
         </AntdMenu.Item>
       );
@@ -42,16 +44,21 @@ export class Menu extends React.Component<MenuProps> {
   }
 
   defaultSelectedKeys(match: Match<any>): string[] {
-    let res = [match.url];
+    let res: string[] = [];
     let buff = '/';
-    match.url
-      .split('/')
-      .filter(x => x)
-      .forEach((name: string) => {
-        buff += name;
-        res.push(buff);
-        buff += '/';
-      });
+
+    if (match.url === '/') {
+      res.push('/');
+    } else {
+      match.url
+        .split('/')
+        .filter(x => x)
+        .forEach((name: string) => {
+          buff += name;
+          res.push(buff + '/');
+          buff += '/';
+        });
+    }
     return res;
   }
 
