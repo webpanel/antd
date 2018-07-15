@@ -11,11 +11,11 @@ import { LocaleProvider } from 'antd';
 import 'antd/dist/antd.css';
 import '../../styles/Layout.css';
 
-import { Menu, MenuItem } from './Menu';
+import { Menu, MenuItemProps } from './Menu';
 import { Header } from './Header';
 import { HeaderConfig } from './Header';
 import { Structure, StructureItem } from './Structure';
-
+import { MenuItem } from './Menu';
 export interface FooterConfig {
   title: string | React.ReactNode;
 }
@@ -23,7 +23,7 @@ export interface FooterConfig {
 export interface LayoutProps {
   footer?: FooterConfig;
   header?: HeaderConfig;
-  menu?: MenuItem[];
+  menu?: React.ReactElement<MenuItemProps>[];
   structure?: { [key: string]: StructureItem };
   logout: () => void;
   userName?: string;
@@ -35,6 +35,7 @@ export interface LayoutState {
 
 @observer
 export class Layout extends React.Component<LayoutProps, LayoutState> {
+  static MenuItem = MenuItem;
   state = {
     collapsed: false
   };

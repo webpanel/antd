@@ -2,45 +2,53 @@ import * as React from 'react';
 import { Link, Route, match as Match } from 'react-router-dom';
 import { Menu as AntdMenu, Icon } from 'antd';
 
-export interface MenuItem {
-  icon: string;
+export interface MenuItemProps {
+  icon?: string;
   title: string;
   path: string;
-  subitems?: MenuItem[];
+  subitems?: React.ReactElement<MenuItemProps>[];
 }
 
 export interface MenuProps {
-  items: MenuItem[];
+  items: React.ReactElement<MenuItemProps>[];
+}
+
+export class MenuItem extends React.Component<MenuItemProps> {
+  render(): any {
+    const { ...item } = this.props;
+    return (
+      <Link to={item.path} key={item.path}>
+        {item.icon ? <Icon type={item.icon} /> : null}
+        <span className="nav-text">{item.title}</span>
+      </Link>
+    );
+  }
 }
 
 export class Menu extends React.Component<MenuProps> {
-  renderItem(item: MenuItem): JSX.Element {
-    if (item.subitems) {
+  renderItems(items: React.ReactElement<MenuItemProps>[]): JSX.Element[] {
+    return items.map((item: React.ReactElement<MenuItemProps>) => {
+      if (item.props.subitems) {
+        return (
+          <AntdMenu.SubMenu
+            key={'sub_' + item.props.path}
+            title={
+              <span>
+                <Icon type={item.props.icon || 'folder'} />
+                <span>{item.props.title}</span>
+              </span>
+            }
+          >
+            {this.renderItems(item.props.subitems)}
+          </AntdMenu.SubMenu>
+        );
+      }
       return (
-        <AntdMenu.SubMenu
-          key={'sub_' + item.path}
-          title={
-            <span>
-              <Icon type={item.icon || 'folder'} />
-              <span>{item.title}</span>
-            </span>
-          }
-        >
-          {item.subitems.map(x => this.renderItem(x))}
-        </AntdMenu.SubMenu>
-      );
-    } else {
-      return (
-        <AntdMenu.Item key={item.path}>
-          <Link to={item.path}>
-            <Icon type={item.icon || 'folder'} />
-            <span className="nav-text">
-              {item.title} ({item.path})
-            </span>
-          </Link>
+        <AntdMenu.Item key={item.props.path}>
+          <MenuItem {...item.props} />
         </AntdMenu.Item>
       );
-    }
+    });
   }
 
   defaultSelectedKeys(match: Match<any>): string[] {
@@ -64,9 +72,9 @@ export class Menu extends React.Component<MenuProps> {
 
   defaultOpenKeys(match: Match<any>): string[] {
     for (let item of this.props.items) {
-      for (let subitem of item.subitems || []) {
-        if (subitem.path === match.url) {
-          return ['sub_' + item.path];
+      for (let subitem of item.props.subitems || []) {
+        if (subitem.props.path === match.url) {
+          return ['sub_' + item.props.path];
         }
       }
     }
@@ -87,7 +95,7 @@ export class Menu extends React.Component<MenuProps> {
               selectedKeys={this.defaultSelectedKeys(match)}
               defaultOpenKeys={this.defaultOpenKeys(match)}
             >
-              {items.map(x => this.renderItem(x))}
+              {this.renderItems(items)}
             </AntdMenu>
           );
         }}
