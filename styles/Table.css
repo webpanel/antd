@@ -10,3 +10,15 @@ td.schrink button {
 .ant-table-tbody > tr > td {
   word-break: normal;
 }
+
+:root .ant-table-column-sorter .anticon-caret-down,
+:root .ant-table-column-sorter .anticon-caret-up {
+  font-size: 16px;
+}
+
+.ant-table-thead th span {
+  white-space: pre;
+}
+.ant-table-column-sorter {
+  margin-left: 0;
+}

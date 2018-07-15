@@ -1,30 +1,22 @@
 import * as React from 'react';
 import { ResourceCollection } from 'webpanel-data';
-export declare type TablePropsActionButton =
-  | 'edit'
-  | 'delete'
-  | React.ReactNode;
+export declare type TablePropsActionButton = 'detail' | 'delete' | React.ReactNode | ((record: any) => React.ReactNode);
 interface TableActionButtonsProps {
-  resourceCollection?: ResourceCollection;
-  id: string | number;
-  onDelete: ((id: string | number) => void);
-  buttons: TablePropsActionButton[];
+    resourceCollection?: ResourceCollection;
+    id: string | number;
+    onDelete: ((id: string | number) => void);
+    buttons: TablePropsActionButton[];
 }
-export declare class TableActionButtons extends React.Component<
-  TableActionButtonsProps
-> {
-  state: {
-    sortedInfo: {
-      columnKey: undefined;
-      order: undefined;
+export declare class TableActionButtons extends React.Component<TableActionButtonsProps> {
+    state: {
+        sortedInfo: {
+            columnKey: undefined;
+            order: undefined;
+        };
+        selectedRowKeys: never[];
     };
-    selectedRowKeys: never[];
-  };
-  deleteResource: (id: React.ReactText) => void;
-  getButton(
-    id: string | number,
-    type: TablePropsActionButton
-  ): {} | null | undefined;
-  render(): JSX.Element;
+    deleteResource: (id: React.ReactText) => void;
+    getButton(id: string | number, type: TablePropsActionButton): {} | null | undefined;
+    render(): JSX.Element;
 }
 export {};

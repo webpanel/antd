@@ -29,16 +29,15 @@
     "react-router-dom": "^4.3.1"
   },
   "peerDependencies": {
-    "mobx-react": "*",
     "mobx": "*",
-    "webpanel-data": "*"
+    "mobx-react": "*"
   },
   "devDependencies": {
     "mobx": "^5.0.3",
     "mobx-react": "^5.2.0",
     "react-scripts-ts": "^2.16.0",
     "typescript": "^2.9.2",
-    "webpanel-data": "*"
+    "webpanel-data": "https://github.com/webpanel/data.git"
   },
   "repository": {
     "type": "git",

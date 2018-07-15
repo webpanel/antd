@@ -1,7 +1,11 @@
 import * as React from 'react';
 import { Table as AntdTable } from 'antd';
-import { TableProps as ATableProps, ColumnProps } from 'antd/lib/table';
-// import { TablePaginationConfig } from 'antd/lib/pagination';
+import {
+  TableProps as ATableProps,
+  ColumnProps,
+  SorterResult
+} from 'antd/lib/table';
+import { PaginationConfig } from 'antd/lib/pagination';
 import { observer } from 'mobx-react';
 
 import { ResourceCollection } from 'webpanel-data';
@@ -25,20 +29,35 @@ export interface TableProps extends ATableProps<any> {
   actionButtons?: TablePropsActionButton[];
 }
 
+// interface TableSortedInfo {
+//   columnKey?: string;
+//   order?: 'ascend' | 'descend' | boolean;
+// }
+interface TableState {
+  sortedInfo: SorterResult<any> | undefined;
+  selectedRowKeys: any[];
+}
+
 @observer
-export class Table extends React.Component<TableProps> {
-  state = {
-    sortedInfo: { columnKey: undefined, order: undefined },
+export class Table extends React.Component<TableProps, TableState> {
+  state: TableState = {
+    sortedInfo: undefined,
     selectedRowKeys: []
   };
 
   handleChange = (
-    // pagination: TablePaginationConfig | boolean,
-    filters: string[],
-    sorter: Object
+    pagination: PaginationConfig,
+    filters: Record<any, string[]>,
+    sorter: SorterResult<any>
   ) => {
-    // console.log(pagination, filters, sorter);
-    // this.setState({ sortedInfo: sorter as TableSortedInfo });
+    console.log('table change', pagination, filters, sorter);
+    this.setState({ sortedInfo: sorter });
+
+    const resource = this.props.resourceCollection;
+    if (resource) {
+      resource.updateSorting([sorter]);
+      // resource.updateFilter(filters)
+    }
   };
 
   onSelectChange = (selectedRowKeys: any[]) => {
@@ -86,6 +105,7 @@ export class Table extends React.Component<TableProps> {
       {
         className: 'schrink',
         title: 'Actions',
+        // fixed: 'right',
         render: (value: any, record: any, index: number) => {
           return (
             <TableActionButtons
@@ -97,7 +117,20 @@ export class Table extends React.Component<TableProps> {
           );
         }
       }
-    ];
+    ].map((c: ColumnProps<any>) => {
+      c.dataIndex = (c.dataIndex || c.key || '').toString();
+
+      const sortedInfo = this.state.sortedInfo;
+      c.sortOrder =
+        sortedInfo && c.dataIndex === sortedInfo.columnKey
+          ? sortedInfo.order
+          : undefined;
+      // c.sorter = true; // (x, y) => (x > y ? -1 : 1);
+      // console.log(c);
+      return c;
+    });
+
+    console.log('???!!!', _columns);
 
     return (
       <AntdTable
@@ -110,8 +143,8 @@ export class Table extends React.Component<TableProps> {
         }
         columns={_columns}
         dataSource={data}
+        onChange={this.handleChange}
         {...restProps}
-        // onChange={this.handleChange}
         // title={title}
         // bordered={config.bordered}
         // pagination={config.pagination}
