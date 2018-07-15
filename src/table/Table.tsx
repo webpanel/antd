@@ -130,8 +130,6 @@ export class Table extends React.Component<TableProps, TableState> {
       return c;
     });
 
-    console.log('???!!!', _columns);
-
     return (
       <AntdTable
         rowKey={rowKey ? rowKey : record => record.id}
