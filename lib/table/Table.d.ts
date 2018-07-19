@@ -7,6 +7,7 @@ import '../../styles/Table.css';
 export interface TableProps extends ATableProps<any> {
     resourceCollection?: ResourceCollection;
     actionButtons?: TablePropsActionButton[];
+    detailButtonText?: string;
 }
 interface TableState {
     sortedInfo: SorterResult<any> | undefined;

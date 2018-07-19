@@ -6,6 +6,7 @@ interface TableActionButtonsProps {
     id: string | number;
     onDelete: ((id: string | number) => void);
     buttons: TablePropsActionButton[];
+    detailButtonText?: string;
 }
 export declare class TableActionButtons extends React.Component<TableActionButtonsProps> {
     state: {

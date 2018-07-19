@@ -27,6 +27,7 @@ import '../../styles/Table.css';
 export interface TableProps extends ATableProps<any> {
   resourceCollection?: ResourceCollection;
   actionButtons?: TablePropsActionButton[];
+  detailButtonText?: string;
 }
 
 // interface TableSortedInfo {
@@ -50,7 +51,7 @@ export class Table extends React.Component<TableProps, TableState> {
     filters: Record<any, string[]>,
     sorter: SorterResult<any>
   ) => {
-    console.log('table change', pagination, filters, sorter);
+    // console.log('table change', pagination, filters, sorter);
     this.setState({ sortedInfo: sorter });
 
     const resource = this.props.resourceCollection;
@@ -91,6 +92,7 @@ export class Table extends React.Component<TableProps, TableState> {
       resourceCollection,
       columns,
       actionButtons,
+      detailButtonText,
       ...restProps
     } = this.props;
     const rowSelection = undefined;
@@ -113,6 +115,7 @@ export class Table extends React.Component<TableProps, TableState> {
               id={this.getRecordKey(record, index)}
               onDelete={this.reloadData}
               buttons={actionButtons || ['edit', 'delete']}
+              detailButtonText={detailButtonText}
             />
           );
         }

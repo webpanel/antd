@@ -16,6 +16,7 @@ interface TableActionButtonsProps {
   id: string | number;
   onDelete: ((id: string | number) => void);
   buttons: TablePropsActionButton[];
+  detailButtonText?: string;
 }
 
 @observer
@@ -32,6 +33,7 @@ export class TableActionButtons extends React.Component<
       title: 'Are you sure?',
       content: 'Do you want to delete this item?',
       okText: 'Yes',
+      cancelText: 'No',
       onOk: async () => {
         const resource = this.props.resourceCollection;
         if (resource) {
@@ -50,9 +52,10 @@ export class TableActionButtons extends React.Component<
     if (typeof type === 'string') {
       switch (type) {
         case 'detail':
+          const { detailButtonText } = this.props;
           return (
             <Link key="edit-button-action" to={id.toString()}>
-              <Button>Edit</Button>
+              <Button>{detailButtonText || 'Detail'}</Button>
             </Link>
           );
         case 'delete':
@@ -60,6 +63,7 @@ export class TableActionButtons extends React.Component<
             <Button
               key="delete-button-action"
               onClick={() => this.deleteResource(id)}
+              type="danger"
             >
               Delete
             </Button>
