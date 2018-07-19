@@ -5,7 +5,7 @@ import { ResourceCollection } from 'webpanel-data';
 import { TablePropsActionButton } from './TableActionButtons';
 import '../../styles/Table.css';
 export interface TableProps extends ATableProps<any> {
-    resourceCollection?: ResourceCollection;
+    resourceCollection: ResourceCollection;
     actionButtons?: TablePropsActionButton[];
     detailButtonText?: string;
 }

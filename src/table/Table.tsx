@@ -25,7 +25,7 @@ import '../../styles/Table.css';
 // };
 
 export interface TableProps extends ATableProps<any> {
-  resourceCollection?: ResourceCollection;
+  resourceCollection: ResourceCollection;
   actionButtons?: TablePropsActionButton[];
   detailButtonText?: string;
 }
@@ -113,6 +113,7 @@ export class Table extends React.Component<TableProps, TableState> {
             <TableActionButtons
               resourceCollection={resourceCollection}
               id={this.getRecordKey(record, index)}
+              values={record}
               onDelete={this.reloadData}
               buttons={actionButtons || ['edit', 'delete']}
               detailButtonText={detailButtonText}

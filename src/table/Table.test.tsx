@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Table } from './Table';
+import { Table } from 'antd';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');

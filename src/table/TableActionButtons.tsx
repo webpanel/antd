@@ -9,11 +9,16 @@ export type TablePropsActionButton =
   | 'detail'
   | 'delete'
   | React.ReactNode
-  | ((id: string | number) => React.ReactNode);
+  | ((
+      id: string | number,
+      values: { [key: string]: any },
+      resourceCollection: ResourceCollection
+    ) => React.ReactNode);
 
 interface TableActionButtonsProps {
-  resourceCollection?: ResourceCollection;
+  resourceCollection: ResourceCollection;
   id: string | number;
+  values: { [key: string]: any };
   onDelete: ((id: string | number) => void);
   buttons: TablePropsActionButton[];
   detailButtonText?: string;
@@ -48,7 +53,12 @@ export class TableActionButtons extends React.Component<
     });
   };
 
-  getButton(id: string | number, type: TablePropsActionButton) {
+  getButton(
+    id: string | number,
+    values: { [key: string]: string },
+    resourceCollection: ResourceCollection,
+    type: TablePropsActionButton
+  ) {
     if (typeof type === 'string') {
       switch (type) {
         case 'detail':
@@ -71,18 +81,17 @@ export class TableActionButtons extends React.Component<
         default:
       }
     } else if (typeof type === 'function') {
-      return type(id);
+      return type(id, values, resourceCollection);
     }
     return type;
   }
 
   render() {
-    const { id, buttons } = this.props;
-
+    const { id, values, resourceCollection, buttons } = this.props;
     return (
       <div>
         {buttons.map(button => {
-          return this.getButton(id, button);
+          return this.getButton(id, values, resourceCollection, button);
         })}
       </div>
     );
