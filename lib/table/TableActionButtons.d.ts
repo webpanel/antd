@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ResourceCollection } from 'webpanel-data';
-export declare type TablePropsActionButton = 'detail' | 'delete' | React.ReactNode | ((record: any) => React.ReactNode);
+export declare type TablePropsActionButton = 'detail' | 'delete' | React.ReactNode | ((id: string | number) => React.ReactNode);
 interface TableActionButtonsProps {
     resourceCollection?: ResourceCollection;
     id: string | number;

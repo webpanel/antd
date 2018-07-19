@@ -9,7 +9,7 @@ export type TablePropsActionButton =
   | 'detail'
   | 'delete'
   | React.ReactNode
-  | ((record: any) => React.ReactNode);
+  | ((id: string | number) => React.ReactNode);
 
 interface TableActionButtonsProps {
   resourceCollection?: ResourceCollection;
@@ -70,6 +70,8 @@ export class TableActionButtons extends React.Component<
           );
         default:
       }
+    } else if (typeof type === 'function') {
+      return type(id);
     }
     return type;
   }
