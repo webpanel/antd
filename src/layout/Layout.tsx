@@ -27,6 +27,8 @@ export interface LayoutProps {
   structure?: { [key: string]: StructureItem };
   logout: () => void;
   userName?: string;
+  logoURL?: string;
+  logoCollapsedURL?: string;
 }
 
 export interface LayoutState {
@@ -55,6 +57,10 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
   }
 
   render() {
+    const logoURL = this.state.collapsed
+      ? this.props.logoCollapsedURL
+      : this.props.logoURL;
+
     return (
       <LocaleProvider locale={locale}>
         <BrowserRouter>
@@ -66,7 +72,12 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
                 this.onCollapse(collapsed);
               }}
             >
-              <div className="logo" />
+              <div
+                className="logo"
+                style={{
+                  backgroundImage: logoURL
+                }}
+              />
               <Menu items={this.props.menu || []} />
             </Sider>
             <LayoutComponent>

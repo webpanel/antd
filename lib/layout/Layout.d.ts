@@ -18,6 +18,8 @@ export interface LayoutProps {
     };
     logout: () => void;
     userName?: string;
+    logoURL?: string;
+    logoCollapsedURL?: string;
 }
 export interface LayoutState {
     collapsed: boolean;
