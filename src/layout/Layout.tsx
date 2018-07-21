@@ -75,7 +75,13 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
               <div
                 className="logo"
                 style={{
-                  backgroundImage: logoURL
+                  backgroundImage: logoURL ? `url(${logoURL})` : undefined,
+                  backgroundColor: logoURL ? 'transparent' : undefined,
+                  maxWidth: '168px',
+                  maxHeight: '32px',
+                  backgroundSize: 'contain',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundPosition: 'center'
                 }}
               />
               <Menu items={this.props.menu || []} />
