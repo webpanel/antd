@@ -3,9 +3,9 @@ export { Link, RouteComponentProps } from 'react-router-dom';
 
 export { LoginForm } from './login-form/LoginForm';
 export { Layout } from './layout';
-export { Table } from './table';
+export { ResourceTable } from './table';
 
-export { Form, ResourceForm, FormItem } from './form/form';
+export { ResourceForm, FormItem } from './form/form';
 // export { Checkbox } from './form/checkbox';
 // export { DatePicker } from './form/date-picker';
 export { Input, InputTextArea } from './form/input';

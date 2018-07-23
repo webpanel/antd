@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { ResourceCollection } from 'webpanel-data';
 
-export type TablePropsActionButton =
+export type ResourceTablePropsActionButton =
   | 'detail'
   | 'delete'
   | React.ReactNode
@@ -15,18 +15,18 @@ export type TablePropsActionButton =
       resourceCollection: ResourceCollection
     ) => React.ReactNode);
 
-interface TableActionButtonsProps {
+interface ResourceTableActionButtonsProps {
   resourceCollection: ResourceCollection;
   id: string | number;
   values: { [key: string]: any };
   onDelete: ((id: string | number) => void);
-  buttons: TablePropsActionButton[];
+  buttons: ResourceTablePropsActionButton[];
   detailButtonText?: string;
 }
 
 @observer
-export class TableActionButtons extends React.Component<
-  TableActionButtonsProps
+export class ResourceTableActionButtons extends React.Component<
+  ResourceTableActionButtonsProps
 > {
   state = {
     sortedInfo: { columnKey: undefined, order: undefined },
@@ -57,7 +57,7 @@ export class TableActionButtons extends React.Component<
     id: string | number,
     values: { [key: string]: string },
     resourceCollection: ResourceCollection,
-    type: TablePropsActionButton
+    type: ResourceTablePropsActionButton
   ) {
     if (typeof type === 'string') {
       switch (type) {

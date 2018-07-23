@@ -11,9 +11,9 @@ import { observer } from 'mobx-react';
 import { ResourceCollection } from 'webpanel-data';
 
 import {
-  TableActionButtons,
-  TablePropsActionButton
-} from './TableActionButtons';
+  ResourceTableActionButtons,
+  ResourceTablePropsActionButton
+} from './ResourceTableActionButtons';
 
 import '../../styles/Table.css';
 
@@ -24,9 +24,9 @@ import '../../styles/Table.css';
 //   return a[columnKey] - b[columnKey];
 // };
 
-export interface TableProps extends ATableProps<any> {
+export interface ResourceTableProps extends ATableProps<any> {
   resourceCollection: ResourceCollection;
-  actionButtons?: TablePropsActionButton[];
+  actionButtons?: ResourceTablePropsActionButton[];
   detailButtonText?: string;
 }
 
@@ -34,14 +34,17 @@ export interface TableProps extends ATableProps<any> {
 //   columnKey?: string;
 //   order?: 'ascend' | 'descend' | boolean;
 // }
-interface TableState {
+interface ResourceTableState {
   sortedInfo: SorterResult<any> | undefined;
   selectedRowKeys: any[];
 }
 
 @observer
-export class Table extends React.Component<TableProps, TableState> {
-  state: TableState = {
+export class ResourceTable extends React.Component<
+  ResourceTableProps,
+  ResourceTableState
+> {
+  state: ResourceTableState = {
     sortedInfo: undefined,
     selectedRowKeys: []
   };
@@ -71,10 +74,6 @@ export class Table extends React.Component<TableProps, TableState> {
       this.props.resourceCollection.get();
     }
   };
-
-  // componentDidMount() {
-  //   this.reloadData();
-  // }
 
   getRecordKey = (record: any, index: number) => {
     const rowKey = this.props.rowKey;
@@ -110,7 +109,7 @@ export class Table extends React.Component<TableProps, TableState> {
         // fixed: 'right',
         render: (value: any, record: any, index: number) => {
           return (
-            <TableActionButtons
+            <ResourceTableActionButtons
               resourceCollection={resourceCollection}
               id={this.getRecordKey(record, index)}
               values={record}
