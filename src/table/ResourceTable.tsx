@@ -48,7 +48,11 @@ export class ResourceTable extends React.Component<
 
     const resource = this.props.resourceCollection;
     if (resource) {
-      resource.updateSorting([sorter]);
+      if (sorter.columnKey) {
+        resource.updateSorting([sorter]);
+      } else {
+        resource.updateSorting([]);
+      }
       // resource.updateFilter(filters)
     }
   };
