@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { ResourceCollection } from 'webpanel-data';
-export declare type ResourceTablePropsActionButton = 'detail' | 'delete' | React.ReactNode | ((id: string | number, values: {
-    [key: string]: any;
-}, resourceCollection: ResourceCollection) => React.ReactNode);
+export declare type ResourceTablePropsActionButton = 'detail' | 'delete' | React.ReactNode | ((props: ActionButtonProps) => React.ReactNode);
 interface ResourceTableActionButtonsProps {
     resourceCollection: ResourceCollection;
     id: string | number;
@@ -13,6 +11,14 @@ interface ResourceTableActionButtonsProps {
     buttons: ResourceTablePropsActionButton[];
     detailButtonText?: string;
 }
+export interface ActionButtonProps {
+    resourceID: string | number;
+    values: {
+        [key: string]: any;
+    };
+    resourceCollection: ResourceCollection;
+    type: ResourceTablePropsActionButton;
+}
 export declare class ResourceTableActionButtons extends React.Component<ResourceTableActionButtonsProps> {
     state: {
         sortedInfo: {
@@ -22,9 +28,7 @@ export declare class ResourceTableActionButtons extends React.Component<Resource
         selectedRowKeys: never[];
     };
     deleteResource: (id: React.ReactText) => void;
-    getButton(id: string | number, values: {
-        [key: string]: string;
-    }, resourceCollection: ResourceCollection, type: ResourceTablePropsActionButton): {} | null | undefined;
+    getButton(props: ActionButtonProps): {} | null | undefined;
     render(): JSX.Element;
 }
 export {};

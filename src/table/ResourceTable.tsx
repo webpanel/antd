@@ -17,23 +17,12 @@ import {
 
 import '../../styles/Table.css';
 
-// const columnSorter = (columnKey: string) => (a: any, b: any) => {
-//   if (a[columnKey] && a[columnKey].localeCompare) {
-//     return a[columnKey].localeCompare(b[columnKey]);
-//   }
-//   return a[columnKey] - b[columnKey];
-// };
-
 export interface ResourceTableProps extends ATableProps<any> {
   resourceCollection: ResourceCollection;
   actionButtons?: ResourceTablePropsActionButton[];
   detailButtonText?: string;
 }
 
-// interface TableSortedInfo {
-//   columnKey?: string;
-//   order?: 'ascend' | 'descend' | boolean;
-// }
 interface ResourceTableState {
   sortedInfo: SorterResult<any> | undefined;
   selectedRowKeys: any[];

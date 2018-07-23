@@ -9,11 +9,7 @@ export type ResourceTablePropsActionButton =
   | 'detail'
   | 'delete'
   | React.ReactNode
-  | ((
-      id: string | number,
-      values: { [key: string]: any },
-      resourceCollection: ResourceCollection
-    ) => React.ReactNode);
+  | ((props: ActionButtonProps) => React.ReactNode);
 
 interface ResourceTableActionButtonsProps {
   resourceCollection: ResourceCollection;
@@ -22,6 +18,13 @@ interface ResourceTableActionButtonsProps {
   onDelete: ((id: string | number) => void);
   buttons: ResourceTablePropsActionButton[];
   detailButtonText?: string;
+}
+
+export interface ActionButtonProps {
+  resourceID: string | number;
+  values: { [key: string]: any };
+  resourceCollection: ResourceCollection;
+  type: ResourceTablePropsActionButton;
 }
 
 @observer
@@ -53,18 +56,13 @@ export class ResourceTableActionButtons extends React.Component<
     });
   };
 
-  getButton(
-    id: string | number,
-    values: { [key: string]: string },
-    resourceCollection: ResourceCollection,
-    type: ResourceTablePropsActionButton
-  ) {
-    if (typeof type === 'string') {
-      switch (type) {
+  getButton(props: ActionButtonProps) {
+    if (typeof props.type === 'string') {
+      switch (props.type) {
         case 'detail':
           const { detailButtonText } = this.props;
           return (
-            <Link key="edit-button-action" to={id.toString()}>
+            <Link key="edit-button-action" to={props.resourceID.toString()}>
               <Button>{detailButtonText || 'Detail'}</Button>
             </Link>
           );
@@ -72,7 +70,7 @@ export class ResourceTableActionButtons extends React.Component<
           return (
             <Button
               key="delete-button-action"
-              onClick={() => this.deleteResource(id)}
+              onClick={() => this.deleteResource(props.resourceID)}
               type="danger"
             >
               Delete
@@ -80,10 +78,10 @@ export class ResourceTableActionButtons extends React.Component<
           );
         default:
       }
-    } else if (typeof type === 'function') {
-      return type(id, values, resourceCollection);
+    } else if (typeof props.type === 'function') {
+      return props.type(props);
     }
-    return type;
+    return props.type;
   }
 
   render() {
@@ -91,7 +89,12 @@ export class ResourceTableActionButtons extends React.Component<
     return (
       <div>
         {buttons.map(button => {
-          return this.getButton(id, values, resourceCollection, button);
+          return this.getButton({
+            resourceID: id,
+            values,
+            resourceCollection,
+            type: button
+          });
         })}
       </div>
     );
