@@ -107,7 +107,7 @@ export class ResourceTable extends React.Component<
               id={this.getRecordKey(record, index)}
               values={record}
               onDelete={this.reloadData}
-              buttons={actionButtons || ['edit', 'delete']}
+              buttons={actionButtons || ['detail', 'delete']}
               detailButtonText={detailButtonText}
             />
           );
