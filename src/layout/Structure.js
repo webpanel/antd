@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -25,10 +26,11 @@ var __rest = (this && this.__rest) || function (s, e) {
             t[p[i]] = s[p[i]];
     return t;
 };
-import * as React from 'react';
-import { Route, Switch } from 'react-router-dom';
-import { Layout } from 'antd';
-import { Breadcrumbs } from './page/Breadcrumbs';
+exports.__esModule = true;
+var React = require("react");
+var react_router_dom_1 = require("react-router-dom");
+var antd_1 = require("antd");
+var Breadcrumbs_1 = require("./page/Breadcrumbs");
 var StructureItem = /** @class */ (function (_super) {
     __extends(StructureItem, _super);
     function StructureItem() {
@@ -43,12 +45,12 @@ var StructureItem = /** @class */ (function (_super) {
     StructureItem.prototype.render = function () {
         var item = __rest(this.props, []);
         return (React.createElement("div", null,
-            item.breadcrumbs && React.createElement(Breadcrumbs, { items: item.breadcrumbs }),
+            item.breadcrumbs && React.createElement(Breadcrumbs_1.Breadcrumbs, { items: item.breadcrumbs }),
             this.renderContent(item.content, this.props)));
     };
     return StructureItem;
 }(React.Component));
-export { StructureItem };
+exports.StructureItem = StructureItem;
 var Structure = /** @class */ (function (_super) {
     __extends(Structure, _super);
     function Structure() {
@@ -69,7 +71,7 @@ var Structure = /** @class */ (function (_super) {
             var itemBreadcrumbs = Array.prototype.concat(breadcrumbs, [
                 Object.assign({}, item.props, { path: path })
             ]);
-            var route = (React.createElement(Route, { key: parentPath + path, exact: true, path: parentPath + path, render: function (renderProps) {
+            var route = (React.createElement(react_router_dom_1.Route, { key: parentPath + path, exact: true, path: parentPath + path, render: function (renderProps) {
                     return React.createElement(StructureItem, __assign({ breadcrumbs: itemBreadcrumbs }, item.props, renderProps));
                 } }));
             routes.push(route);
@@ -88,15 +90,14 @@ var Structure = /** @class */ (function (_super) {
         var error = this.state.error;
         if (error !== null) {
             var _error = error;
-            return (React.createElement(Layout.Content, { style: { margin: '24px 16px 0', overflow: 'initial' } },
+            return (React.createElement(antd_1.Layout.Content, { style: { margin: '24px 16px 0', overflow: 'initial' } },
                 React.createElement("div", { style: { padding: 24, background: '#fff', textAlign: 'center' } },
                     "error ",
                     _error.message)));
         }
-        return (React.createElement(Layout.Content, { style: { margin: '24px 16px 0', overflow: 'initial' } },
-            React.createElement(Switch, null, this.props.items ? this.getRoutes(this.props.items) : null)));
+        return (React.createElement(antd_1.Layout.Content, { style: { margin: '24px 16px 0', overflow: 'initial' } },
+            React.createElement(react_router_dom_1.Switch, null, this.props.items ? this.getRoutes(this.props.items) : null)));
     };
     return Structure;
 }(React.Component));
-export { Structure };
-//# sourceMappingURL=Structure.js.map
+exports.Structure = Structure;
