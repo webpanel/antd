@@ -14,7 +14,7 @@ import '../../styles/Layout.css';
 import { Menu, MenuItemProps } from './Menu';
 import { Header } from './Header';
 import { HeaderConfig } from './Header';
-import { Structure, StructureItem } from './Structure';
+import { Structure, StructureItemProps, StructureItem } from './Structure';
 import { MenuItem } from './Menu';
 export interface FooterConfig {
   title: string | React.ReactNode;
@@ -24,7 +24,7 @@ export interface LayoutProps {
   footer?: FooterConfig;
   header?: HeaderConfig;
   menu?: React.ReactElement<MenuItemProps>[];
-  structure?: { [key: string]: StructureItem };
+  structure?: { [key: string]: React.ReactElement<StructureItemProps> };
   logout: () => void;
   userName?: string;
   logoURL?: string;
@@ -38,6 +38,7 @@ export interface LayoutState {
 @observer
 export class Layout extends React.Component<LayoutProps, LayoutState> {
   static MenuItem = MenuItem;
+  static StructureItem = StructureItem;
   state = {
     collapsed: false
   };
