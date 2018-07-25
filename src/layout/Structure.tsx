@@ -10,18 +10,38 @@ export type StructureItemContent =
   | React.ReactNode
   | ((props: RouteComponentProps<any>) => React.ReactNode);
 
-export interface StructureItem {
+export interface StructureItemProps {
   name: string;
+  breadcrumbs?: BreadcrumbItem[];
   content?: StructureItemContent;
-  subitems?: { [key: string]: StructureItem };
+  subitems?: { [key: string]: React.ReactElement<StructureItemProps> };
 }
 
 export interface ContentProps {
-  items?: { [key: string]: StructureItem };
+  items?: { [key: string]: React.ReactElement<StructureItemProps> };
 }
 
 export interface ContentState {
   error: Error | null;
+}
+
+export class StructureItem extends React.Component<StructureItemProps> {
+    renderContent(content: StructureItemContent, props: any): React.ReactNode {
+        if (typeof content === 'function') {
+            return content(props);
+        }
+        return content;
+    }
+
+    render(): any {
+        const { ...item } = this.props;
+        return (
+            <div>
+                {item.breadcrumbs && <Breadcrumbs items={item.breadcrumbs}/>}
+                {this.renderContent(item.content, this.props)}
+            </div>
+        );
+    }
 }
 
 export class Structure extends React.Component<ContentProps, ContentState> {
@@ -31,15 +51,8 @@ export class Structure extends React.Component<ContentProps, ContentState> {
     this.setState({ error: error || new Error(`empty error`) });
   }
 
-  renderContent(content: StructureItemContent, props: any): React.ReactNode {
-    if (typeof content === 'function') {
-      return content(props);
-    }
-    return content;
-  }
-
   getRoutes(
-    items: { [key: string]: StructureItem },
+    items: { [key: string]: React.ReactElement<StructureItemProps> },
     routes: JSX.Element[] | null = null,
     parentPath: string = '',
     breadcrumbs: BreadcrumbItem[] = []
@@ -50,28 +63,28 @@ export class Structure extends React.Component<ContentProps, ContentState> {
       const item = items[path];
 
       const itemBreadcrumbs = Array.prototype.concat(breadcrumbs, [
-        Object.assign({}, item, { path })
+        Object.assign({}, item.props, { path })
       ]);
 
-      let route = (
-        <Route
-          key={parentPath + path}
-          exact={true}
-          path={parentPath + path}
-          render={renderProps => {
-            return (
-              <div>
-                <Breadcrumbs items={itemBreadcrumbs} />
-                {this.renderContent(item.content, renderProps)}
-              </div>
-            );
-          }}
-        />
+      const route = (
+          <Route
+              key={parentPath + path}
+              exact={true}
+              path={parentPath + path}
+              render={renderProps =>
+                  <StructureItem
+                      breadcrumbs={itemBreadcrumbs}
+                      {...item.props}
+                      {...renderProps}
+                  />
+              }
+          />
       );
+
       routes.push(route);
-      if (item.subitems && Object.keys(item.subitems).length > 0) {
+      if (item.props.subitems && Object.keys(item.props.subitems).length > 0) {
         this.getRoutes(
-          item.subitems,
+          item.props.subitems,
           routes,
           parentPath + path,
           itemBreadcrumbs
