@@ -4,10 +4,8 @@ import 'antd/dist/antd.css';
 import '../../styles/Layout.css';
 import { MenuItemProps } from './Menu';
 import { HeaderConfig } from './Header';
-import { StructureItemProps } from './Structure';
+import { StructureItemProps, StructureItem } from './Structure';
 import { MenuItem } from './Menu';
-import { StructureItem } from "./Structure";
-
 export interface FooterConfig {
     title: string | React.ReactNode;
 }
