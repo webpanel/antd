@@ -6,14 +6,10 @@ export interface StructureItemProps {
     name: string;
     breadcrumbs?: BreadcrumbItem[];
     content?: StructureItemContent;
-    subitems?: {
-        [key: string]: React.ReactElement<StructureItemProps>;
-    };
+    children?: React.ReactElement<StructureItemProps>[];
 }
 export interface ContentProps {
-    items?: {
-        [key: string]: React.ReactElement<StructureItemProps>;
-    };
+    items?: React.ReactElement<StructureItemProps>[];
 }
 export interface ContentState {
     error: Error | null;
@@ -27,8 +23,6 @@ export declare class Structure extends React.Component<ContentProps, ContentStat
         error: null;
     };
     componentDidCatch(error: Error | null, info: object): void;
-    getRoutes(items: {
-        [key: string]: React.ReactElement<StructureItemProps>;
-    }, routes?: JSX.Element[] | null, parentPath?: string, breadcrumbs?: BreadcrumbItem[]): JSX.Element[];
+    getRoutes(items: React.ReactElement<StructureItemProps>[], routes?: JSX.Element[] | null, parentPath?: string, breadcrumbs?: BreadcrumbItem[]): JSX.Element[];
     render(): JSX.Element;
 }

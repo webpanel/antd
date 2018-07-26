@@ -13,9 +13,7 @@ export interface LayoutProps {
     footer?: FooterConfig;
     header?: HeaderConfig;
     menu?: React.ReactElement<MenuItemProps>[];
-    structure?: {
-        [key: string]: React.ReactElement<StructureItemProps>;
-    };
+    structure?: React.ReactElement<StructureItemProps>[];
     logout: () => void;
     userName?: string;
     logoURL?: string;
