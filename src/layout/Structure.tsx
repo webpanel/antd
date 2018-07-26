@@ -14,11 +14,11 @@ export interface StructureItemProps {
   name: string;
   breadcrumbs?: BreadcrumbItem[];
   content?: StructureItemContent;
-  subitems?: { [key: string]: React.ReactElement<StructureItemProps> };
+  children?: React.ReactElement<StructureItemProps>[];
 }
 
 export interface ContentProps {
-  items?: { [key: string]: React.ReactElement<StructureItemProps> };
+  items?: React.ReactElement<StructureItemProps>[];
 }
 
 export interface ContentState {
@@ -52,15 +52,16 @@ export class Structure extends React.Component<ContentProps, ContentState> {
   }
 
   getRoutes(
-    items: { [key: string]: React.ReactElement<StructureItemProps> },
+    items: React.ReactElement<StructureItemProps>[],
     routes: JSX.Element[] | null = null,
     parentPath: string = '',
     breadcrumbs: BreadcrumbItem[] = []
   ): JSX.Element[] {
     routes = routes || [];
 
-    for (let path of Object.keys(items)) {
-      const item = items[path];
+    for (let item of items) {
+      const path = item.key;
+      if (!path) continue;
 
       const itemBreadcrumbs = Array.prototype.concat(breadcrumbs, [
         Object.assign({}, item.props, { path })
@@ -82,9 +83,9 @@ export class Structure extends React.Component<ContentProps, ContentState> {
       );
 
       routes.push(route);
-      if (item.props.subitems && Object.keys(item.props.subitems).length > 0) {
+      if (item.props.children && Object.keys(item.props.children).length > 0) {
         this.getRoutes(
-          item.props.subitems,
+          item.props.children,
           routes,
           parentPath + path,
           itemBreadcrumbs
