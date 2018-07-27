@@ -10,7 +10,6 @@ export interface ResourceTableProps extends ATableProps<any> {
     detailButtonText?: string;
 }
 interface ResourceTableState {
-    sortedInfo: SorterResult<any> | undefined;
     selectedRowKeys: any[];
 }
 export declare class ResourceTable extends React.Component<ResourceTableProps, ResourceTableState> {

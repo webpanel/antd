@@ -24,7 +24,6 @@ export interface ResourceTableProps extends ATableProps<any> {
 }
 
 interface ResourceTableState {
-  sortedInfo: SorterResult<any> | undefined;
   selectedRowKeys: any[];
 }
 
@@ -34,7 +33,6 @@ export class ResourceTable extends React.Component<
   ResourceTableState
 > {
   state: ResourceTableState = {
-    sortedInfo: undefined,
     selectedRowKeys: []
   };
 
@@ -44,16 +42,19 @@ export class ResourceTable extends React.Component<
     sorter: SorterResult<any>
   ) => {
     // console.log('table change', pagination, filters, sorter);
-    this.setState({ sortedInfo: sorter });
 
     const resource = this.props.resourceCollection;
     if (resource) {
       if (sorter.columnKey) {
-        resource.updateSorting([sorter]);
+        resource.updateSorting(
+          [{ columnKey: sorter.columnKey, order: sorter.order }],
+          false
+        );
       } else {
-        resource.updateSorting([]);
+        resource.updateSorting([], false);
       }
-      // resource.updateFilter(filters)
+      resource.updateFilters(filters, false);
+      resource.get();
     }
   };
 
@@ -94,6 +95,9 @@ export class ResourceTable extends React.Component<
       data = resourceCollection.data || undefined;
     }
 
+    const sortedInfo =
+      resourceCollection.sorting.length > 0 && resourceCollection.sorting[0];
+
     const _columns: ColumnProps<any>[] = [
       ...(columns || []),
       {
@@ -116,13 +120,13 @@ export class ResourceTable extends React.Component<
     ].map((c: ColumnProps<any>) => {
       c.dataIndex = (c.dataIndex || c.key || '').toString();
 
-      const sortedInfo = this.state.sortedInfo;
-      c.sortOrder =
-        sortedInfo && c.dataIndex === sortedInfo.columnKey
-          ? sortedInfo.order
-          : undefined;
-      // c.sorter = true; // (x, y) => (x > y ? -1 : 1);
-      // console.log(c);
+      if (sortedInfo) {
+        c.sortOrder =
+          sortedInfo && c.key === sortedInfo.columnKey
+            ? sortedInfo.order
+            : undefined;
+      }
+
       return c;
     });
 
@@ -139,11 +143,6 @@ export class ResourceTable extends React.Component<
         dataSource={data}
         onChange={this.handleChange}
         {...restProps}
-        // title={title}
-        // bordered={config.bordered}
-        // pagination={config.pagination}
-        // size={config.size}
-        // columns={columns}
       />
     );
   }

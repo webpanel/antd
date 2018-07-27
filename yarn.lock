@@ -8552,25 +8552,9 @@ webpack@3.8.1:
     webpack-sources "^1.0.1"
     yargs "^8.0.2"
 
-"webpanel-data@https://github.com/webpanel/data.git":
-  version "0.0.15"
-  resolved "https://github.com/webpanel/data.git#2bf2d6a63e0ee170b02889a4acc6d82bc454c0ea"
-  dependencies:
-    "@types/inflection" "^1.5.28"
-    "@types/lodash" "^4.14.110"
-    "@types/node" "^10.3.2"
-    "@types/node-fetch" "^2.1.1"
-    "@types/react" "*"
-    inflection "^1.12.0"
-    lodash "^4.17.10"
-    node-fetch "^2.1.2"
-    querystring "^0.2.0"
-    react "*"
-    url "^0.11.0"
-
-"webpanel-data@https://github.com/webpanel/data.git#feature/wp-7-add-collection-search":
+"webpanel-data@https://github.com/webpanel/data.git#develop":
   version "0.0.18"
-  resolved "https://github.com/webpanel/data.git#7be10cdb647d89ca532ffa5c8028f243e0ad12d4"
+  resolved "https://github.com/webpanel/data.git#313b255abdf4c6154027aa6cbdc5dd7917e7e975"
   dependencies:
     "@types/inflection" "^1.5.28"
     "@types/lodash" "^4.14.110"
