@@ -1,6 +1,8 @@
 import * as React from 'react';
 import Login from 'ant-design-pro/lib/Login';
-import { Alert } from 'antd';
+import { Alert, Modal, Checkbox } from 'antd';
+
+import { ForgotPassword, ForgotPasswordHandler } from './ForgotPassword';
 
 const { Tab, UserName, Password, Submit } = Login;
 
@@ -14,14 +16,24 @@ export interface LoginFormAuthorizationInfo {
 
 export interface LoginFormProps {
   authorizationInfo: LoginFormAuthorizationInfo;
+  onForgotPasswordSend?: ForgotPasswordHandler;
 }
 
-export class LoginForm extends React.Component<LoginFormProps> {
+interface LoginFormState {
+  notice: string;
+  type: string;
+  autoLogin: boolean;
+  forgotPasswordVisible: boolean;
+}
+
+export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
   state = {
     notice: '',
     type: 'tab1',
-    autoLogin: true
+    autoLogin: true,
+    forgotPasswordVisible: false
   };
+
   onSubmit = async (
     err: any,
     values: { username: string; password: string }
@@ -41,7 +53,15 @@ export class LoginForm extends React.Component<LoginFormProps> {
       autoLogin: e.target.checked
     });
   };
+  showForgotPassword = () => {
+    this.setState({ forgotPasswordVisible: true });
+  };
+  hideForgotPassword = () => {
+    this.setState({ forgotPasswordVisible: false });
+  };
   render() {
+    const { onForgotPasswordSend } = this.props;
+
     return (
       <div style={{ width: '368px', margin: '0 auto' }}>
         <Login
@@ -66,15 +86,22 @@ export class LoginForm extends React.Component<LoginFormProps> {
             <Password name="password" />
           </Tab>
           <div>
-            {/* <Checkbox
+            <Checkbox
               checked={this.state.autoLogin}
               onChange={this.changeAutoLogin}
+              style={{ visibility: 'hidden' }}
             >
               Keep me logged in
-            </Checkbox> */}
-            {/* <a style={{ float: 'right' }} href="">
-              Zapomenuté heslo
-            </a> */}
+            </Checkbox>
+            {onForgotPasswordSend && (
+              <a
+                style={{ float: 'right' }}
+                onClick={this.showForgotPassword}
+                href="#"
+              >
+                Forgot password
+              </a>
+            )}
           </div>
           <Submit loading={this.props.authorizationInfo.isAuthorizing}>
             Login
@@ -89,6 +116,23 @@ export class LoginForm extends React.Component<LoginFormProps> {
             </a>
           </div> */}
         </Login>
+
+        {onForgotPasswordSend && (
+          <Modal
+            title="Forgot password"
+            visible={this.state.forgotPasswordVisible}
+            maskClosable={true}
+            onCancel={this.hideForgotPassword}
+            footer={null}
+          >
+            <ForgotPassword
+              defaultEmail="???"
+              onSend={async (email: string) => {
+                await onForgotPasswordSend(email);
+              }}
+            />
+          </Modal>
+        )}
       </div>
     );
   }
