@@ -96,7 +96,9 @@ export class ResourceTable extends React.Component<
     }
 
     const sortedInfo =
-      resourceCollection.sorting.length > 0 && resourceCollection.sorting[0];
+      resourceCollection.sorting &&
+      resourceCollection.sorting.length > 0 &&
+      resourceCollection.sorting[0];
 
     const _columns: ColumnProps<any>[] = [
       ...(columns || []),
