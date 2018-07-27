@@ -1,0 +1,1 @@
+export { ResourceSearchInput } from './ResourceSearchInput';

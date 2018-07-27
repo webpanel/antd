@@ -27,7 +27,7 @@ export declare class ResourceTableActionButtons extends React.Component<Resource
         };
         selectedRowKeys: never[];
     };
-    deleteResource: (id: React.ReactText) => void;
+    deleteResource: (id: string | number) => void;
     getButton(props: ActionButtonProps): {} | null | undefined;
     render(): JSX.Element;
 }
