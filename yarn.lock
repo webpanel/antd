@@ -8568,6 +8568,22 @@ webpack@3.8.1:
     react "*"
     url "^0.11.0"
 
+"webpanel-data@https://github.com/webpanel/data.git#feature/wp-7-add-collection-search":
+  version "0.0.18"
+  resolved "https://github.com/webpanel/data.git#7be10cdb647d89ca532ffa5c8028f243e0ad12d4"
+  dependencies:
+    "@types/inflection" "^1.5.28"
+    "@types/lodash" "^4.14.110"
+    "@types/node" "^10.3.2"
+    "@types/node-fetch" "^2.1.1"
+    "@types/react" "*"
+    inflection "^1.12.0"
+    lodash "^4.17.10"
+    node-fetch "^2.1.2"
+    querystring "^0.2.0"
+    react "*"
+    url "^0.11.0"
+
 websocket-driver@>=0.5.1:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/websocket-driver/-/websocket-driver-0.7.0.tgz#0caf9d2d755d93aee049d4bdd0d3fe2cca2a24eb"

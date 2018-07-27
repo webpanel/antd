@@ -4,6 +4,7 @@ export { LoginForm } from './login-form/LoginForm';
 export { Layout } from './layout';
 export { ResourceTable, ResourceTableActionButtonProps } from './table';
 
+export { ResourceSearchInput } from './search-input';
 export { ResourceForm } from './form/form';
 // export { Checkbox } from './form/checkbox';
 // export { DatePicker } from './form/date-picker';
