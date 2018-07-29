@@ -19,7 +19,7 @@ import '../../styles/Table.css';
 
 export interface ResourceTableProps extends ATableProps<any> {
   resourceCollection: ResourceCollection;
-  actionButtons?: ResourceTablePropsActionButton[];
+  actionButtons?: ResourceTablePropsActionButton[] | null;
   detailButtonText?: string;
 }
 
@@ -78,6 +78,56 @@ export class ResourceTable extends React.Component<
     return recordKey === undefined ? index : recordKey;
   };
 
+  getColumns = (): ColumnProps<any>[] => {
+    const {
+      resourceCollection,
+      columns,
+      actionButtons,
+      detailButtonText
+    } = this.props;
+
+    const sortedInfo =
+      resourceCollection.sorting &&
+      resourceCollection.sorting.length > 0 &&
+      resourceCollection.sorting[0];
+
+    let _columns: ColumnProps<any>[] = [...(columns || [])];
+
+    if (actionButtons !== null) {
+      const actionsColumn = {
+        className: 'schrink',
+        title: 'Actions',
+        // fixed: 'right',
+        render: (value: any, record: any, index: number) => {
+          return (
+            <ResourceTableActionButtons
+              resourceCollection={resourceCollection}
+              id={this.getRecordKey(record, index)}
+              values={record}
+              onDelete={this.reloadData}
+              buttons={actionButtons || ['detail', 'delete']}
+              detailButtonText={detailButtonText}
+            />
+          );
+        }
+      };
+      _columns.push(actionsColumn);
+    }
+
+    return _columns.map((c: ColumnProps<any>) => {
+      c.dataIndex = (c.dataIndex || c.key || '').toString();
+
+      if (sortedInfo) {
+        c.sortOrder =
+          sortedInfo && c.key === sortedInfo.columnKey
+            ? sortedInfo.order
+            : undefined;
+      }
+
+      return c;
+    });
+  };
+
   render() {
     const {
       rowKey,
@@ -95,43 +145,6 @@ export class ResourceTable extends React.Component<
       data = resourceCollection.data || undefined;
     }
 
-    const sortedInfo =
-      resourceCollection.sorting &&
-      resourceCollection.sorting.length > 0 &&
-      resourceCollection.sorting[0];
-
-    const _columns: ColumnProps<any>[] = [
-      ...(columns || []),
-      {
-        className: 'schrink',
-        title: 'Actions',
-        // fixed: 'right',
-        render: (value: any, record: any, index: number) => {
-          return (
-            <ResourceTableActionButtons
-              resourceCollection={resourceCollection}
-              id={this.getRecordKey(record, index)}
-              values={record}
-              onDelete={this.reloadData}
-              buttons={actionButtons || ['detail', 'delete']}
-              detailButtonText={detailButtonText}
-            />
-          );
-        }
-      }
-    ].map((c: ColumnProps<any>) => {
-      c.dataIndex = (c.dataIndex || c.key || '').toString();
-
-      if (sortedInfo) {
-        c.sortOrder =
-          sortedInfo && c.key === sortedInfo.columnKey
-            ? sortedInfo.order
-            : undefined;
-      }
-
-      return c;
-    });
-
     return (
       <AntdTable
         rowKey={rowKey ? rowKey : record => record.id}
@@ -141,7 +154,7 @@ export class ResourceTable extends React.Component<
             ? this.props.resourceCollection.loading
             : false
         }
-        columns={_columns}
+        columns={this.getColumns()}
         dataSource={data}
         onChange={this.handleChange}
         {...restProps}

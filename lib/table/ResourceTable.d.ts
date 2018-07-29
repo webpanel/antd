@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { TableProps as ATableProps, SorterResult } from 'antd/lib/table';
+import { TableProps as ATableProps, ColumnProps, SorterResult } from 'antd/lib/table';
 import { PaginationConfig } from 'antd/lib/pagination';
 import { ResourceCollection } from 'webpanel-data';
 import { ResourceTablePropsActionButton } from './ResourceTableActionButtons';
 import '../../styles/Table.css';
 export interface ResourceTableProps extends ATableProps<any> {
     resourceCollection: ResourceCollection;
-    actionButtons?: ResourceTablePropsActionButton[];
+    actionButtons?: ResourceTablePropsActionButton[] | null;
     detailButtonText?: string;
 }
 interface ResourceTableState {
@@ -18,6 +18,7 @@ export declare class ResourceTable extends React.Component<ResourceTableProps, R
     onSelectChange: (selectedRowKeys: any[]) => void;
     reloadData: () => void;
     getRecordKey: (record: any, index: number) => any;
+    getColumns: () => ColumnProps<any>[];
     render(): JSX.Element;
 }
 export {};
