@@ -15,10 +15,11 @@ export interface MenuProps {
   items: React.ReactElement<MenuItemProps>[];
 }
 
-export class MenuItem extends React.Component<MenuItemComponentProps> {
+export class MenuItem extends React.Component<MenuItemProps> {}
+
+export class MenuItemComponent extends React.Component<MenuItemComponentProps> {
   render(): any {
     const { ...item } = this.props;
-    console.log('menuitem', this, item);
     return (
       <Link to={item.path} key={item.path}>
         {item.icon ? <Icon type={item.icon} /> : null}
@@ -48,11 +49,11 @@ export class Menu extends React.Component<MenuProps> {
       }
       const key = item.key;
       if (!key) {
-        return <MenuItem {...item.props} path="#" />;
+        return <MenuItemComponent {...item.props} path="#" />;
       }
       return (
         <AntdMenu.Item key={key}>
-          <MenuItem {...item.props} path={key.toString()} />
+          <MenuItemComponent {...item.props} path={key.toString()} />
         </AntdMenu.Item>
       );
     });

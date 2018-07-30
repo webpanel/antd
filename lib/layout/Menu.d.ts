@@ -11,7 +11,9 @@ interface MenuItemComponentProps extends MenuItemProps {
 export interface MenuProps {
     items: React.ReactElement<MenuItemProps>[];
 }
-export declare class MenuItem extends React.Component<MenuItemComponentProps> {
+export declare class MenuItem extends React.Component<MenuItemProps> {
+}
+export declare class MenuItemComponent extends React.Component<MenuItemComponentProps> {
     render(): any;
 }
 export declare class Menu extends React.Component<MenuProps> {
