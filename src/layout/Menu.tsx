@@ -5,17 +5,20 @@ import { Menu as AntdMenu, Icon } from 'antd';
 export interface MenuItemProps {
   icon?: string;
   title: string;
-  path: string;
   subitems?: React.ReactElement<MenuItemProps>[];
+}
+interface MenuItemComponentProps extends MenuItemProps {
+  path: string;
 }
 
 export interface MenuProps {
   items: React.ReactElement<MenuItemProps>[];
 }
 
-export class MenuItem extends React.Component<MenuItemProps> {
+export class MenuItem extends React.Component<MenuItemComponentProps> {
   render(): any {
     const { ...item } = this.props;
+    console.log('menuitem', this, item);
     return (
       <Link to={item.path} key={item.path}>
         {item.icon ? <Icon type={item.icon} /> : null}
@@ -31,7 +34,7 @@ export class Menu extends React.Component<MenuProps> {
       if (item.props.subitems) {
         return (
           <AntdMenu.SubMenu
-            key={'sub_' + item.props.path}
+            key={'sub_' + item.key}
             title={
               <span>
                 <Icon type={item.props.icon || 'folder'} />
@@ -43,9 +46,13 @@ export class Menu extends React.Component<MenuProps> {
           </AntdMenu.SubMenu>
         );
       }
+      const key = item.key;
+      if (!key) {
+        return <MenuItem {...item.props} path="#" />;
+      }
       return (
-        <AntdMenu.Item key={item.props.path}>
-          <MenuItem {...item.props} />
+        <AntdMenu.Item key={key}>
+          <MenuItem {...item.props} path={key.toString()} />
         </AntdMenu.Item>
       );
     });
@@ -73,8 +80,8 @@ export class Menu extends React.Component<MenuProps> {
   defaultOpenKeys(match: Match<any>): string[] {
     for (let item of this.props.items) {
       for (let subitem of item.props.subitems || []) {
-        if (subitem.props.path === match.url) {
-          return ['sub_' + item.props.path];
+        if (subitem.key === match.url) {
+          return ['sub_' + subitem.key];
         }
       }
     }

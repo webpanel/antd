@@ -3,13 +3,15 @@ import { match as Match } from 'react-router-dom';
 export interface MenuItemProps {
     icon?: string;
     title: string;
-    path: string;
     subitems?: React.ReactElement<MenuItemProps>[];
+}
+interface MenuItemComponentProps extends MenuItemProps {
+    path: string;
 }
 export interface MenuProps {
     items: React.ReactElement<MenuItemProps>[];
 }
-export declare class MenuItem extends React.Component<MenuItemProps> {
+export declare class MenuItem extends React.Component<MenuItemComponentProps> {
     render(): any;
 }
 export declare class Menu extends React.Component<MenuProps> {
@@ -18,3 +20,4 @@ export declare class Menu extends React.Component<MenuProps> {
     defaultOpenKeys(match: Match<any>): string[];
     render(): JSX.Element;
 }
+export {};
