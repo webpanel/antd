@@ -27,7 +27,7 @@ export declare class ResourceTableActionButtons extends React.Component<Resource
         };
         selectedRowKeys: never[];
     };
-    deleteResource: (id: import("../../../../../../../../Users/jakubknejzlik/Projects/github/webpanel/antd/node_modules/csstype").AnimationIterationCountProperty) => void;
+    deleteResource: (id: React.ReactText) => void;
     getButton(props: ActionButtonProps): {} | null | undefined;
     render(): JSX.Element;
 }
