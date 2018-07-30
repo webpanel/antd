@@ -70,7 +70,7 @@ export class ResourceTable extends React.Component<
   };
 
   getRecordKey = (record: any, index: number) => {
-    const rowKey = this.props.rowKey;
+    const rowKey = this.props.rowKey || 'id';
     const recordKey =
       typeof rowKey === 'function'
         ? rowKey(record, index)
@@ -147,7 +147,7 @@ export class ResourceTable extends React.Component<
 
     return (
       <AntdTable
-        rowKey={rowKey ? rowKey : record => record.id}
+        rowKey={rowKey || 'id'}
         rowSelection={rowSelection}
         loading={
           this.props.resourceCollection
