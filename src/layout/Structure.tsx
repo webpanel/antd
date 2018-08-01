@@ -109,10 +109,20 @@ export class Structure extends React.Component<ContentProps, ContentState> {
       );
     }
 
+    const pageNotFound = (
+      <Route path="*">
+        <div>
+          <h1>Page not found</h1>
+          <i>Check page address or contact tech assistance</i>
+        </div>
+      </Route>
+    );
+
     return (
       <Layout.Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
         <Switch>
           {this.props.items ? this.getRoutes(this.props.items) : null}
+          {pageNotFound}
         </Switch>
       </Layout.Content>
     );
