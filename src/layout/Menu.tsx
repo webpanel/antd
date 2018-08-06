@@ -2,7 +2,9 @@ import * as React from 'react';
 import { Link, Route, match as Match } from 'react-router-dom';
 import { Menu as AntdMenu, Icon } from 'antd';
 
-export interface MenuItemProps {
+import { searchChildrenWithType, appendStringPath } from '../utils';
+
+export interface MenuItemProps extends React.Props<any> {
   icon?: string;
   title: string;
   subitems?: React.ReactElement<MenuItemProps>[];
@@ -30,12 +32,25 @@ export class MenuItemComponent extends React.Component<MenuItemComponentProps> {
 }
 
 export class Menu extends React.Component<MenuProps> {
-  renderItems(items: React.ReactElement<MenuItemProps>[]): JSX.Element[] {
+  renderItems(
+    items: React.ReactElement<MenuItemProps>[],
+    parentPath: string
+  ): JSX.Element[] {
     return items.map((item: React.ReactElement<MenuItemProps>) => {
-      if (item.props.subitems) {
+      const subitems =
+        item.props.subitems ||
+        searchChildrenWithType(item.props.children, MenuItem);
+
+      const key = item.key;
+      if (!key) {
+        return <MenuItemComponent {...item.props} path="#" />;
+      }
+      const resolvedPath = appendStringPath(parentPath, key.toString());
+
+      if (subitems && subitems.length > 0) {
         return (
           <AntdMenu.SubMenu
-            key={'sub_' + item.key}
+            key={'sub_' + resolvedPath}
             title={
               <span>
                 <Icon type={item.props.icon || 'folder'} />
@@ -43,17 +58,14 @@ export class Menu extends React.Component<MenuProps> {
               </span>
             }
           >
-            {this.renderItems(item.props.subitems)}
+            {this.renderItems(subitems, resolvedPath)}
           </AntdMenu.SubMenu>
         );
       }
-      const key = item.key;
-      if (!key) {
-        return <MenuItemComponent {...item.props} path="#" />;
-      }
+
       return (
-        <AntdMenu.Item key={key}>
-          <MenuItemComponent {...item.props} path={key.toString()} />
+        <AntdMenu.Item key={resolvedPath}>
+          <MenuItemComponent {...item.props} path={resolvedPath} />
         </AntdMenu.Item>
       );
     });
@@ -79,15 +91,20 @@ export class Menu extends React.Component<MenuProps> {
   }
 
   defaultOpenKeys(match: Match<any>): string[] {
-    const children: any[] = Array.isArray(this.props.children) ?
-      [...this.props.children] :
-      [this.props.children];
-    const items = children.filter(comp => comp.type.name === 'MenuItem');
+    const items = searchChildrenWithType(this.props.children, MenuItem);
 
     for (let item of items) {
-      for (let subitem of item.props.subitems || []) {
-        if (subitem.key === match.url) {
-          return ['sub_' + subitem.key];
+      const subitems = searchChildrenWithType(item.props.children, MenuItem);
+      for (let subitem of subitems) {
+        if (item.key && subitem.key) {
+          const resolvedPath = appendStringPath(
+            item.key.toString(),
+            subitem.key.toString()
+          );
+          if (resolvedPath === match.url) {
+            const parentPath = appendStringPath(item.key.toString(), '');
+            return ['sub_' + parentPath];
+          }
         }
       }
     }
@@ -95,11 +112,7 @@ export class Menu extends React.Component<MenuProps> {
   }
 
   render() {
-    const children: any[] = Array.isArray(this.props.children) ?
-      [...this.props.children] :
-      [this.props.children];
-    const items = children.filter(comp => comp.type.name === 'MenuItem');
-
+    const items = searchChildrenWithType(this.props.children, MenuItem);
     return (
       <Route
         path="*"
@@ -112,7 +125,7 @@ export class Menu extends React.Component<MenuProps> {
               selectedKeys={this.defaultSelectedKeys(match)}
               defaultOpenKeys={this.defaultOpenKeys(match)}
             >
-              {this.renderItems(items)}
+              {this.renderItems(items, '/')}
             </AntdMenu>
           );
         }}

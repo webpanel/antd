@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { match as Match } from 'react-router-dom';
-export interface MenuItemProps {
+export interface MenuItemProps extends React.Props<any> {
     icon?: string;
     title: string;
     subitems?: React.ReactElement<MenuItemProps>[];
@@ -17,7 +17,7 @@ export declare class MenuItemComponent extends React.Component<MenuItemComponent
     render(): any;
 }
 export declare class Menu extends React.Component<MenuProps> {
-    renderItems(items: React.ReactElement<MenuItemProps>[]): JSX.Element[];
+    renderItems(items: React.ReactElement<MenuItemProps>[], parentPath: string): JSX.Element[];
     defaultSelectedKeys(match: Match<any>): string[];
     defaultOpenKeys(match: Match<any>): string[];
     render(): JSX.Element;

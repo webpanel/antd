@@ -4,17 +4,18 @@ import { RouteComponentProps } from 'react-router';
 import { Layout } from 'antd';
 import { BreadcrumbItem } from './page';
 import { Breadcrumbs } from './page/Breadcrumbs';
+import { searchChildrenWithType, appendStringPath } from '../utils';
+import { resolve } from 'url';
 
 export type StructureItemContent =
   | string
   | React.ReactNode
   | ((props: RouteComponentProps<any>) => React.ReactNode);
 
-export interface StructureItemProps {
+export interface StructureItemProps extends React.Props<any> {
   name: string;
   breadcrumbs?: BreadcrumbItem[];
   content?: StructureItemContent;
-  children?: React.ReactElement<StructureItemProps>[];
 }
 
 export interface ContentProps {
@@ -27,21 +28,21 @@ export interface ContentState {
 
 export class StructureItem extends React.Component<StructureItemProps> {
   renderContent(content: StructureItemContent, props: any): React.ReactNode {
-        if (typeof content === 'function') {
-            return content(props);
-        }
-        return content;
+    if (typeof content === 'function') {
+      return content(props);
     }
+    return content;
+  }
 
-    render(): any {
-        const { ...item } = this.props;
-        return (
-            <div>
-                {item.breadcrumbs && <Breadcrumbs items={item.breadcrumbs}/>}
-                {this.renderContent(item.content, this.props)}
-            </div>
-        );
-    }
+  render(): any {
+    const { ...item } = this.props;
+    return (
+      <div>
+        {item.breadcrumbs && <Breadcrumbs items={item.breadcrumbs} />}
+        {this.renderContent(item.content, this.props)}
+      </div>
+    );
+  }
 }
 
 export class Structure extends React.Component<ContentProps, ContentState> {
@@ -61,35 +62,40 @@ export class Structure extends React.Component<ContentProps, ContentState> {
 
     for (let item of items) {
       const path = item.key;
-      if (!path) continue;
+      if (!path) {
+        continue;
+      }
 
       const itemBreadcrumbs = Array.prototype.concat(breadcrumbs, [
         Object.assign({}, item.props, { path })
       ]);
 
+      const resolvedPath = appendStringPath(parentPath, path.toString());
+
       const route = (
-          <Route
-              key={parentPath + path}
-              exact={true}
-              path={parentPath + path}
-              render={renderProps =>
-                  <StructureItem
-                      breadcrumbs={itemBreadcrumbs}
-                      {...item.props}
-                      {...renderProps}
-                  />
-              }
-          />
+        <Route
+          key={resolvedPath}
+          exact={true}
+          path={resolvedPath}
+          render={renderProps => (
+            <StructureItem
+              breadcrumbs={itemBreadcrumbs}
+              {...item.props}
+              {...renderProps}
+            />
+          )}
+        />
       );
 
       routes.push(route);
-      if (item.props.children && Object.keys(item.props.children).length > 0) {
-        this.getRoutes(
-          item.props.children,
-          routes,
-          parentPath + path,
-          itemBreadcrumbs
-        );
+
+      const subitems = searchChildrenWithType(
+        item.props.children,
+        StructureItem
+      );
+
+      if (subitems && subitems.length > 0) {
+        this.getRoutes(subitems, routes, resolvedPath, itemBreadcrumbs);
       }
     }
     return routes;
@@ -118,10 +124,7 @@ export class Structure extends React.Component<ContentProps, ContentState> {
       </Route>
     );
 
-    const children: any[] = Array.isArray(this.props.children) ?
-      [...this.props.children] :
-      [this.props.children];
-    const items = children.filter(comp => comp.type.name === 'StructureItem');
+    const items = searchChildrenWithType(this.props.children, StructureItem);
 
     return (
       <Layout.Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>

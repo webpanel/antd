@@ -16,6 +16,8 @@ import { Header } from './Header';
 import { HeaderConfig } from './Header';
 import { StructureItemProps, StructureItem, Structure } from './Structure';
 import { MenuItem } from './Menu';
+import { searchChildrenWithType } from '../utils';
+
 export interface FooterConfig {
   title: string | React.ReactNode;
 }
@@ -64,12 +66,8 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
       ? this.props.logoCollapsedURL
       : this.props.logoURL;
 
-    const children: any[] = Array.isArray(this.props.children) ?
-      [...this.props.children] :
-      [this.props.children];
-
-    const menus = children.filter((comp) => comp.type.name === 'Menu');
-    const structures = children.filter((comp) => comp.type.name === 'Structure');
+    const menus = searchChildrenWithType(this.props.children, Menu);
+    const structures = searchChildrenWithType(this.props.children, Structure);
 
     return (
       <LocaleProvider locale={locale}>
