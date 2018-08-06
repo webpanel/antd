@@ -2,6 +2,7 @@ import * as React from 'react';
 import { get } from 'lodash';
 import { InputProps } from 'antd/lib/input/Input';
 import { Subscriber } from 'react-broadcast';
+import { Observer } from 'mobx-react';
 
 import { FormContext } from './Form';
 
@@ -38,6 +39,7 @@ class FormElementComponent extends React.Component<
 
   render() {
     // const { formContext, ...props } = this.props;
+    // return this.props.renderElement;
     return this.wrapInFieldDecorator(this.props.renderElement);
   }
 }
@@ -46,13 +48,19 @@ export class FormElement<P> extends React.Component<P & FormElementProps> {
   render() {
     return (
       <Subscriber channel="form-context">
-        {(context: FormContext) => (
-          <FormElementComponent
-            {...this.props}
-            formContext={context}
-            renderElement={this.getElement()}
-          />
-        )}
+        {(context: FormContext) => {
+          return (
+            <Observer>
+              {() => (
+                <FormElementComponent
+                  {...this.props}
+                  formContext={context}
+                  renderElement={this.getElement()}
+                />
+              )}
+            </Observer>
+          );
+        }}
       </Subscriber>
     );
   }
