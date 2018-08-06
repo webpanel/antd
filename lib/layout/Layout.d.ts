@@ -2,9 +2,9 @@ import * as React from 'react';
 import { ClickParam } from 'antd/lib/menu';
 import 'antd/dist/antd.css';
 import '../../styles/Layout.css';
-import { MenuItemProps } from './Menu';
+import { Menu, MenuItemProps } from './Menu';
 import { HeaderConfig } from './Header';
-import { StructureItemProps, StructureItem } from './Structure';
+import { StructureItemProps, StructureItem, Structure } from './Structure';
 import { MenuItem } from './Menu';
 export interface FooterConfig {
     title: string | React.ReactNode;
@@ -23,7 +23,9 @@ export interface LayoutState {
     collapsed: boolean;
 }
 export declare class Layout extends React.Component<LayoutProps, LayoutState> {
+    static Menu: typeof Menu;
     static MenuItem: typeof MenuItem;
+    static Structure: typeof Structure;
     static StructureItem: typeof StructureItem;
     state: {
         collapsed: boolean;
