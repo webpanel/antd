@@ -8553,8 +8553,8 @@ webpack@3.8.1:
     yargs "^8.0.2"
 
 "webpanel-data@https://github.com/webpanel/data.git#develop":
-  version "0.0.18"
-  resolved "https://github.com/webpanel/data.git#313b255abdf4c6154027aa6cbdc5dd7917e7e975"
+  version "0.0.20"
+  resolved "https://github.com/webpanel/data.git#6c6eb801f278a060c123e18cde0da2a56c3130f9"
   dependencies:
     "@types/inflection" "^1.5.28"
     "@types/lodash" "^4.14.110"

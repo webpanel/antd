@@ -8,7 +8,7 @@ import {
 import { PaginationConfig } from 'antd/lib/pagination';
 import { observer } from 'mobx-react';
 
-import { ResourceCollection } from 'webpanel-data';
+import {ResourceCollection, SortInfoOrder} from 'webpanel-data';
 
 import {
   ResourceTableActionButtons,
@@ -47,7 +47,7 @@ export class ResourceTable extends React.Component<
     if (resource) {
       if (sorter.columnKey) {
         resource.updateSorting(
-          [{ columnKey: sorter.columnKey, order: sorter.order }],
+          [{ columnKey: sorter.columnKey, order: SortInfoOrder[sorter.order]}],
           false
         );
       } else {

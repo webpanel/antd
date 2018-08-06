@@ -9,7 +9,7 @@ interface MenuItemComponentProps extends MenuItemProps {
     path: string;
 }
 export interface MenuProps {
-    items: React.ReactElement<MenuItemProps>[];
+    items?: React.ReactElement<MenuItemProps>[];
 }
 export declare class MenuItem extends React.Component<MenuItemProps> {
 }

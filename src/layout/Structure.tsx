@@ -26,7 +26,7 @@ export interface ContentState {
 }
 
 export class StructureItem extends React.Component<StructureItemProps> {
-    renderContent(content: StructureItemContent, props: any): React.ReactNode {
+  renderContent(content: StructureItemContent, props: any): React.ReactNode {
         if (typeof content === 'function') {
             return content(props);
         }
@@ -118,10 +118,15 @@ export class Structure extends React.Component<ContentProps, ContentState> {
       </Route>
     );
 
+    const children: any[] = Array.isArray(this.props.children) ?
+      [...this.props.children] :
+      [this.props.children];
+    const items = children.filter(comp => comp.type.name === 'StructureItem');
+
     return (
       <Layout.Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
         <Switch>
-          {this.props.items ? this.getRoutes(this.props.items) : null}
+          {this.getRoutes(items)}
           {pageNotFound}
         </Switch>
       </Layout.Content>

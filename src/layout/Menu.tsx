@@ -12,7 +12,7 @@ interface MenuItemComponentProps extends MenuItemProps {
 }
 
 export interface MenuProps {
-  items: React.ReactElement<MenuItemProps>[];
+  items?: React.ReactElement<MenuItemProps>[];
 }
 
 export class MenuItem extends React.Component<MenuItemProps> {}
@@ -79,7 +79,12 @@ export class Menu extends React.Component<MenuProps> {
   }
 
   defaultOpenKeys(match: Match<any>): string[] {
-    for (let item of this.props.items) {
+    const children: any[] = Array.isArray(this.props.children) ?
+      [...this.props.children] :
+      [this.props.children];
+    const items = children.filter(comp => comp.type.name === 'MenuItem');
+
+    for (let item of items) {
       for (let subitem of item.props.subitems || []) {
         if (subitem.key === match.url) {
           return ['sub_' + subitem.key];
@@ -90,7 +95,11 @@ export class Menu extends React.Component<MenuProps> {
   }
 
   render() {
-    const items = this.props.items;
+    const children: any[] = Array.isArray(this.props.children) ?
+      [...this.props.children] :
+      [this.props.children];
+    const items = children.filter(comp => comp.type.name === 'MenuItem');
+
     return (
       <Route
         path="*"

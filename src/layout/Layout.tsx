@@ -14,7 +14,7 @@ import '../../styles/Layout.css';
 import { Menu, MenuItemProps } from './Menu';
 import { Header } from './Header';
 import { HeaderConfig } from './Header';
-import { Structure, StructureItemProps, StructureItem } from './Structure';
+import { StructureItemProps, StructureItem, Structure } from './Structure';
 import { MenuItem } from './Menu';
 export interface FooterConfig {
   title: string | React.ReactNode;
@@ -37,7 +37,9 @@ export interface LayoutState {
 
 @observer
 export class Layout extends React.Component<LayoutProps, LayoutState> {
+  static Menu = Menu;
   static MenuItem = MenuItem;
+  static Structure = Structure;
   static StructureItem = StructureItem;
   state = {
     collapsed: false
@@ -62,6 +64,13 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
       ? this.props.logoCollapsedURL
       : this.props.logoURL;
 
+    const children: any[] = Array.isArray(this.props.children) ?
+      [...this.props.children] :
+      [this.props.children];
+
+    const menus = children.filter((comp) => comp.type.name === 'Menu');
+    const structures = children.filter((comp) => comp.type.name === 'Structure');
+
     return (
       <LocaleProvider locale={locale}>
         <BrowserRouter>
@@ -85,14 +94,14 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
                   backgroundPosition: 'center'
                 }}
               />
-              <Menu items={this.props.menu || []} />
+              {menus}
             </Sider>
             <LayoutComponent>
               <Header
                 onMenuSelect={param => this.handleMenuClick(param)}
                 username={this.props.userName}
               />
-              <Structure items={this.props.structure} />
+              {structures}
               <Footer style={{ textAlign: 'center' }}>
                 {this.props.footer && this.props.footer.title}
               </Footer>
