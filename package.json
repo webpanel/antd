@@ -36,7 +36,7 @@
     "mobx": "^5.0.3",
     "mobx-react": "^5.2.0",
     "react-scripts-ts": "^2.16.0",
-    "typescript": "^2.9.2",
+    "typescript": "^3.0.1",
     "webpanel-data": "https://github.com/webpanel/data.git#develop"
   },
   "repository": {
