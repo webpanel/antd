@@ -9,17 +9,39 @@ import { Form, FormContext } from './Form';
 
 export interface ResourceFormProps extends FormProps {
   formResource: Resource;
+  onSuccess?: () => void;
+  onFailure?: (err: Error) => void;
 }
 
 @observer
 export class ResourceForm extends React.Component<ResourceFormProps> {
   onSave = async (values: any) => {
-    await this.props.formResource.save(values);
-    message.success('Form saved');
+    try {
+      await this.props.formResource.save(values);
+      this.displaySuccess();
+    } catch (error) {
+      this.displayError(error);
+    }
+  };
+
+  displaySuccess = () => {
+    if (this.props.onSuccess) {
+      this.props.onSuccess();
+    } else {
+      message.success('Form saved!');
+    }
+  };
+
+  displayError = (err: Error) => {
+    if (this.props.onFailure) {
+      this.props.onFailure(err);
+    } else {
+      message.error(err.message || err || 'Unknown error occurred!');
+    }
   };
 
   render() {
-    const { formResource, ...formProps } = this.props;
+    const { onSuccess, onFailure, formResource, ...formProps } = this.props;
 
     return (
       <Form

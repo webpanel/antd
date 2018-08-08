@@ -5,7 +5,7 @@ import { Layout } from 'antd';
 import { BreadcrumbItem } from './page';
 import { Breadcrumbs } from './page/Breadcrumbs';
 import { searchChildrenWithType, appendStringPath } from '../utils';
-import { resolve } from 'url';
+// import { resolve } from 'url';
 
 export type StructureItemContent =
   | string
