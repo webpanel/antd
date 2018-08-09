@@ -5,7 +5,7 @@ import { ClickParam } from 'antd/lib/menu';
 import { BrowserRouter } from 'react-router-dom';
 import { observer } from 'mobx-react';
 
-import locale from 'antd/lib/locale-provider/cs_CZ';
+import locale from 'antd/lib/locale-provider/en_US';
 import { LocaleProvider } from 'antd';
 
 import 'antd/dist/antd.css';
