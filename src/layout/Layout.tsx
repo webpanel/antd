@@ -5,9 +5,6 @@ import { ClickParam } from 'antd/lib/menu';
 import { BrowserRouter } from 'react-router-dom';
 import { observer } from 'mobx-react';
 
-import locale from 'antd/lib/locale-provider/en_US';
-import { LocaleProvider } from 'antd';
-
 import 'antd/dist/antd.css';
 import '../../styles/Layout.css';
 
@@ -70,43 +67,41 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
     const structures = searchChildrenWithType(this.props.children, Structure);
 
     return (
-      <LocaleProvider locale={locale}>
-        <BrowserRouter>
-          <LayoutComponent className="full-height">
-            <Sider
-              collapsible={true}
-              collapsed={this.state.collapsed}
-              onCollapse={collapsed => {
-                this.onCollapse(collapsed);
+      <BrowserRouter>
+        <LayoutComponent className="full-height">
+          <Sider
+            collapsible={true}
+            collapsed={this.state.collapsed}
+            onCollapse={collapsed => {
+              this.onCollapse(collapsed);
+            }}
+          >
+            <div
+              className="logo"
+              style={{
+                backgroundImage: logoURL ? `url(${logoURL})` : undefined,
+                backgroundColor: logoURL ? 'transparent' : undefined,
+                maxWidth: '168px',
+                maxHeight: '32px',
+                backgroundSize: 'contain',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center'
               }}
-            >
-              <div
-                className="logo"
-                style={{
-                  backgroundImage: logoURL ? `url(${logoURL})` : undefined,
-                  backgroundColor: logoURL ? 'transparent' : undefined,
-                  maxWidth: '168px',
-                  maxHeight: '32px',
-                  backgroundSize: 'contain',
-                  backgroundRepeat: 'no-repeat',
-                  backgroundPosition: 'center'
-                }}
-              />
-              {menus}
-            </Sider>
-            <LayoutComponent>
-              <Header
-                onMenuSelect={param => this.handleMenuClick(param)}
-                username={this.props.userName}
-              />
-              {structures}
-              <Footer style={{ textAlign: 'center' }}>
-                {this.props.footer && this.props.footer.title}
-              </Footer>
-            </LayoutComponent>
+            />
+            {menus}
+          </Sider>
+          <LayoutComponent>
+            <Header
+              onMenuSelect={param => this.handleMenuClick(param)}
+              username={this.props.userName}
+            />
+            {structures}
+            <Footer style={{ textAlign: 'center' }}>
+              {this.props.footer && this.props.footer.title}
+            </Footer>
           </LayoutComponent>
-        </BrowserRouter>
-      </LocaleProvider>
+        </LayoutComponent>
+      </BrowserRouter>
     );
   }
 }
