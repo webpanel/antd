@@ -17,6 +17,8 @@ export interface LoginFormAuthorizationInfo {
 export interface LoginFormProps {
   authorizationInfo: LoginFormAuthorizationInfo;
   onForgotPasswordSend?: ForgotPasswordHandler;
+  onForgotPasswordSuccess?: () => void;
+  onForgotPasswordError?: (err: Error) => void;
 }
 
 interface LoginFormState {
@@ -131,6 +133,8 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
                 await onForgotPasswordSend(email);
                 this.hideForgotPassword();
               }}
+              onSuccess={this.props.onForgotPasswordSuccess}
+              onError={this.props.onForgotPasswordError}
             />
           </Modal>
         )}

@@ -9,6 +9,8 @@ export type ForgotPasswordHandler = ((email: string) => Promise<void>);
 export interface ForgotPasswordProps {
   defaultEmail?: string;
   onSend: ForgotPasswordHandler;
+  onSuccess?: () => void;
+  onError?: (err: Error) => void;
 }
 
 export interface ForgotPasswordState {
@@ -23,9 +25,17 @@ export class ForgotPassword extends React.Component<ForgotPasswordProps> {
     try {
       this.setState({ loading: false });
       await this.props.onSend(values.email);
-      message.success('Sent');
+      if (this.props.onSuccess) {
+        this.props.onSuccess();
+      } else {
+        message.success('Sent');
+      }
     } catch (err) {
-      message.error(err.message);
+      if (this.props.onError) {
+        this.props.onError(err);
+      } else {
+        message.error(err.message);
+      }
     } finally {
       this.setState({ loading: false });
     }

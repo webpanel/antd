@@ -9,6 +9,8 @@ export interface LoginFormAuthorizationInfo {
 export interface LoginFormProps {
     authorizationInfo: LoginFormAuthorizationInfo;
     onForgotPasswordSend?: ForgotPasswordHandler;
+    onForgotPasswordSuccess?: () => void;
+    onForgotPasswordError?: (err: Error) => void;
 }
 interface LoginFormState {
     notice: string;

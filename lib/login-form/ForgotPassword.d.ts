@@ -3,6 +3,8 @@ export declare type ForgotPasswordHandler = ((email: string) => Promise<void>);
 export interface ForgotPasswordProps {
     defaultEmail?: string;
     onSend: ForgotPasswordHandler;
+    onSuccess?: () => void;
+    onError?: (err: Error) => void;
 }
 export interface ForgotPasswordState {
     loading: boolean;
