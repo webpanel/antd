@@ -10,6 +10,7 @@ export interface FormFieldProps extends GetFieldDecoratorOptions {
     extra?: React.ReactNode;
     style?: React.CSSProperties;
     colon?: boolean;
+    hasFeedback?: boolean;
     name: string;
     formContext: FormContext;
 }

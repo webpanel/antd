@@ -15,6 +15,7 @@ export interface FormFieldProps extends GetFieldDecoratorOptions {
   extra?: React.ReactNode;
   style?: React.CSSProperties;
   colon?: boolean;
+  hasFeedback?: boolean;
 
   name: string;
   formContext: FormContext;
@@ -47,7 +48,8 @@ export class FormField extends React.Component<FormFieldProps> {
       wrapperCol,
       extra,
       style,
-      colon
+      colon,
+      hasFeedback
     } = this.props;
 
     return (
@@ -60,6 +62,7 @@ export class FormField extends React.Component<FormFieldProps> {
           extra={extra}
           style={style}
           colon={colon}
+          hasFeedback={hasFeedback}
         >
           {this.decoratedChildren(this.props.formContext)}
         </FormItem>
