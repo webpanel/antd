@@ -9,6 +9,7 @@ import { Form, FormContext } from './Form';
 
 export interface ResourceFormProps extends FormProps {
   formResource: Resource;
+  render: (context: FormContext) => React.ReactNode;
   onSuccess?: () => void;
   onFailure?: (err: Error) => void;
 }
@@ -41,7 +42,13 @@ export class ResourceForm extends React.Component<ResourceFormProps> {
   };
 
   render() {
-    const { onSuccess, onFailure, formResource, ...formProps } = this.props;
+    const {
+      onSuccess,
+      onFailure,
+      formResource,
+      render,
+      ...formProps
+    } = this.props;
 
     return (
       <Form
@@ -52,6 +59,7 @@ export class ResourceForm extends React.Component<ResourceFormProps> {
           const hasChanges = context.form.isFieldsTouched();
           return (
             <div>
+              {render(context)}
               {this.props.children}
               <AForm.Item
                 wrapperCol={{

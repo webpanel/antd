@@ -7,7 +7,6 @@ import {
 } from 'antd/lib/form/Form';
 
 import { observer } from 'mobx-react';
-import { Broadcast } from 'react-broadcast';
 
 interface FormProps extends AFormProps {
   render: (context: FormContext) => React.ReactNode;
@@ -98,16 +97,14 @@ export class FormComponent extends React.Component<
     // } : null;
 
     const formContext: FormContext = {
-      form: this.props.form,
+      form,
       initialValues: initialValues || {}
     };
 
     return (
-      <Broadcast channel="form-context" value={formContext}>
-        <AForm onSubmit={this.submit} {...formProps}>
-          {render(formContext)}
-        </AForm>
-      </Broadcast>
+      <AForm onSubmit={this.submit} {...formProps}>
+        {render(formContext)}
+      </AForm>
     );
   }
 }

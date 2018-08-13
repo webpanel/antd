@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { message, Button, Form as AForm } from 'antd';
+import { message, Button, Input, Form as AForm } from 'antd';
 
 import { Form } from '../form/form';
-import { Input } from '../form/input/Input';
 
 export type ForgotPasswordHandler = ((email: string) => Promise<void>);
 

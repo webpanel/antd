@@ -3,6 +3,5 @@ export { LoginForm } from './login-form/LoginForm';
 export { Layout } from './layout';
 export { ResourceTable, ResourceTableActionButtonProps } from './table';
 export { ResourceSearchInput } from './search-input';
-export { ResourceForm } from './form/form';
-export { Input, InputTextArea } from './form/input';
+export { ResourceForm, FormField, Input } from './form/form';
 export { ResourceSelect } from './resource-select/ResourceSelect';
