@@ -19,7 +19,6 @@
     "@types/react-dom": "^16.0.6",
     "@types/react-router-dom": "^4.2.7",
     "ant-design-pro": "^1.2.1",
-    "antd": "^3.6.1",
     "jsonwebtoken": "^8.2.2",
     "lodash": "^4.17.10",
     "node-fetch": "^2.1.2",
@@ -29,10 +28,12 @@
     "react-router-dom": "^4.3.1"
   },
   "peerDependencies": {
+    "antd": "*",
     "mobx": "*",
     "mobx-react": "*"
   },
   "devDependencies": {
+    "antd": "^3.6.1",
     "mobx": "^5.0.3",
     "mobx-react": "^5.2.0",
     "react-scripts-ts": "^2.16.0",

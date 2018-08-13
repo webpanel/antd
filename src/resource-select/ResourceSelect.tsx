@@ -3,7 +3,7 @@ import { Select } from 'antd';
 import { SelectProps } from 'antd/lib/select';
 import { observer } from 'mobx-react';
 import { ResourceCollection } from 'webpanel-data';
-import { FormElement } from '../form/form/FormElement';
+// import { FormElementBase } from '../form/form/FormElementBase';
 
 type ResourceSelectKey = string | ((value: any) => string);
 
@@ -14,7 +14,7 @@ export interface ResourceSelectProps {
 }
 
 @observer
-export class ResourceSelect extends FormElement<
+export class ResourceSelect extends React.Component<
   SelectProps & ResourceSelectProps
 > {
   private latestResourceData?: any = undefined;
@@ -31,7 +31,7 @@ export class ResourceSelect extends FormElement<
     return null;
   };
 
-  getElement() {
+  render() {
     const { labelKey, valueKey, resourceCollection, ...props } = this.props;
 
     if (this.latestResourceData !== resourceCollection.data) {
