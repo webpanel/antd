@@ -5,6 +5,6 @@ export { Layout } from './layout';
 export { ResourceTable, ResourceTableActionButtonProps } from './table';
 
 export { ResourceSearchInput } from './search-input';
-export { ResourceForm, FormField, Input } from './form/form';
+export { ResourceForm, Form, FormField, Input } from './form/form';
 
 export { ResourceSelect } from './resource-select/ResourceSelect';
