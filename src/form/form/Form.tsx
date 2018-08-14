@@ -11,14 +11,15 @@ import { observer } from 'mobx-react';
 interface FormProps extends AFormProps {
   render: (context: FormContext) => React.ReactNode;
   initialValues?: { [key: string]: any };
-  onSave?: (values: any) => Promise<void>;
-  onValidationError?: (err: Error) => Promise<void>;
+  onSave?: (values: any, context: FormContext) => Promise<void>;
+  onValidationError?: (err: Error, context: FormContext) => Promise<void>;
 }
 
 interface FormState {}
 
 export interface FormContext {
   form: WrappedFormUtils;
+  formComponent: FormComponent;
   initialValues: { [key: string]: any };
 }
 
@@ -49,16 +50,23 @@ export class FormComponent extends React.Component<
 
   submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { form /*, config, context*/ } = this.props;
+    const { form, initialValues } = this.props;
+
+    const formContext: FormContext = {
+      form,
+      formComponent: this,
+      initialValues: initialValues || {}
+    };
+
     form.validateFields(async (err, values) => {
       if (err) {
         if (this.props.onValidationError) {
-          this.props.onValidationError(err);
+          this.props.onValidationError(err, formContext);
         }
       } else {
         form.setFieldsValue(values);
         if (this.props.onSave) {
-          await this.props.onSave(values);
+          await this.props.onSave(values, formContext);
         }
       }
     });
@@ -98,6 +106,7 @@ export class FormComponent extends React.Component<
 
     const formContext: FormContext = {
       form,
+      formComponent: this,
       initialValues: initialValues || {}
     };
 

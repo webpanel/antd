@@ -5,13 +5,14 @@ interface FormProps extends AFormProps {
     initialValues?: {
         [key: string]: any;
     };
-    onSave?: (values: any) => Promise<void>;
-    onValidationError?: (err: Error) => Promise<void>;
+    onSave?: (values: any, context: FormContext) => Promise<void>;
+    onValidationError?: (err: Error, context: FormContext) => Promise<void>;
 }
 interface FormState {
 }
 export interface FormContext {
     form: WrappedFormUtils;
+    formComponent: FormComponent;
     initialValues: {
         [key: string]: any;
     };
