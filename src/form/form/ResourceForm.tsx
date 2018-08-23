@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Form as AForm, message } from 'antd';
+import { message } from 'antd';
 import { FormProps } from 'antd/lib/form/Form';
 
 import { observer } from 'mobx-react';
@@ -56,32 +56,11 @@ export class ResourceForm extends React.Component<ResourceFormProps> {
         initialValues={formResource.data}
         {...formProps}
         render={(context: FormContext) => {
-          // const hasChanges = context.form.isFieldsTouched();
           return (
-            <div>
+            <>
               {render(context)}
               {this.props.children}
-              <AForm.Item
-                wrapperCol={{
-                  xs: { span: 24, offset: 0 },
-                  sm: { span: 16, offset: 8 }
-                }}
-              >
-                {/* <Button disabled={!hasChanges} type="primary" htmlType="submit">
-                  Send
-                </Button>
-                <Popconfirm
-                  title="Reset?"
-                  cancelText="No"
-                  okText="Yes"
-                  onConfirm={() => context.form.resetFields()}
-                >
-                  <Button disabled={!hasChanges} style={{ marginLeft: 8 }}>
-                    Reset
-                  </Button>
-                </Popconfirm> */}
-              </AForm.Item>
-            </div>
+            </>
           );
         }}
       />
