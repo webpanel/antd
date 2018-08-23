@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Form as AForm, message, Button, /*Spin,*/ Popconfirm } from 'antd';
+import { Form as AForm, message } from 'antd';
 import { FormProps } from 'antd/lib/form/Form';
 
 import { observer } from 'mobx-react';
@@ -56,7 +56,7 @@ export class ResourceForm extends React.Component<ResourceFormProps> {
         initialValues={formResource.data}
         {...formProps}
         render={(context: FormContext) => {
-          const hasChanges = context.form.isFieldsTouched();
+          // const hasChanges = context.form.isFieldsTouched();
           return (
             <div>
               {render(context)}
@@ -67,7 +67,7 @@ export class ResourceForm extends React.Component<ResourceFormProps> {
                   sm: { span: 16, offset: 8 }
                 }}
               >
-                <Button disabled={!hasChanges} type="primary" htmlType="submit">
+                {/* <Button disabled={!hasChanges} type="primary" htmlType="submit">
                   Send
                 </Button>
                 <Popconfirm
@@ -79,7 +79,7 @@ export class ResourceForm extends React.Component<ResourceFormProps> {
                   <Button disabled={!hasChanges} style={{ marginLeft: 8 }}>
                     Reset
                   </Button>
-                </Popconfirm>
+                </Popconfirm> */}
               </AForm.Item>
             </div>
           );
