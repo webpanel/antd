@@ -53,20 +53,18 @@ export class FormField extends React.Component<FormFieldProps> {
     } = this.props;
 
     return (
-      <div>
-        <FormItem
-          className={className}
-          label={label}
-          labelCol={labelCol}
-          wrapperCol={wrapperCol}
-          extra={extra}
-          style={style}
-          colon={colon}
-          hasFeedback={hasFeedback}
-        >
-          {this.decoratedChildren(this.props.formContext)}
-        </FormItem>
-      </div>
+      <FormItem
+        className={className}
+        label={label}
+        labelCol={labelCol}
+        wrapperCol={wrapperCol}
+        extra={extra}
+        style={style}
+        colon={colon}
+        hasFeedback={hasFeedback}
+      >
+        {this.decoratedChildren(this.props.formContext)}
+      </FormItem>
     );
   }
 }
