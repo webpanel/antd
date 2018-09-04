@@ -11,6 +11,7 @@ export interface ResourceSelectProps {
   resourceCollection: ResourceCollection;
   valueKey?: ResourceSelectKey;
   labelKey: ResourceSelectKey;
+  groupKey?: string;
 }
 
 @observer
@@ -39,16 +40,50 @@ export class ResourceSelect extends React.Component<
     }
 
     if (!this.optionsCache && resourceCollection.data) {
-      this.optionsCache = resourceCollection.data.map(
-        (item: any, index: number) => {
-          const id = this.getValueForKey(item, valueKey || 'id') || index;
-          return (
-            <Select.Option key={id} value={id}>
-              {this.getValueForKey(item, labelKey)}
-            </Select.Option>
-          );
-        }
-      );
+      const groupKey: string | undefined = this.props.groupKey;
+      if (groupKey) {
+        const groups = {};
+        resourceCollection.data.forEach(
+          (item: any, index: number) => {
+            const label = item[groupKey];
+            if (!groups[label]) {
+              groups[label] = [];
+            }
+
+            const id = this.getValueForKey(item, valueKey || 'id') || index;
+            groups[label].push(
+              <Select.Option
+                key={id}
+                value={id}
+              >
+                {this.getValueForKey(item, labelKey)}
+              </Select.Option>
+            )
+          });
+
+        this.optionsCache = Object.keys(groups).map((key: string) => (
+          <Select.OptGroup
+            key={key}
+            label={key}
+          >
+            {groups[key]}
+          </Select.OptGroup>
+        ))
+      } else {
+        this.optionsCache = resourceCollection.data.map(
+          (item: any, index: number) => {
+            const id = this.getValueForKey(item, valueKey || 'id') || index;
+            return (
+              <Select.Option
+                key={id}
+                value={id}
+              >
+                {this.getValueForKey(item, labelKey)}
+              </Select.Option>
+            );
+          }
+        );
+      }
       this.latestResourceData = resourceCollection.data;
     }
 
