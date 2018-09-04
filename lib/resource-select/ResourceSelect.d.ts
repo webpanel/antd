@@ -6,6 +6,7 @@ export interface ResourceSelectProps {
     resourceCollection: ResourceCollection;
     valueKey?: ResourceSelectKey;
     labelKey: ResourceSelectKey;
+    groupKey?: string;
 }
 export declare class ResourceSelect extends React.Component<SelectProps & ResourceSelectProps> {
     private latestResourceData?;
