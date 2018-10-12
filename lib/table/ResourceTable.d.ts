@@ -8,6 +8,7 @@ export interface ResourceTableProps extends ATableProps<any> {
     resourceCollection: ResourceCollection;
     actionButtons?: ResourceTablePropsActionButton[] | null;
     detailButtonText?: string;
+    customDetailURL?: string;
 }
 interface ResourceTableState {
     selectedRowKeys: any[];

@@ -21,6 +21,7 @@ export interface ResourceTableProps extends ATableProps<any> {
   resourceCollection: ResourceCollection;
   actionButtons?: ResourceTablePropsActionButton[] | null;
   detailButtonText?: string;
+  customDetailURL?: string;
 }
 
 interface ResourceTableState {
@@ -83,7 +84,8 @@ export class ResourceTable extends React.Component<
       resourceCollection,
       columns,
       actionButtons,
-      detailButtonText
+      detailButtonText,
+      customDetailURL,
     } = this.props;
 
     const sortedInfo =
@@ -107,6 +109,7 @@ export class ResourceTable extends React.Component<
               onDelete={this.reloadData}
               buttons={actionButtons || ['detail', 'delete']}
               detailButtonText={detailButtonText}
+              customDetailURL={customDetailURL}
             />
           );
         }
