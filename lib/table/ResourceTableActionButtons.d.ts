@@ -10,7 +10,7 @@ interface ResourceTableActionButtonsProps {
     onDelete: ((id: string | number) => void);
     buttons: ResourceTablePropsActionButton[];
     detailButtonText?: string;
-    customDetailURL?: string;
+    customDetailURL?: ((referenceID: string) => string);
 }
 export interface ActionButtonProps {
     resourceID: string | number;
@@ -19,7 +19,7 @@ export interface ActionButtonProps {
     };
     resourceCollection: ResourceCollection;
     type: ResourceTablePropsActionButton;
-    customDetailURL?: string;
+    customDetailURL?: ((referenceID: string) => string);
 }
 export declare class ResourceTableActionButtons extends React.Component<ResourceTableActionButtonsProps> {
     state: {

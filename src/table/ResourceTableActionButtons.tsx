@@ -18,7 +18,7 @@ interface ResourceTableActionButtonsProps {
   onDelete: ((id: string | number) => void);
   buttons: ResourceTablePropsActionButton[];
   detailButtonText?: string;
-  customDetailURL?: string;
+  customDetailURL?: ((referenceID: string) => string);
 }
 
 export interface ActionButtonProps {
@@ -26,7 +26,7 @@ export interface ActionButtonProps {
   values: { [key: string]: any };
   resourceCollection: ResourceCollection;
   type: ResourceTablePropsActionButton;
-  customDetailURL?: string;
+  customDetailURL?: ((referenceID: string) => string);
 }
 
 @observer
@@ -64,7 +64,14 @@ export class ResourceTableActionButtons extends React.Component<
         case 'detail':
           const { detailButtonText } = this.props;
           return (
-            <Link key="edit-button-action" to={props.customDetailURL || props.resourceID.toString()}>
+            <Link
+              key="edit-button-action"
+              to={
+                props.customDetailURL
+                  ? props.customDetailURL(props.resourceID.toString())
+                  : props.resourceID.toString()
+              }
+            >
               <Button>{detailButtonText || 'Detail'}</Button>
             </Link>
           );
@@ -87,7 +94,13 @@ export class ResourceTableActionButtons extends React.Component<
   }
 
   render() {
-    const { id, values, resourceCollection, buttons, customDetailURL } = this.props;
+    const {
+      id,
+      values,
+      resourceCollection,
+      buttons,
+      customDetailURL
+    } = this.props;
     return (
       <div>
         {buttons.map(button => {
@@ -96,7 +109,7 @@ export class ResourceTableActionButtons extends React.Component<
             values,
             resourceCollection,
             type: button,
-            customDetailURL: customDetailURL,
+            customDetailURL
           });
         })}
       </div>

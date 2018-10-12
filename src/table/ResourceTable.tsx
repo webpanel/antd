@@ -21,7 +21,7 @@ export interface ResourceTableProps extends ATableProps<any> {
   resourceCollection: ResourceCollection;
   actionButtons?: ResourceTablePropsActionButton[] | null;
   detailButtonText?: string;
-  customDetailURL?: string;
+  customDetailURL?: ((referenceID: string) => string);
 }
 
 interface ResourceTableState {
