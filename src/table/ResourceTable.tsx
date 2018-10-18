@@ -8,7 +8,7 @@ import {
 import { PaginationConfig } from 'antd/lib/pagination';
 import { observer } from 'mobx-react';
 
-import {ResourceCollection, SortInfoOrder} from 'webpanel-data';
+import { ResourceCollection, SortInfoOrder } from 'webpanel-data';
 
 import {
   ResourceTableActionButtons,
@@ -20,6 +20,7 @@ import '../../styles/Table.css';
 export interface ResourceTableProps extends ATableProps<any> {
   resourceCollection: ResourceCollection;
   actionButtons?: ResourceTablePropsActionButton[] | null;
+  actionButtonsTitle?: React.ReactNode;
   detailButtonText?: string;
   customDetailURL?: ((referenceID: string) => string);
 }
@@ -48,7 +49,7 @@ export class ResourceTable extends React.Component<
     if (resource) {
       if (sorter.columnKey) {
         resource.updateSorting(
-          [{ columnKey: sorter.columnKey, order: SortInfoOrder[sorter.order]}],
+          [{ columnKey: sorter.columnKey, order: SortInfoOrder[sorter.order] }],
           false
         );
       } else {
@@ -84,8 +85,9 @@ export class ResourceTable extends React.Component<
       resourceCollection,
       columns,
       actionButtons,
+      actionButtonsTitle,
       detailButtonText,
-      customDetailURL,
+      customDetailURL
     } = this.props;
 
     const sortedInfo =
@@ -96,9 +98,9 @@ export class ResourceTable extends React.Component<
     let _columns: ColumnProps<any>[] = [...(columns || [])];
 
     if (actionButtons !== null) {
-      const actionsColumn = {
+      const actionsColumn: ColumnProps<any> = {
         className: 'schrink',
-        title: 'Actions',
+        title: actionButtonsTitle || 'Actions',
         // fixed: 'right',
         render: (value: any, record: any, index: number) => {
           return (
