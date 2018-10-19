@@ -35,7 +35,11 @@
     "mobx-react": "*"
   },
   "devDependencies": {
+    "@types/enzyme": "^3.1.14",
+    "@types/enzyme-adapter-react-16": "^1.0.3",
     "antd": "^3.6.1",
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.6.0",
     "mobx": "^5.0.3",
     "mobx-react": "^5.2.0",
     "react-scripts-ts": "^2.16.0",
