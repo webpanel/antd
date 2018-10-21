@@ -30,9 +30,7 @@ export interface ContentState {
   error: Error | null;
 }
 
-export class StructureItem extends React.Component<
-  StructureItemProps & RouteComponentProps<any>
-> {
+export class StructureItem extends React.Component<StructureItemProps> {
   renderContent(content: StructureItemContent, props: any): React.ReactNode {
     return typeof content === 'function' ? content(props) : content;
   }
@@ -40,7 +38,8 @@ export class StructureItem extends React.Component<
   render(): any {
     const { header, ...item } = this.props;
 
-    let _header = typeof header === 'function' ? header(this.props) : header;
+    let _header =
+      typeof header === 'function' ? header(this.props as any) : header;
     const breadcrumps = [
       { title: <Icon type="home" />, href: '/' },
       ...(item.breadcrumbs || [])

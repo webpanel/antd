@@ -16,7 +16,7 @@ export interface ContentProps {
 export interface ContentState {
     error: Error | null;
 }
-export declare class StructureItem extends React.Component<StructureItemProps & RouteComponentProps<any>> {
+export declare class StructureItem extends React.Component<StructureItemProps> {
     renderContent(content: StructureItemContent, props: any): React.ReactNode;
     render(): any;
 }
