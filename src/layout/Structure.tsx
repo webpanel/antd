@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
-import { Layout } from 'antd';
+import { Layout, Icon } from 'antd';
+import PageHeader, { IPageHeaderProps } from 'ant-design-pro/lib/PageHeader';
+
 import { BreadcrumbItem } from './page';
-import { Breadcrumbs } from './page/Breadcrumbs';
+// import { Breadcrumbs } from './page/Breadcrumbs';
 import { searchChildrenWithType, appendStringPath } from '../utils';
 
 export type StructureItemContent =
-  | string
   | React.ReactNode
   | ((props: RouteComponentProps<any>) => React.ReactNode);
 
@@ -15,6 +16,7 @@ export interface StructureItemProps extends React.Props<any> {
   name: string;
   breadcrumbs?: BreadcrumbItem[];
   content?: StructureItemContent;
+  header?: IPageHeaderProps;
 }
 
 export interface ContentProps {
@@ -34,10 +36,20 @@ export class StructureItem extends React.Component<StructureItemProps> {
   }
 
   render(): any {
-    const { ...item } = this.props;
+    const { header, ...item } = this.props;
+
+    const breadcrumps = [
+      { title: <Icon type="home" />, href: '/' },
+      ...(item.breadcrumbs || [])
+    ];
+    breadcrumps[breadcrumps.length - 1].href = undefined;
+
     return (
       <div>
-        {item.breadcrumbs && <Breadcrumbs items={item.breadcrumbs} />}
+        <div style={{ margin: '-24px -24px 16px' }}>
+          <PageHeader breadcrumbList={breadcrumps} {...header} />
+        </div>
+        {/* {item.breadcrumbs && <Breadcrumbs items={item.breadcrumbs} />} */}
         {this.renderContent(item.content, this.props)}
       </div>
     );
@@ -65,9 +77,10 @@ export class Structure extends React.Component<ContentProps, ContentState> {
         continue;
       }
 
-      const itemBreadcrumbs = Array.prototype.concat(breadcrumbs, [
-        Object.assign({}, item.props, { path })
-      ]);
+      const itemBreadcrumbs: BreadcrumbItem[] = [
+        ...breadcrumbs,
+        ...[{ title: item.props.name, href: path.toString() }]
+      ];
 
       const resolvedPath = appendStringPath(parentPath, path.toString());
 

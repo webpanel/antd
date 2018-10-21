@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { Breadcrumb, Icon } from 'antd';
 
 export interface BreadcrumbItem {
-  name: string;
-  path: string;
+  title: string;
+  href?: string;
 }
 
 export interface BreadcrumbsProps {
@@ -25,13 +25,13 @@ export class Breadcrumbs extends React.Component<BreadcrumbsProps> {
           </Link>
         </Breadcrumb.Item>
         {breadcrumbsLinks.map(i => (
-          <Breadcrumb.Item key={i.path}>
-            <Link to={i.path}>{i.name}</Link>
+          <Breadcrumb.Item key={i.href}>
+            <Link to={i.href + '/'}>{i.title}</Link>
           </Breadcrumb.Item>
         ))}
         {currentBreadcrumb ? (
-          <Breadcrumb.Item key={currentBreadcrumb.path}>
-            {currentBreadcrumb.name}
+          <Breadcrumb.Item key={currentBreadcrumb.href}>
+            {currentBreadcrumb.title}
           </Breadcrumb.Item>
         ) : null}
       </Breadcrumb>

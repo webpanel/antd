@@ -7,6 +7,7 @@ import '../../styles/Table.css';
 export interface ResourceTableProps extends ATableProps<any> {
     resourceCollection: ResourceCollection;
     actionButtons?: ResourceTablePropsActionButton[] | null;
+    actionButtonsTitle?: React.ReactNode;
     detailButtonText?: string;
     customDetailURL?: ((referenceID: string) => string);
 }

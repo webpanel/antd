@@ -1,7 +1,7 @@
 import * as React from 'react';
 export interface BreadcrumbItem {
-    name: string;
-    path: string;
+    title: string;
+    href?: string;
 }
 export interface BreadcrumbsProps {
     items: BreadcrumbItem[];

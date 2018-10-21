@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
+import { IPageHeaderProps } from 'ant-design-pro/lib/PageHeader';
 import { BreadcrumbItem } from './page';
-export declare type StructureItemContent = string | React.ReactNode | ((props: RouteComponentProps<any>) => React.ReactNode);
+export declare type StructureItemContent = React.ReactNode | ((props: RouteComponentProps<any>) => React.ReactNode);
 export interface StructureItemProps extends React.Props<any> {
     name: string;
     breadcrumbs?: BreadcrumbItem[];
     content?: StructureItemContent;
+    header?: IPageHeaderProps;
 }
 export interface ContentProps {
     items?: React.ReactElement<StructureItemProps>[];
