@@ -3,11 +3,12 @@ import { RouteComponentProps } from 'react-router';
 import { IPageHeaderProps } from 'ant-design-pro/lib/PageHeader';
 import { BreadcrumbItem } from './page';
 export declare type StructureItemContent = React.ReactNode | ((props: RouteComponentProps<any>) => React.ReactNode);
+export declare type StructureHeaderProps = IPageHeaderProps | ((props: RouteComponentProps<any>) => IPageHeaderProps);
 export interface StructureItemProps extends React.Props<any> {
     name: string;
     breadcrumbs?: BreadcrumbItem[];
     content?: StructureItemContent;
-    header?: IPageHeaderProps;
+    header?: StructureHeaderProps;
 }
 export interface ContentProps {
     items?: React.ReactElement<StructureItemProps>[];
@@ -15,7 +16,7 @@ export interface ContentProps {
 export interface ContentState {
     error: Error | null;
 }
-export declare class StructureItem extends React.Component<StructureItemProps> {
+export declare class StructureItem extends React.Component<StructureItemProps & RouteComponentProps<any>> {
     renderContent(content: StructureItemContent, props: any): React.ReactNode;
     render(): any;
 }

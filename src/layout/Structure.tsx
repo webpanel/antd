@@ -11,12 +11,15 @@ import { searchChildrenWithType, appendStringPath } from '../utils';
 export type StructureItemContent =
   | React.ReactNode
   | ((props: RouteComponentProps<any>) => React.ReactNode);
+export type StructureHeaderProps =
+  | IPageHeaderProps
+  | ((props: RouteComponentProps<any>) => IPageHeaderProps);
 
 export interface StructureItemProps extends React.Props<any> {
   name: string;
   breadcrumbs?: BreadcrumbItem[];
   content?: StructureItemContent;
-  header?: IPageHeaderProps;
+  header?: StructureHeaderProps;
 }
 
 export interface ContentProps {
@@ -27,17 +30,17 @@ export interface ContentState {
   error: Error | null;
 }
 
-export class StructureItem extends React.Component<StructureItemProps> {
+export class StructureItem extends React.Component<
+  StructureItemProps & RouteComponentProps<any>
+> {
   renderContent(content: StructureItemContent, props: any): React.ReactNode {
-    if (typeof content === 'function') {
-      return content(props);
-    }
-    return content;
+    return typeof content === 'function' ? content(props) : content;
   }
 
   render(): any {
     const { header, ...item } = this.props;
 
+    let _header = typeof header === 'function' ? header(this.props) : header;
     const breadcrumps = [
       { title: <Icon type="home" />, href: '/' },
       ...(item.breadcrumbs || [])
@@ -47,7 +50,7 @@ export class StructureItem extends React.Component<StructureItemProps> {
     return (
       <div>
         <div style={{ margin: '-24px -24px 16px' }}>
-          <PageHeader breadcrumbList={breadcrumps} {...header} />
+          <PageHeader breadcrumbList={breadcrumps} {..._header} />
         </div>
         {/* {item.breadcrumbs && <Breadcrumbs items={item.breadcrumbs} />} */}
         {this.renderContent(item.content, this.props)}

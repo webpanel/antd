@@ -27,7 +27,7 @@ export class Header extends React.Component<HeaderProps & HeaderConfig> {
   render() {
     return (
       <AntdLayout.Header style={{ background: '#fff' }}>
-        <div class="antd-header-content">
+        <div className="antd-header-content">
           <Menu
             theme="light"
             mode="horizontal"
