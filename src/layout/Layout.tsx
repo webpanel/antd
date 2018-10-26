@@ -5,7 +5,6 @@ import { ClickParam } from 'antd/lib/menu';
 import { BrowserRouter } from 'react-router-dom';
 import { observer } from 'mobx-react';
 
-import 'antd/dist/antd.css';
 import '../../styles/Layout.css';
 
 import { Menu, MenuItemProps } from './Menu';
