@@ -25,7 +25,7 @@ export declare class FormComponent extends React.Component<FormProps & FormCompo
     }): {
         [key: string]: any;
     };
-    submit: (e: React.FormEvent<HTMLFormElement>) => void;
+    submit: (e: React.FormEvent<HTMLFormElement> | undefined) => void;
     updateFieldValues(values: any): void;
     render(): JSX.Element;
 }

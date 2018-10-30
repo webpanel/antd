@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { ResourceCollection } from 'webpanel-data';
+import { ButtonSize } from 'antd/lib/button';
 export declare type ResourceTablePropsActionButton = 'detail' | 'delete' | React.ReactNode | ((props: ActionButtonProps) => React.ReactNode);
 interface ResourceTableActionButtonsProps {
     resourceCollection: ResourceCollection;
@@ -9,8 +10,9 @@ interface ResourceTableActionButtonsProps {
     };
     onDelete: ((id: string | number) => void);
     buttons: ResourceTablePropsActionButton[];
-    detailButtonText?: string;
+    detailButtonText?: React.ReactNode;
     customDetailURL?: ((referenceID: string) => string);
+    size?: ButtonSize;
 }
 export interface ActionButtonProps {
     resourceID: string | number;

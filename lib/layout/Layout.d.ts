@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { ClickParam } from 'antd/lib/menu';
-import 'antd/dist/antd.css';
 import '../../styles/Layout.css';
 import { Menu, MenuItemProps } from './Menu';
 import { HeaderConfig } from './Header';

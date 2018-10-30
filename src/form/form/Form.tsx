@@ -48,8 +48,10 @@ export class FormComponent extends React.Component<
     return _values;
   }
 
-  submit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  public submit = (e: React.FormEvent<HTMLFormElement> | undefined) => {
+    if (e) {
+      e.preventDefault();
+    }
     const { form, initialValues } = this.props;
 
     const formContext: FormContext = {

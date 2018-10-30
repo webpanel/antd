@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { Button, Modal } from 'antd';
+import { Button, Modal, Icon } from 'antd';
 import { observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 
 import { ResourceCollection } from 'webpanel-data';
+import { ButtonSize } from 'antd/lib/button';
 
 export type ResourceTablePropsActionButton =
   | 'detail'
@@ -17,8 +18,9 @@ interface ResourceTableActionButtonsProps {
   values: { [key: string]: any };
   onDelete: ((id: string | number) => void);
   buttons: ResourceTablePropsActionButton[];
-  detailButtonText?: string;
+  detailButtonText?: React.ReactNode;
   customDetailURL?: ((referenceID: string) => string);
+  size?: ButtonSize;
 }
 
 export interface ActionButtonProps {
@@ -59,6 +61,8 @@ export class ResourceTableActionButtons extends React.Component<
   };
 
   getButton(props: ActionButtonProps) {
+    const { size } = this.props;
+
     if (typeof props.type === 'string') {
       switch (props.type) {
         case 'detail':
@@ -72,7 +76,9 @@ export class ResourceTableActionButtons extends React.Component<
                   : props.resourceID.toString()
               }
             >
-              <Button>{detailButtonText || 'Detail'}</Button>
+              <Button size={size}>
+                {detailButtonText || <Icon type="search" />}
+              </Button>
             </Link>
           );
         case 'delete':
@@ -81,8 +87,9 @@ export class ResourceTableActionButtons extends React.Component<
               key="delete-button-action"
               onClick={() => this.deleteResource(props.resourceID)}
               type="danger"
+              size={size}
             >
-              Delete
+              <Icon type="delete" />
             </Button>
           );
         default:
