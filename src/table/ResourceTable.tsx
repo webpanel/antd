@@ -101,7 +101,7 @@ export class ResourceTable extends React.Component<
     if (actionButtons !== null) {
       const actionsColumn: ColumnProps<any> = {
         className: 'schrink',
-        title: actionButtonsTitle || 'Actions',
+        title: actionButtonsTitle || null,
         // fixed: 'right',
         render: (value: any, record: any, index: number) => {
           return (
