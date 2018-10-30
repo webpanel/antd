@@ -23,6 +23,7 @@ export interface ResourceTableProps extends ATableProps<any> {
   actionButtonsTitle?: React.ReactNode;
   detailButtonText?: React.ReactNode;
   customDetailURL?: ((referenceID: string) => string);
+  condensed?: boolean;
 }
 
 interface ResourceTableState {
@@ -112,6 +113,7 @@ export class ResourceTable extends React.Component<
               buttons={actionButtons || ['detail', 'delete']}
               detailButtonText={detailButtonText}
               customDetailURL={customDetailURL}
+              size={this.props.condensed ? 'small' : undefined}
             />
           );
         }
@@ -162,6 +164,7 @@ export class ResourceTable extends React.Component<
         columns={this.getColumns()}
         dataSource={data}
         onChange={this.handleChange}
+        size={this.props.condensed ? 'small' : undefined}
         {...restProps}
       />
     );

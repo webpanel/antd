@@ -10,6 +10,7 @@ export interface ResourceTableProps extends ATableProps<any> {
     actionButtonsTitle?: React.ReactNode;
     detailButtonText?: React.ReactNode;
     customDetailURL?: ((referenceID: string) => string);
+    condensed?: boolean;
 }
 interface ResourceTableState {
     selectedRowKeys: any[];
