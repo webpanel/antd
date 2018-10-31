@@ -48,7 +48,7 @@ export class FormComponent extends React.Component<
     return _values;
   }
 
-  public submit = (e: React.FormEvent<HTMLFormElement> | undefined) => {
+  public submit = async (e?: React.FormEvent<HTMLFormElement>) => {
     if (e) {
       e.preventDefault();
     }
@@ -59,18 +59,21 @@ export class FormComponent extends React.Component<
       formComponent: this,
       initialValues: initialValues || {}
     };
-
-    form.validateFields(async (err, values) => {
-      if (err) {
-        if (this.props.onValidationError) {
-          this.props.onValidationError(err, formContext);
+    return new Promise((resolve, reject) => {
+      form.validateFields(async (err, values) => {
+        if (err) {
+          if (this.props.onValidationError) {
+            this.props.onValidationError(err, formContext);
+          }
+          reject(err);
+        } else {
+          form.setFieldsValue(values);
+          if (this.props.onSave) {
+            await this.props.onSave(values, formContext);
+          }
+          resolve();
         }
-      } else {
-        form.setFieldsValue(values);
-        if (this.props.onSave) {
-          await this.props.onSave(values, formContext);
-        }
-      }
+      });
     });
   };
 
