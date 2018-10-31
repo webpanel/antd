@@ -2,8 +2,7 @@ import * as React from 'react';
 
 import { FormContext } from './Form';
 
-import { Button, Popconfirm, Form, Menu, Dropdown } from 'antd';
-import { ClickParam } from 'antd/lib/menu';
+import { Button, Popconfirm, Form } from 'antd';
 
 export interface ResourceFormButtonsProps {
   formContext: FormContext;
