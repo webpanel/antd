@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Link, Route, Switch } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
-import { Layout, Icon } from 'antd';
+import { Layout, Icon, Button } from 'antd';
 import PageHeader, { IPageHeaderProps } from 'ant-design-pro/lib/PageHeader';
+import Exception from 'ant-design-pro/lib/Exception';
 
 import { BreadcrumbItem } from './page';
 // import { Breadcrumbs } from './page/Breadcrumbs';
@@ -131,10 +132,18 @@ export class Structure extends React.Component<ContentProps, ContentState> {
 
     const pageNotFound = (
       <Route path="*">
-        <div>
-          <h1>Page not found</h1>
-          <i>Check page address or contact tech assistance</i>
-        </div>
+        <Exception
+          type="404"
+          title="Page not found"
+          desc="Check page address or contact tech assistance"
+          actions={
+            <Link to="/">
+              <Button type="primary">
+                Home
+              </Button>
+            </Link>
+          }
+        />
       </Route>
     );
 
