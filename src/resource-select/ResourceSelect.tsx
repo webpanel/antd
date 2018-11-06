@@ -92,6 +92,7 @@ export class ResourceSelect extends React.Component<
       <Select
         // onSearch={this.onSearch}
         showSearch={true}
+        optionFilterProp="children"
         {...props}
       >
         {options}
