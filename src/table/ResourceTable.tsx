@@ -44,10 +44,11 @@ export class ResourceTable extends React.Component<
     filters: Record<any, string[]>,
     sorter: SorterResult<any>
   ) => {
-    // console.log('table change', pagination, filters, sorter);
-
     const resource = this.props.resourceCollection;
     if (resource) {
+      global.console.log('??', sorter.columnKey, [
+        { columnKey: sorter.columnKey, order: SortInfoOrder[sorter.order] }
+      ]);
       if (sorter.columnKey) {
         resource.updateSorting(
           [{ columnKey: sorter.columnKey, order: SortInfoOrder[sorter.order] }],
