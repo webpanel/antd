@@ -56,9 +56,9 @@ export class ResourceTable extends React.Component<
       }
 
       if (pagination.pageSize) {
-        resource.updateLimit(pagination.pageSize)
+        resource.updateLimit(pagination.pageSize, false)
         if (pagination.current) {
-          resource.updateOffset(pagination.current * pagination.pageSize)
+          resource.updateOffset((pagination.current - 1) * pagination.pageSize, false)
         }
       }
 
