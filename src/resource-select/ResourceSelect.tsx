@@ -77,13 +77,23 @@ export class ResourceSelect extends React.Component<
       this.latestResourceData = resourceCollection.data;
     }
 
+    const { name } = resourceCollection;
+    const className = `resource-select__${name.toLowerCase()}`;
+
     const options = this.optionsCache || [];
+    global.console.log(resourceCollection);
     return (
       <Select
         // onSearch={this.onSearch}
+        className={className}
         showSearch={true}
         allowClear={true}
         optionFilterProp="children"
+        dropdownStyle={{ position: 'relative' }}
+        getPopupContainer={() =>
+          document.querySelector(`.${className}`)
+          || document.body
+        }
         {...props}
       >
         {options}

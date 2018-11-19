@@ -149,6 +149,7 @@ export class ResourceTable extends React.Component<
       columns,
       actionButtons,
       detailButtonText,
+      pagination,
       ...restProps
     } = this.props;
     const rowSelection = undefined;
@@ -171,6 +172,7 @@ export class ResourceTable extends React.Component<
         dataSource={data}
         onChange={this.handleChange}
         size={this.props.condensed ? 'small' : undefined}
+        pagination={{total: resourceCollection.count, ...pagination}}
         {...restProps}
       />
     );
