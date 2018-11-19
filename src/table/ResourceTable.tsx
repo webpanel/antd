@@ -54,6 +54,14 @@ export class ResourceTable extends React.Component<
       } else {
         resource.updateSorting([], false);
       }
+
+      if (pagination.pageSize) {
+        resource.updateLimit(pagination.pageSize)
+        if (pagination.current) {
+          resource.updateOffset(pagination.current * pagination.pageSize)
+        }
+      }
+
       resource.updateFilters(filters, false);
       resource.get();
     }
