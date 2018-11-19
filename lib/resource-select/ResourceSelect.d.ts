@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { SelectProps } from 'antd/lib/select';
-import { ResourceCollection } from 'webpanel-data';
+import { ResourceCollection, Resource } from 'webpanel-data';
 declare type ResourceSelectKey = string | ((value: any) => string);
 export interface ResourceSelectProps {
     resourceCollection: ResourceCollection;
@@ -8,10 +8,17 @@ export interface ResourceSelectProps {
     labelKey: ResourceSelectKey;
     groupKey?: string;
 }
-export declare class ResourceSelect extends React.Component<SelectProps & ResourceSelectProps> {
+interface ResourceSelectState {
+    search?: string;
+    currentItem?: Resource;
+}
+export declare class ResourceSelect extends React.Component<SelectProps & ResourceSelectProps, ResourceSelectState> {
+    state: ResourceSelectState;
     private latestResourceData?;
     private optionsCache?;
+    private optionsIds?;
     getValueForKey: (item: any, key: ResourceSelectKey) => string | null;
+    componentDidUpdate(): Promise<void>;
     render(): JSX.Element;
 }
 export {};

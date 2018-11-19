@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Select } from 'antd';
 import { SelectProps } from 'antd/lib/select';
 import { observer } from 'mobx-react';
-import { ResourceCollection } from 'webpanel-data';
+import { ResourceCollection, Resource } from 'webpanel-data';
 // import { FormElementBase } from '../form/form/FormElementBase';
 
 type ResourceSelectKey = string | ((value: any) => string);
@@ -14,12 +14,21 @@ export interface ResourceSelectProps {
   groupKey?: string;
 }
 
+interface ResourceSelectState {
+  search?: string;
+  currentItem?: Resource;
+}
+
 @observer
 export class ResourceSelect extends React.Component<
-  SelectProps & ResourceSelectProps
+  SelectProps & ResourceSelectProps,
+  ResourceSelectState
 > {
+  state: ResourceSelectState = { search: undefined, currentItem: undefined };
+
   private latestResourceData?: any = undefined;
   private optionsCache?: JSX.Element[] = undefined;
+  private optionsIds?: string[] = undefined;
 
   // onSearch = (value: string) => this.setState({ value });
 
@@ -32,14 +41,39 @@ export class ResourceSelect extends React.Component<
     return null;
   };
 
+  async componentDidUpdate() {
+    const { resourceCollection } = this.props;
+    if (resourceCollection.search !== this.state.search) {
+      resourceCollection.updateSearch(this.state.search);
+    }
+    const value = (this.props.value && this.props.value.toString()) || null;
+    if (value) {
+      if (!this.state.currentItem || this.state.currentItem.id !== value) {
+        const item = await resourceCollection.getItem({ id: value });
+        await item.get();
+        this.setState({ currentItem: item });
+      }
+    } else {
+      if (this.state.currentItem) {
+        this.setState({ currentItem: undefined });
+      }
+    }
+  }
+
   render() {
     const { labelKey, valueKey, resourceCollection, ...props } = this.props;
+    const { currentItem } = this.state;
+
+    let showCurrentItem = true;
 
     if (this.latestResourceData !== resourceCollection.data) {
       this.optionsCache = undefined;
+      this.optionsIds = undefined;
     }
 
     if (!this.optionsCache && resourceCollection.data) {
+      const optionsIds: string[] = [];
+      this.optionsIds = optionsIds;
       const groupKey: string | undefined = this.props.groupKey;
       if (groupKey) {
         const groups = {};
@@ -50,6 +84,7 @@ export class ResourceSelect extends React.Component<
           }
 
           const id = this.getValueForKey(item, valueKey || 'id') || index;
+          optionsIds.push(id.toString());
           groups[label].push(
             <Select.Option key={id} value={id}>
               {this.getValueForKey(item, labelKey)}
@@ -66,6 +101,7 @@ export class ResourceSelect extends React.Component<
         this.optionsCache = resourceCollection.data.map(
           (item: any, index: number) => {
             const id = this.getValueForKey(item, valueKey || 'id') || index;
+            optionsIds.push(id.toString());
             return (
               <Select.Option key={id} value={id}>
                 {this.getValueForKey(item, labelKey)}
@@ -81,7 +117,6 @@ export class ResourceSelect extends React.Component<
     const className = `resource-select__${name.toLowerCase()}`;
 
     const options = this.optionsCache || [];
-    global.console.log(resourceCollection);
     return (
       <Select
         // onSearch={this.onSearch}
@@ -91,11 +126,28 @@ export class ResourceSelect extends React.Component<
         optionFilterProp="children"
         dropdownStyle={{ position: 'relative' }}
         getPopupContainer={() =>
-          document.querySelector(`.${className}`)
-          || document.body
+          document.querySelector(`.${className}`) || document.body
         }
+        onSearch={(value: any) => {
+          this.setState({ search: value });
+        }}
+        onFocus={() => {
+          resourceCollection.get();
+        }}
+        onBlur={() => {
+          this.setState({ search: undefined });
+        }}
         {...props}
       >
+        {this.optionsIds &&
+          currentItem &&
+          currentItem.id &&
+          this.optionsIds.indexOf(currentItem.id.toString()) === -1 &&
+          currentItem.data && (
+            <Select.Option key={currentItem.id} value={currentItem.id}>
+              {this.getValueForKey(currentItem.data, labelKey)}
+            </Select.Option>
+          )}
         {options}
       </Select>
     );
