@@ -30,8 +30,6 @@ export class ResourceSelect extends React.Component<
   private optionsCache?: JSX.Element[] = undefined;
   private optionsIds?: string[] = undefined;
 
-  // onSearch = (value: string) => this.setState({ value });
-
   getValueForKey = (item: any, key: ResourceSelectKey): string | null => {
     if (typeof key === 'string') {
       return item[key];
@@ -63,8 +61,6 @@ export class ResourceSelect extends React.Component<
   render() {
     const { labelKey, valueKey, resourceCollection, ...props } = this.props;
     const { currentItem } = this.state;
-
-    let showCurrentItem = true;
 
     if (this.latestResourceData !== resourceCollection.data) {
       this.optionsCache = undefined;
