@@ -39,8 +39,12 @@ export class FormComponent extends React.Component<
     let _values: { [key: string]: any } = {};
     for (let key of Object.keys(values)) {
       const value = values[key];
-      if (value && value.toISOString) {
-        _values[key] = value.toISOString();
+      if (typeof value === 'undefined' || value === null) {
+        _values[key] = null;
+      } else if (value instanceof Date || value instanceof Array) {
+        _values[key] = value;
+      } else if (typeof value === 'object') {
+        _values[key] = this.sanitizeValues(value);
       } else {
         _values[key] = value;
       }
@@ -61,6 +65,8 @@ export class FormComponent extends React.Component<
     };
     return new Promise((resolve, reject) => {
       form.validateFields(async (err, values) => {
+        values = this.sanitizeValues(values);
+
         if (err) {
           if (this.props.onValidationError) {
             this.props.onValidationError(err, formContext);
