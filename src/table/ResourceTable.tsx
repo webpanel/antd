@@ -17,6 +17,10 @@ import {
 
 import '../../styles/Table.css';
 
+export interface ResourceTableColumn extends ColumnProps<any> {
+  filterFormatter?: (values: any[]) => { [key: string]: any };
+}
+
 export interface ResourceTableProps extends ATableProps<any> {
   resourceCollection: ResourceCollection;
   actionButtons?: ResourceTablePropsActionButton[] | null;
@@ -24,21 +28,11 @@ export interface ResourceTableProps extends ATableProps<any> {
   detailButtonText?: React.ReactNode;
   customDetailURL?: ((referenceID: string) => string);
   condensed?: boolean;
-}
-
-interface ResourceTableState {
-  selectedRowKeys: any[];
+  columns?: ResourceTableColumn[];
 }
 
 @observer
-export class ResourceTable extends React.Component<
-  ResourceTableProps,
-  ResourceTableState
-> {
-  state: ResourceTableState = {
-    selectedRowKeys: []
-  };
-
+export class ResourceTable extends React.Component<ResourceTableProps> {
   handleChange = (
     pagination: PaginationConfig,
     filters: Record<any, string[]>,
@@ -65,14 +59,31 @@ export class ResourceTable extends React.Component<
         }
       }
 
-      resource.updateFilters(filters, false);
+      const _filters = {};
+      for (let column of this.props.columns || []) {
+        const columnKey = column.dataIndex || column.key;
+        if (!columnKey) {
+          continue;
+        }
+        const value = filters[columnKey];
+        if (typeof value !== 'undefined') {
+          if (column.filterFormatter) {
+            const formattedValue = column.filterFormatter(value);
+            for (let key of Object.keys(formattedValue)) {
+              _filters[key] = formattedValue[key];
+            }
+          } else if (value.length === 1) {
+            _filters[columnKey] = value[0];
+          } else if (value.length === 2) {
+            _filters[columnKey + '_gte'] = value[0];
+            _filters[columnKey + '_lte'] = value[1];
+          }
+        }
+      }
+
+      resource.updateFilters(_filters, false);
       resource.get();
     }
-  };
-
-  onSelectChange = (selectedRowKeys: any[]) => {
-    // console.log('selectedRowKeys changed: ', selectedRowKeys);
-    this.setState({ selectedRowKeys });
   };
 
   reloadData = () => {

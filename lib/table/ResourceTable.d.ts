@@ -4,6 +4,11 @@ import { PaginationConfig } from 'antd/lib/pagination';
 import { ResourceCollection } from 'webpanel-data';
 import { ResourceTablePropsActionButton } from './ResourceTableActionButtons';
 import '../../styles/Table.css';
+export interface ResourceTableColumn extends ColumnProps<any> {
+    filterFormatter?: (values: any[]) => {
+        [key: string]: any;
+    };
+}
 export interface ResourceTableProps extends ATableProps<any> {
     resourceCollection: ResourceCollection;
     actionButtons?: ResourceTablePropsActionButton[] | null;
@@ -11,17 +16,12 @@ export interface ResourceTableProps extends ATableProps<any> {
     detailButtonText?: React.ReactNode;
     customDetailURL?: ((referenceID: string) => string);
     condensed?: boolean;
+    columns?: ResourceTableColumn[];
 }
-interface ResourceTableState {
-    selectedRowKeys: any[];
-}
-export declare class ResourceTable extends React.Component<ResourceTableProps, ResourceTableState> {
-    state: ResourceTableState;
+export declare class ResourceTable extends React.Component<ResourceTableProps> {
     handleChange: (pagination: PaginationConfig, filters: Record<any, string[]>, sorter: SorterResult<any>) => void;
-    onSelectChange: (selectedRowKeys: any[]) => void;
     reloadData: () => void;
     getRecordKey: (record: any, index: number) => any;
     getColumns: () => ColumnProps<any>[];
     render(): JSX.Element;
 }
-export {};
