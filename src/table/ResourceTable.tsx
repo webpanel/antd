@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Table as AntdTable } from 'antd';
+import { Table as AntdTable, Alert, Button } from 'antd';
 import {
   TableProps as ATableProps,
   ColumnProps,
@@ -155,6 +155,23 @@ export class ResourceTable extends React.Component<ResourceTableProps> {
     });
   };
 
+  errorReportContent(error: Error): React.ReactNode {
+    return (
+      <Alert
+        type="error"
+        closable={false}
+        message={
+          <div>
+            Failed to load resource{' '}
+            <Button size="small" onClick={() => this.reloadData()}>
+              retry
+            </Button>
+          </div>
+        }
+      />
+    );
+  }
+
   render() {
     const {
       rowKey,
@@ -173,7 +190,9 @@ export class ResourceTable extends React.Component<ResourceTableProps> {
       data = resourceCollection.data || undefined;
     }
 
-    return (
+    return resourceCollection.error ? (
+      this.errorReportContent(resourceCollection.error)
+    ) : (
       <AntdTable
         rowKey={rowKey || 'id'}
         rowSelection={rowSelection}

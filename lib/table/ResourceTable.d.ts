@@ -23,5 +23,6 @@ export declare class ResourceTable extends React.Component<ResourceTableProps> {
     reloadData: () => void;
     getRecordKey: (record: any, index: number) => any;
     getColumns: () => ColumnProps<any>[];
-    render(): JSX.Element;
+    errorReportContent(error: Error): React.ReactNode;
+    render(): {} | null | undefined;
 }
