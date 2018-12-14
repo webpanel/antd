@@ -189,6 +189,12 @@
   dependencies:
     csstype "^2.2.0"
 
+"@types/uuid@^3.4.4":
+  version "3.4.4"
+  resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-3.4.4.tgz#7af69360fa65ef0decb41fd150bf4ca5c0cefdf5"
+  dependencies:
+    "@types/node" "*"
+
 abab@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/abab/-/abab-1.0.4.tgz#5faad9c2c07f60dd76770f71cf025b62a63cfd4e"
@@ -312,7 +318,7 @@ ansi-styles@^3.2.0, ansi-styles@^3.2.1:
   dependencies:
     color-convert "^1.9.0"
 
-ant-design-pro@^2.1.0:
+ant-design-pro@2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/ant-design-pro/-/ant-design-pro-2.1.0.tgz#a5f8851cd5ec793c1dd6ab4679ff16035b3c195f"
   dependencies:
@@ -8361,7 +8367,7 @@ uuid@^2.0.2:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-2.0.3.tgz#67e2e863797215530dff318e5bf9dcebfd47b21a"
 
-uuid@^3.1.0:
+uuid@^3.1.0, uuid@^3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.3.2.tgz#1b4af4955eb3077c501c23872fc6513811587131"
 
@@ -8544,9 +8550,9 @@ webpack@3.8.1:
     webpack-sources "^1.0.1"
     yargs "^8.0.2"
 
-"webpanel-data@https://github.com/webpanel/data.git#develop":
-  version "0.0.20"
-  resolved "https://github.com/webpanel/data.git#6c6eb801f278a060c123e18cde0da2a56c3130f9"
+webpanel-data@^0.0.29:
+  version "0.0.29"
+  resolved "https://registry.yarnpkg.com/webpanel-data/-/webpanel-data-0.0.29.tgz#9a91ffc1103d3cf48736f04024866e09bbdae92e"
   dependencies:
     "@types/inflection" "^1.5.28"
     "@types/lodash" "^4.14.110"

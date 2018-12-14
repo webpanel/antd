@@ -3,6 +3,7 @@ import { Select } from 'antd';
 import { SelectProps } from 'antd/lib/select';
 import { observer } from 'mobx-react';
 import { ResourceCollection, Resource } from 'webpanel-data';
+import * as uuid from 'uuid';
 // import { FormElementBase } from '../form/form/FormElementBase';
 
 type ResourceSelectKey = string | ((value: any) => string);
@@ -109,8 +110,7 @@ export class ResourceSelect extends React.Component<
       this.latestResourceData = resourceCollection.data;
     }
 
-    const { name } = resourceCollection;
-    const className = `resource-select__${name.toLowerCase()}`;
+    const className = `resource-select__${uuid.v4()}`;
 
     const options = this.optionsCache || [];
     return (
