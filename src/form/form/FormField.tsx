@@ -39,9 +39,9 @@ export class FormField extends React.Component<FormFieldProps> {
 
     let children = this.props.children;
     if (Array.isArray(children)) {
-      return children.map(elm =>
-        form.getFieldDecorator(this.props.name, props)(elm)
-      );
+      return children
+        .filter(x => x)
+        .map(elm => form.getFieldDecorator(this.props.name, props)(elm));
     }
     return form.getFieldDecorator(this.props.name, props)(children);
   };
