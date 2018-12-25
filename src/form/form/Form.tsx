@@ -39,7 +39,7 @@ export class FormComponent extends React.Component<
     let _values: { [key: string]: any } = {};
     for (let key of Object.keys(values)) {
       const value = values[key];
-      if (typeof value === 'undefined' || value === null) {
+      if (value === null) {
         _values[key] = null;
       } else if (value instanceof Date || value instanceof Array) {
         _values[key] = value;
