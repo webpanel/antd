@@ -60,7 +60,7 @@ export class ResourceTable extends React.Component<
         );
       } else {
         resource.updateSorting([], false);
-        global.console.log('updated sorting', resource);
+        global.console.log('updated sorting', resource.sorting);
       }
 
       if (pagination.pageSize) {
