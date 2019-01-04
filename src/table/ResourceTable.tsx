@@ -209,6 +209,7 @@ export class ResourceTable extends React.Component<
       data = resourceCollection.data || undefined;
     }
 
+    global.console.log(restProps, '??');
     return resourceCollection.error ? (
       this.errorReportContent(resourceCollection.error)
     ) : (
