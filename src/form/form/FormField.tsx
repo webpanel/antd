@@ -6,6 +6,7 @@ import { FormContext } from './Form';
 import { GetFieldDecoratorOptions } from 'antd/lib/form/Form';
 import FormItem from 'antd/lib/form/FormItem';
 import { ColProps } from 'antd/lib/col';
+import { ResourceSelect } from '../../resource-select/ResourceSelect';
 
 export interface FormFieldProps extends GetFieldDecoratorOptions {
   className?: string;
@@ -43,13 +44,27 @@ export class FormField extends React.Component<FormFieldProps> {
       return value;
     };
 
-    let children = this.props.children;
-    if (Array.isArray(children)) {
-      return children
-        .filter(x => x)
-        .map(elm => form.getFieldDecorator(this.props.name, props)(elm));
-    }
-    return form.getFieldDecorator(this.props.name, props)(children);
+    let children = Array.isArray(this.props.children)
+      ? this.props.children
+      : [this.props.children];
+
+    return children
+      .filter(x => x)
+      .map(elm => {
+        // nasty hack to handle crashes when select mode is for multiple values
+        // but the form value is undefined (we provide empty array)
+        if (elm) {
+          const element = elm as React.ReactElement<any>;
+          if (
+            element.type === ResourceSelect &&
+            element.props.mode !== 'default'
+          ) {
+            props.initialValue = props.initialValue || [];
+          }
+        }
+
+        return form.getFieldDecorator(this.props.name, props)(elm);
+      });
   };
 
   render() {
