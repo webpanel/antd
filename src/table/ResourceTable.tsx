@@ -162,6 +162,7 @@ export class ResourceTable extends React.Component<
             ? sortedInfo.order
             : undefined;
       }
+      console.log('??????', c);
 
       return c;
     });
@@ -199,24 +200,24 @@ export class ResourceTable extends React.Component<
       pagination,
       ...restProps
     } = this.props;
-    const { selectedRowKeys } = this.state;
-    const rowSelection = {
-      selectedRowKeys,
-      onChange: this.onSelectChange
-    };
+
+    // const { selectedRowKeys } = this.state;
+    // const rowSelection = {
+    //   selectedRowKeys,
+    //   onChange: this.onSelectChange
+    // };
 
     let data = dataSource;
     if (resourceCollection) {
       data = resourceCollection.data || undefined;
     }
 
-    global.console.log(restProps, '??');
     return resourceCollection.error ? (
       this.errorReportContent(resourceCollection.error)
     ) : (
       <AntdTable
         rowKey={rowKey || 'id'}
-        rowSelection={rowSelection}
+        // rowSelection={rowSelection}
         loading={
           this.props.resourceCollection
             ? this.props.resourceCollection.loading
