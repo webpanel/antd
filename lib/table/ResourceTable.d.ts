@@ -18,11 +18,18 @@ export interface ResourceTableProps extends ATableProps<any> {
     condensed?: boolean;
     columns?: ResourceTableColumn[];
 }
-export declare class ResourceTable extends React.Component<ResourceTableProps> {
+export interface ResourceTableState {
+    selectedRowKeys: string[];
+}
+export declare class ResourceTable extends React.Component<ResourceTableProps, ResourceTableState> {
+    state: {
+        selectedRowKeys: never[];
+    };
     handleChange: (pagination: PaginationConfig, filters: Record<any, string[]>, sorter: SorterResult<any>) => void;
     reloadData: () => void;
     getRecordKey: (record: any, index: number) => any;
     getColumns: () => ColumnProps<any>[];
     errorReportContent(error: Error): React.ReactNode;
+    onSelectChange: (selectedRowKeys: string[]) => void;
     render(): {} | null | undefined;
 }

@@ -31,8 +31,19 @@ export interface ResourceTableProps extends ATableProps<any> {
   columns?: ResourceTableColumn[];
 }
 
+export interface ResourceTableState {
+  selectedRowKeys: string[];
+}
+
 @observer
-export class ResourceTable extends React.Component<ResourceTableProps> {
+export class ResourceTable extends React.Component<
+  ResourceTableProps,
+  ResourceTableState
+> {
+  state = {
+    selectedRowKeys: []
+  };
+
   handleChange = (
     pagination: PaginationConfig,
     filters: Record<any, string[]>,
@@ -172,6 +183,10 @@ export class ResourceTable extends React.Component<ResourceTableProps> {
     );
   }
 
+  onSelectChange = (selectedRowKeys: string[]) => {
+    this.setState({ selectedRowKeys });
+  };
+
   render() {
     const {
       rowKey,
@@ -183,7 +198,11 @@ export class ResourceTable extends React.Component<ResourceTableProps> {
       pagination,
       ...restProps
     } = this.props;
-    const rowSelection = undefined;
+    const { selectedRowKeys } = this.state;
+    const rowSelection = {
+      selectedRowKeys,
+      onChange: this.onSelectChange
+    };
 
     let data = dataSource;
     if (resourceCollection) {
