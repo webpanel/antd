@@ -149,6 +149,8 @@ export class ResourceTable extends React.Component<ResourceTableProps> {
           sortedInfo && c.key === sortedInfo.columnKey
             ? sortedInfo.order
             : undefined;
+      } else {
+        c.sortOrder = undefined;
       }
 
       return c;
