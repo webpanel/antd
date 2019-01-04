@@ -59,6 +59,7 @@ export class ResourceTable extends React.Component<
         );
       } else {
         resource.updateSorting([], false);
+        global.console.log('updated sorting', resource);
       }
 
       if (pagination.pageSize) {
@@ -162,7 +163,6 @@ export class ResourceTable extends React.Component<
             ? sortedInfo.order
             : undefined;
       }
-      console.log('??????', c);
 
       return c;
     });
