@@ -166,7 +166,7 @@ export class ResourceTable extends React.Component<
       } else {
         c.sortOrder = undefined;
       }
-
+      global.console.log('???', c);
       return c;
     });
   };
