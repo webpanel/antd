@@ -50,8 +50,8 @@ export class ResourceTable extends React.Component<
     sorter: SorterResult<any>
   ) => {
     const resource = this.props.resourceCollection;
+    global.console.log('?!!!', sorter);
     if (resource) {
-      global.console.log('?!!!', sorter);
       if (sorter.columnKey) {
         resource.updateSorting(
           [{ columnKey: sorter.columnKey, order: SortInfoOrder[sorter.order] }],
