@@ -93,6 +93,7 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
             <Header
               onMenuSelect={param => this.handleMenuClick(param)}
               username={this.props.userName}
+              {...this.props.header}
             />
             {structures}
             <Footer style={{ textAlign: 'center' }}>

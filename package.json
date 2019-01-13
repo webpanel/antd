@@ -31,7 +31,7 @@
     "uuid": "^3.3.2"
   },
   "peerDependencies": {
-    "ant-design-pro": "1.4.4",
+    "ant-design-pro": "2.1.0",
     "antd": "3.8.1",
     "mobx": "*",
     "mobx-react": "*"

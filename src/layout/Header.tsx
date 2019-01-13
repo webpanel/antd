@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { Layout as AntdLayout, Menu, Icon } from 'antd';
-const { SubMenu } = Menu;
+import { Layout as AntdLayout, Menu, Icon, Dropdown } from 'antd';
 import { ClickParam } from 'antd/lib/menu';
 // import { AuthSession } from '../../../../webana';
 // import { Subscriber } from 'react-broadcast';
@@ -11,54 +10,35 @@ export interface HeaderProps {
 
 export interface HeaderConfig {
   username?: string;
+  items?: React.ReactNode;
 }
 
 export class Header extends React.Component<HeaderProps & HeaderConfig> {
-  // tokenPayload: any = null;
-
-  handleMenuClick(param: ClickParam) {
+  handleMenuClick = (param: ClickParam) => {
     this.props.onMenuSelect(param);
-  }
-
-  // componentWillMount() {
-  //   this.tokenPayload = AuthSession.current().getTokenPayload();
-  // }
+  };
 
   render() {
+    const menu = (
+      <Menu onClick={this.handleMenuClick}>
+        {/* <Menu.Divider /> */}
+        <Menu.Item key="logout">
+          <Icon type="logout" />
+          Logout
+        </Menu.Item>
+      </Menu>
+    );
+
     return (
-      <AntdLayout.Header style={{ background: '#fff' }}>
+      <AntdLayout.Header>
         <div className="antd-header-content">
-          <Menu
-            theme="light"
-            mode="horizontal"
-            defaultSelectedKeys={[]}
-            style={{ lineHeight: '64px' }}
-            onSelect={param => {
-              this.handleMenuClick(param);
-            }}
-          >
-            {/* <Menu.Item key="1">nav 1</Menu.Item>
-      <Menu.Item key="2">nav 2</Menu.Item> */}
-            <SubMenu
-              title={
-                <span>
-                  <Icon type="user" />
-                  {this.props.username || 'Me'}
-                </span>
-              }
-              style={{ float: 'right' }}
-            >
-              <Menu.Item key="logout">
-                <Icon type="logout" />
-                Logout
-              </Menu.Item>
-            </SubMenu>
-          </Menu>
-          {/* <Icon
-      className="trigger"
-      type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
-      onClick={this.toggle}
-    /> */}
+          {this.props.items}
+          <Dropdown overlay={menu}>
+            <span className="antd-header-content-item">
+              <Icon type="user" style={{ padding: '0 8px 0 0' }} />
+              {this.props.username || 'Me'}
+            </span>
+          </Dropdown>
         </div>
       </AntdLayout.Header>
     );

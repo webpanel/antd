@@ -5,8 +5,9 @@ export interface HeaderProps {
 }
 export interface HeaderConfig {
     username?: string;
+    items?: React.ReactNode;
 }
 export declare class Header extends React.Component<HeaderProps & HeaderConfig> {
-    handleMenuClick(param: ClickParam): void;
+    handleMenuClick: (param: ClickParam) => void;
     render(): JSX.Element;
 }
