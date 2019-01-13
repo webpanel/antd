@@ -8063,6 +8063,10 @@ ts-loader@^2.3.7:
     loader-utils "^1.0.2"
     semver "^5.0.1"
 
+ts-thunk@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/ts-thunk/-/ts-thunk-0.0.6.tgz#47898955e530c6b7229a8b314e79f2e1dc1b2a4f"
+
 tsconfig-paths-webpack-plugin@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/tsconfig-paths-webpack-plugin/-/tsconfig-paths-webpack-plugin-2.0.0.tgz#7652dc684bb3206c8e7e446831ca01cbf4d11772"

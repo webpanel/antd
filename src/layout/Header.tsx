@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Layout as AntdLayout, Menu, Icon, Dropdown } from 'antd';
 import { ClickParam } from 'antd/lib/menu';
+import { Thunk, resolveOptionalThunk } from 'ts-thunk';
 // import { AuthSession } from '../../../../webana';
 // import { Subscriber } from 'react-broadcast';
 
@@ -10,7 +11,7 @@ export interface HeaderProps {
 
 export interface HeaderConfig {
   username?: string;
-  items?: React.ReactNode;
+  items?: Thunk<React.ReactNode>;
 }
 
 export class Header extends React.Component<HeaderProps & HeaderConfig> {
@@ -32,7 +33,7 @@ export class Header extends React.Component<HeaderProps & HeaderConfig> {
     return (
       <AntdLayout.Header>
         <div className="antd-header-content">
-          {this.props.items}
+          {resolveOptionalThunk(this.props.items)}
           <Dropdown overlay={menu}>
             <span className="antd-header-content-item">
               <Icon type="user" style={{ padding: '0 8px 0 0' }} />
