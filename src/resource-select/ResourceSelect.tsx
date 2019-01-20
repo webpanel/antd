@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Select } from 'antd';
+import { Select, Spin } from 'antd';
 import { SelectProps } from 'antd/lib/select';
 import { observer } from 'mobx-react';
 import { ResourceCollection, Resource } from 'webpanel-data';
@@ -83,7 +83,7 @@ export class ResourceSelect extends React.Component<
           const id = this.getValueForKey(item, valueKey || 'id') || index;
           optionsIds.push(id.toString());
           groups[label].push(
-            <Select.Option key={id} value={id}>
+            <Select.Option key={id.toString()} value={id}>
               {this.getValueForKey(item, labelKey)}
             </Select.Option>
           );
@@ -100,7 +100,7 @@ export class ResourceSelect extends React.Component<
             const id = this.getValueForKey(item, valueKey || 'id') || index;
             optionsIds.push(id.toString());
             return (
-              <Select.Option key={id} value={id}>
+              <Select.Option key={id.toString()} value={id}>
                 {this.getValueForKey(item, labelKey)}
               </Select.Option>
             );
@@ -117,6 +117,8 @@ export class ResourceSelect extends React.Component<
       <Select
         // onSearch={this.onSearch}
         className={className}
+        loading={resourceCollection.loading}
+        notFoundContent={resourceCollection.loading ? <Spin size="small" /> : null}
         showSearch={true}
         allowClear={true}
         optionFilterProp="children"
@@ -140,7 +142,7 @@ export class ResourceSelect extends React.Component<
           currentItem.id &&
           this.optionsIds.indexOf(currentItem.id.toString()) === -1 &&
           currentItem.data && (
-            <Select.Option key={currentItem.id} value={currentItem.id}>
+            <Select.Option key={currentItem.id.toString()} value={currentItem.id}>
               {this.getValueForKey(currentItem.data, labelKey)}
             </Select.Option>
           )}

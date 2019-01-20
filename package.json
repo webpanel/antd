@@ -33,13 +33,13 @@
   },
   "peerDependencies": {
     "ant-design-pro": "2.1.0",
-    "antd": "3.8.1",
+    "antd": "3.11.2",
     "mobx": "*",
     "mobx-react": "*"
   },
   "devDependencies": {
     "ant-design-pro": "2.1.0",
-    "antd": "^3.6.1",
+    "antd": "3.11.2",
     "mobx": "^5.0.3",
     "mobx-react": "^5.2.0",
     "react-scripts-ts": "^2.16.0",
