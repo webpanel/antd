@@ -3,6 +3,7 @@ import { Link, Route, match as Match } from 'react-router-dom';
 import { Menu as AntdMenu, Icon } from 'antd';
 
 import { searchChildrenWithType, appendStringPath } from '../utils';
+import { MenuTheme } from 'antd/lib/menu';
 
 export interface MenuItemProps extends React.Props<any> {
   icon?: string;
@@ -15,6 +16,7 @@ interface MenuItemComponentProps extends MenuItemProps {
 
 export interface MenuProps {
   items?: React.ReactElement<MenuItemProps>[];
+  theme?: MenuTheme;
 }
 
 export class MenuItem extends React.Component<MenuItemProps> {}
@@ -120,7 +122,7 @@ export class Menu extends React.Component<MenuProps> {
         children={({ match }) => {
           return (
             <AntdMenu
-              theme="dark"
+              theme={this.props.theme}
               mode="inline"
               selectedKeys={this.defaultSelectedKeys(match)}
               defaultOpenKeys={this.defaultOpenKeys(match)}

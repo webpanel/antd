@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { match as Match } from 'react-router-dom';
+import { MenuTheme } from 'antd/lib/menu';
 export interface MenuItemProps extends React.Props<any> {
     icon?: string;
     title: string;
@@ -10,6 +11,7 @@ interface MenuItemComponentProps extends MenuItemProps {
 }
 export interface MenuProps {
     items?: React.ReactElement<MenuItemProps>[];
+    theme?: MenuTheme;
 }
 export declare class MenuItem extends React.Component<MenuItemProps> {
 }
