@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as moment from 'moment';
 import { Form as AForm /*, message, Button, Spin, Popconfirm*/ } from 'antd';
 import {
   FormComponentProps,
@@ -41,7 +42,17 @@ export class FormComponent extends React.Component<
       const value = values[key];
       if (value === null) {
         _values[key] = null;
-      } else if (value instanceof Date || value instanceof Array) {
+      } else if (
+        value instanceof Date ||
+        (typeof value === 'string' && moment(value).isValid())
+      ) {
+        // we need to remove milliseconds as it's not possible to store them in some database engines (MySQL)
+        // we are also checking by moment because form return dates as strings
+        _values[key] =
+          moment(value)
+            .toISOString()
+            .split('.')[0] + '.000Z';
+      } else if (value instanceof Array) {
         _values[key] = value;
       } else if (typeof value === 'object') {
         _values[key] = this.sanitizeValues(value);
