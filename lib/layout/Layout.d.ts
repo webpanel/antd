@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { ClickParam } from 'antd/lib/menu';
 import '../../styles/Layout.css';
-import { Menu, MenuItemProps } from './Menu';
+import { Menu } from './Menu';
 import { HeaderConfig } from './Header';
-import { StructureItemProps, StructureItem, Structure } from './Structure';
+import { StructureItem, Structure } from './Structure';
 import { MenuItem } from './Menu';
 export interface FooterConfig {
     title: string | React.ReactNode;
@@ -11,8 +11,6 @@ export interface FooterConfig {
 export interface LayoutProps {
     footer?: FooterConfig;
     header?: HeaderConfig;
-    menu?: React.ReactElement<MenuItemProps>[];
-    structure?: React.ReactElement<StructureItemProps>[];
     logout: () => void;
     userName?: string;
     logoURL?: string;

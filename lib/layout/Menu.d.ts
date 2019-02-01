@@ -9,9 +9,10 @@ export interface MenuItemProps extends React.Props<any> {
 interface MenuItemComponentProps extends MenuItemProps {
     path: string;
 }
-export interface MenuProps {
-    items?: React.ReactElement<MenuItemProps>[];
+export interface MenuConfig {
     theme?: MenuTheme;
+}
+export interface MenuProps extends MenuConfig {
 }
 export declare class MenuItem extends React.Component<MenuItemProps> {
 }

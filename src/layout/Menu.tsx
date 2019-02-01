@@ -14,9 +14,11 @@ interface MenuItemComponentProps extends MenuItemProps {
   path: string;
 }
 
-export interface MenuProps {
-  items?: React.ReactElement<MenuItemProps>[];
+export interface MenuConfig {
   theme?: MenuTheme;
+}
+export interface MenuProps extends MenuConfig {
+  // items?: React.ReactElement<MenuItemProps>[];
 }
 
 export class MenuItem extends React.Component<MenuItemProps> {}
@@ -122,10 +124,10 @@ export class Menu extends React.Component<MenuProps> {
         children={({ match }) => {
           return (
             <AntdMenu
-              theme={this.props.theme}
               mode="inline"
               selectedKeys={this.defaultSelectedKeys(match)}
               defaultOpenKeys={this.defaultOpenKeys(match)}
+              {...this.props}
             >
               {this.renderItems(items, '/')}
             </AntdMenu>
