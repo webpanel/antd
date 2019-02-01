@@ -124,6 +124,7 @@ export class Menu extends React.Component<MenuProps> {
         children={({ match }) => {
           return (
             <AntdMenu
+              theme="dark"
               mode="inline"
               selectedKeys={this.defaultSelectedKeys(match)}
               defaultOpenKeys={this.defaultOpenKeys(match)}

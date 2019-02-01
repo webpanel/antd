@@ -67,6 +67,7 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
       <BrowserRouter>
         <LayoutComponent className="full-height">
           <Sider
+            theme="dark"
             collapsible={true}
             collapsed={this.state.collapsed}
             onCollapse={collapsed => {
