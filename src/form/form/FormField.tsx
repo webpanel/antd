@@ -37,8 +37,8 @@ export class FormField extends React.Component<FormFieldProps> {
     let props = Object.assign({}, { ...this.props });
 
     props.initialValue = props.initialValue || get(initialValues, namePath);
-    props.normalize = (value: any): any => {
-      if (typeof value === 'undefined') {
+    props.normalize = (value: any, prevValue: any): any => {
+      if (typeof value === 'undefined' && typeof prevValue !== 'undefined') {
         return null;
       }
       return value;
