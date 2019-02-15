@@ -45,7 +45,7 @@ export class FormComponent extends React.Component<
       } else if (
         value instanceof Date ||
         (typeof value === 'string' &&
-          moment(value, 'YYYY-MM-DDTHH:mm:ss.ZZZZ', true).isValid())
+          moment(value, 'YYYY-MM-DDTHH:mm:ss.SSS[Z]', true).isValid())
       ) {
         // we need to remove milliseconds as it's not possible to store them in some database engines (MySQL)
         // we are also checking by moment because form return dates as strings
