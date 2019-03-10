@@ -1,9 +1,9 @@
+import '../../styles/Table.css';
 import * as React from 'react';
 import { TableProps as ATableProps, ColumnProps, SorterResult } from 'antd/lib/table';
-import { PaginationConfig } from 'antd/lib/pagination';
 import { ResourceCollection } from 'webpanel-data';
 import { ResourceTablePropsActionButton } from './ResourceTableActionButtons';
-import '../../styles/Table.css';
+import { PaginationConfig } from 'antd/lib/pagination';
 export interface ResourceTableColumn extends ColumnProps<any> {
     filterFormatter?: (values: any[]) => {
         [key: string]: any;

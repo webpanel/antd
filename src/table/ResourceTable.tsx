@@ -1,21 +1,21 @@
+import '../../styles/Table.css';
+
 import * as React from 'react';
-import { Table as AntdTable, Alert, Button } from 'antd';
+
 import {
   TableProps as ATableProps,
   ColumnProps,
   SorterResult
 } from 'antd/lib/table';
-import { PaginationConfig } from 'antd/lib/pagination';
-import { observer } from 'mobx-react';
-
+import { Alert, Table as AntdTable, Button } from 'antd';
 import { ResourceCollection, SortInfoOrder } from 'webpanel-data';
-
 import {
   ResourceTableActionButtons,
   ResourceTablePropsActionButton
 } from './ResourceTableActionButtons';
 
-import '../../styles/Table.css';
+import { PaginationConfig } from 'antd/lib/pagination';
+import { observer } from 'mobx-react';
 
 export interface ResourceTableColumn extends ColumnProps<any> {
   filterFormatter?: (values: any[]) => { [key: string]: any };
@@ -81,7 +81,7 @@ export class ResourceTable extends React.Component<ResourceTableProps> {
         }
       }
 
-      resource.updateFilters(_filters, false);
+      resource.updateNamedFilters('table', _filters, false);
       resource.get();
     }
   };
