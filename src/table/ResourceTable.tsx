@@ -25,6 +25,7 @@ export interface ResourceTableProps extends ATableProps<any> {
   resourceCollection: ResourceCollection;
   actionButtons?: ResourceTablePropsActionButton[] | null;
   actionButtonsTitle?: React.ReactNode;
+  actionButtonsFixed?: boolean;
   detailButtonText?: React.ReactNode;
   customDetailURL?: ((referenceID: string) => string);
   condensed?: boolean;
@@ -107,6 +108,7 @@ export class ResourceTable extends React.Component<ResourceTableProps> {
       columns,
       actionButtons,
       actionButtonsTitle,
+      actionButtonsFixed,
       detailButtonText,
       customDetailURL
     } = this.props;
@@ -122,7 +124,7 @@ export class ResourceTable extends React.Component<ResourceTableProps> {
       const actionsColumn: ColumnProps<any> = {
         className: 'schrink',
         title: actionButtonsTitle || null,
-        // fixed: 'right',
+        fixed: actionButtonsFixed ? 'right' : undefined,
         render: (value: any, record: any, index: number) => {
           return (
             <ResourceTableActionButtons
