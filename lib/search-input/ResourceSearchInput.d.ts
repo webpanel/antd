@@ -1,10 +1,18 @@
 import * as React from 'react';
-import { SearchProps } from 'antd/lib/input/Search';
 import { ResourceCollection } from 'webpanel-data';
+import { SearchProps } from 'antd/lib/input/Search';
 export interface ResourceSearchInputProps extends SearchProps {
     resourceCollection: ResourceCollection;
 }
-export declare class ResourceSearchInput extends React.Component<ResourceSearchInputProps> {
-    handleSearch: (value: string) => void;
+export interface ResourceSearchInputState extends SearchProps {
+    value?: string;
+}
+export declare class ResourceSearchInput extends React.Component<ResourceSearchInputProps, ResourceSearchInputState> {
+    private cancelHandler;
+    static getDerivedStateFromProps(nextProps: ResourceSearchInputProps, prevState: ResourceSearchInputState): {
+        value: string | undefined;
+    };
+    updateSearch: () => void;
+    handleChange: (value: string) => void;
     render(): JSX.Element;
 }
