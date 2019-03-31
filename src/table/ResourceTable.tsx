@@ -18,7 +18,8 @@ import { PaginationConfig } from 'antd/lib/pagination';
 import { observer } from 'mobx-react';
 
 export interface ResourceTableColumn extends ColumnProps<any> {
-  filterFormatter?: (values: any[]) => { [key: string]: any };
+  filterNormalize?: (values: any[]) => { [key: string]: any };
+  filterDenormalize?: (values: { [key: string]: any }) => any[];
 }
 
 export interface ResourceTableProps extends ATableProps<any> {
@@ -68,10 +69,10 @@ export class ResourceTable extends React.Component<ResourceTableProps> {
         }
         const value = filters[columnKey];
         if (typeof value !== 'undefined') {
-          if (column.filterFormatter) {
-            const formattedValue = column.filterFormatter(value);
-            for (let key of Object.keys(formattedValue)) {
-              _filters[key] = formattedValue[key];
+          if (column.filterNormalize) {
+            const normalizedValue = column.filterNormalize(value);
+            for (let key of Object.keys(normalizedValue)) {
+              _filters[key] = normalizedValue[key];
             }
           } else if (value.length === 1) {
             _filters[columnKey] = value[0];
@@ -117,11 +118,12 @@ export class ResourceTable extends React.Component<ResourceTableProps> {
       resourceCollection.sorting &&
       resourceCollection.sorting.length > 0 &&
       resourceCollection.sorting[0];
+    const filters = resourceCollection.namedFilter('table');
 
-    let _columns: ColumnProps<any>[] = [...(columns || [])];
+    let _columns: ResourceTableColumn[] = [...(columns || [])];
 
     if (actionButtons !== null) {
-      const actionsColumn: ColumnProps<any> = {
+      const actionsColumn: ResourceTableColumn = {
         className: 'schrink',
         title: actionButtonsTitle || null,
         fixed: actionButtonsFixed ? 'right' : undefined,
@@ -143,8 +145,29 @@ export class ResourceTable extends React.Component<ResourceTableProps> {
       _columns.push(actionsColumn);
     }
 
-    return _columns.map((c: ColumnProps<any>) => {
+    return _columns.map((c: ResourceTableColumn) => {
       c.dataIndex = (c.dataIndex || c.key || '').toString();
+
+      if (filters) {
+        if (c.filterDenormalize) {
+          c.filteredValue = c.filterDenormalize(filters);
+        } else if (
+          filters[c.dataIndex + '_gte'] &&
+          filters[c.dataIndex + '_lte']
+        ) {
+          c.filteredValue = [
+            filters[c.dataIndex + '_gte'],
+            filters[c.dataIndex + '_lte']
+          ];
+        } else if (filters[c.dataIndex]) {
+          c.filteredValue = [filters[c.dataIndex]];
+        }
+      }
+      global.console.log('???', c.dataIndex, JSON.stringify(c.filteredValue));
+      // if (filteredValue) {
+      //   c.filteredValue = [filteredValue];
+      // }
+      // c.filtered = true;
 
       if (sortedInfo) {
         c.sortOrder =
