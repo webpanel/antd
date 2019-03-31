@@ -163,11 +163,6 @@ export class ResourceTable extends React.Component<ResourceTableProps> {
           c.filteredValue = [filters[c.dataIndex]];
         }
       }
-      global.console.log('???', c.dataIndex, JSON.stringify(c.filteredValue));
-      // if (filteredValue) {
-      //   c.filteredValue = [filteredValue];
-      // }
-      // c.filtered = true;
 
       if (sortedInfo) {
         c.sortOrder =
@@ -215,6 +210,11 @@ export class ResourceTable extends React.Component<ResourceTableProps> {
     let data = dataSource;
     if (resourceCollection) {
       data = resourceCollection.data || undefined;
+    }
+
+    if (pagination) {
+      pagination.pageSize = resourceCollection.limit || 30;
+      pagination.current = resourceCollection.page + 1;
     }
 
     return resourceCollection.error ? (

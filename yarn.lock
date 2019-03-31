@@ -8706,9 +8706,10 @@ webpack@3.8.1:
     webpack-sources "^1.0.1"
     yargs "^8.0.2"
 
-webpanel-data@^0.0.29:
-  version "0.0.29"
-  resolved "https://registry.yarnpkg.com/webpanel-data/-/webpanel-data-0.0.29.tgz#9a91ffc1103d3cf48736f04024866e09bbdae92e"
+webpanel-data@0.0.30:
+  version "0.0.30"
+  resolved "https://registry.yarnpkg.com/webpanel-data/-/webpanel-data-0.0.30.tgz#dda86b14159c7d74805eba53fffd9eac88e8de22"
+  integrity sha512-jaWEjVkcJ6ZQaddbSUAsmgHvHh0kugldz/ueNygO7EfWO4sp0kVLFn57bNa3hinTx5Ymh9pZDDtPYR3qwqO+4Q==
   dependencies:
     "@types/inflection" "^1.5.28"
     "@types/lodash" "^4.14.110"
