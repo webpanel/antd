@@ -1,0 +1,32 @@
+@media print {
+  .ant-layout-sider,
+  .ant-layout-header,
+  .ant-table .schrink,
+  .ant-card-head-title .ant-btn {
+    display: none;
+  }
+  .ant-table {
+    font-size: 8px;
+  }
+  .full-height,
+  body {
+    height: inherit !important;
+  }
+  .ant-table {
+    font-size: 12px;
+  }
+  .antd-pro-page-header-pageHeader,
+  .ant-btn,
+  .ant-table-column-has-filters .ant-dropdown-trigger,
+  .ant-table-column-sorter {
+    display: none;
+  }
+  .ant-table-thead
+    > tr
+    > th.ant-table-column-has-actions.ant-table-column-has-sorters.ant-table-column-has-filters {
+    padding-right: 8px !important;
+  }
+  @page {
+    margin: 20px;
+  }
+}
