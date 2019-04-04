@@ -84,7 +84,7 @@ export class ResourceTable extends React.Component<ResourceTableProps> {
       }
 
       resource.updateNamedFilters('table', _filters, false);
-      resource.get();
+      resource.reload();
     }
   };
 

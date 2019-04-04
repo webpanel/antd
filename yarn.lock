@@ -8709,10 +8709,10 @@ webpack@3.8.1:
     webpack-sources "^1.0.1"
     yargs "^8.0.2"
 
-webpanel-data@^0.0.34:
-  version "0.0.34"
-  resolved "https://registry.yarnpkg.com/webpanel-data/-/webpanel-data-0.0.34.tgz#01e112c40edf46df16147031aa9d4e8b15e64995"
-  integrity sha512-u1kHwUhiL1usIqihDMbFFNxLwvC/FZtMc3qVhPkqLYDyacfdcY5wfCGFeZTJ/8i6XDFaPaAqQ8SDGKt9QpCYKQ==
+webpanel-data@0.0.35:
+  version "0.0.35"
+  resolved "https://registry.yarnpkg.com/webpanel-data/-/webpanel-data-0.0.35.tgz#a5893c993e25b595b51a3985e6953f841cb28dfb"
+  integrity sha512-tZ8rZIwqhRjW/afw3JmV6n0um0cc/aw+rgbr/L3JD2FOKnickJV8I7MgfPb14lJy2vLdC9qkWDPA5rn4ScbPcw==
   dependencies:
     "@types/inflection" "^1.5.28"
     "@types/lodash" "^4.14.110"

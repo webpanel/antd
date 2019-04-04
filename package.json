@@ -44,7 +44,7 @@
     "mobx-react": "^5.2.0",
     "react-scripts-ts": "^2.16.0",
     "typescript": "^3.0.1",
-    "webpanel-data": "^0.0.34"
+    "webpanel-data": "0.0.35"
   },
   "repository": {
     "type": "git",
