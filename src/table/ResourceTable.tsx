@@ -225,7 +225,7 @@ export class ResourceTable extends React.Component<ResourceTableProps> {
         rowSelection={rowSelection}
         loading={
           this.props.resourceCollection
-            ? this.props.resourceCollection.loading
+            ? (this.props.resourceCollection.loading && !this.props.resourceCollection.polling)
             : false
         }
         columns={this.getColumns()}
