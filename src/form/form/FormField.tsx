@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { get } from 'lodash';
 
-import { FormContext } from './Form';
-
-import { GetFieldDecoratorOptions } from 'antd/lib/form/Form';
-import FormItem from 'antd/lib/form/FormItem';
 import { ColProps } from 'antd/lib/col';
+import { FormContext } from './Form';
+import FormItem from 'antd/lib/form/FormItem';
+import { GetFieldDecoratorOptions } from 'antd/lib/form/Form';
 import { ResourceSelect } from '../../resource-select/ResourceSelect';
+import { get } from 'lodash';
 
 export interface FormFieldProps extends GetFieldDecoratorOptions {
   className?: string;

@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { Link, Route, match as Match } from 'react-router-dom';
-import { Menu as AntdMenu, Icon } from 'antd';
 
-import { searchChildrenWithType, appendStringPath } from '../utils';
+import { Menu as AntdMenu, Icon } from 'antd';
+import { Link, match as Match, Route } from 'react-router-dom';
+import { appendStringPath, searchChildrenWithType } from '../utils';
+
 import { MenuTheme } from 'antd/lib/menu';
 
 export interface MenuItemProps extends React.Props<any> {
@@ -75,7 +76,10 @@ export class Menu extends React.Component<MenuProps> {
     });
   }
 
-  defaultSelectedKeys(match: Match<any>): string[] {
+  defaultSelectedKeys(match: Match<any> | null): string[] {
+    if (match === null) {
+      return [];
+    }
     let res: string[] = [];
     let buff = '/';
 
@@ -94,7 +98,10 @@ export class Menu extends React.Component<MenuProps> {
     return res;
   }
 
-  defaultOpenKeys(match: Match<any>): string[] {
+  defaultOpenKeys(match: Match<any> | null): string[] {
+    if (match === null) {
+      return [];
+    }
     const items = searchChildrenWithType(this.props.children, MenuItem);
 
     for (let item of items) {

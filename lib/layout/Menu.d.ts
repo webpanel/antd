@@ -21,8 +21,8 @@ export declare class MenuItemComponent extends React.Component<MenuItemComponent
 }
 export declare class Menu extends React.Component<MenuProps> {
     renderItems(items: React.ReactElement<MenuItemProps>[], parentPath: string): JSX.Element[];
-    defaultSelectedKeys(match: Match<any>): string[];
-    defaultOpenKeys(match: Match<any>): string[];
+    defaultSelectedKeys(match: Match<any> | null): string[];
+    defaultOpenKeys(match: Match<any> | null): string[];
     render(): JSX.Element;
 }
 export {};

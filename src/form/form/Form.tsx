@@ -1,12 +1,13 @@
 import * as React from 'react';
 import * as moment from 'moment';
-import { Form as AForm /*, message, Button, Spin, Popconfirm*/ } from 'antd';
+
 import {
+  FormProps as AFormProps,
   FormComponentProps,
-  WrappedFormUtils,
-  FormProps as AFormProps
+  WrappedFormUtils
 } from 'antd/lib/form/Form';
 
+import { Form as AForm } from 'antd';
 import { observer } from 'mobx-react';
 
 interface FormProps extends AFormProps {
@@ -33,7 +34,9 @@ export class FormComponent extends React.Component<
 
   resetFields = () => {
     const { form } = this.props;
-    form.resetFields();
+    if (form) {
+      form.resetFields();
+    }
   };
 
   sanitizeValues(values: { [key: string]: any }): { [key: string]: any } {
@@ -76,6 +79,9 @@ export class FormComponent extends React.Component<
       initialValues: initialValues || {}
     };
     return new Promise((resolve, reject) => {
+      if (typeof form === 'undefined') {
+        return resolve();
+      }
       form.validateFields(async (err, values) => {
         values = this.sanitizeValues(values);
 
@@ -97,6 +103,9 @@ export class FormComponent extends React.Component<
 
   updateFieldValues(values: any) {
     const { form } = this.props;
+    if (typeof form === 'undefined') {
+      return;
+    }
     const keys = Object.keys(form.getFieldsValue());
 
     let newValues: { [key: string]: any } = {};
@@ -141,6 +150,6 @@ export class FormComponent extends React.Component<
   }
 }
 
-export const Form: React.ComponentClass<FormProps> = AForm.create()(
+export const Form = AForm.create<FormProps & FormComponentProps>()(
   FormComponent
 );
