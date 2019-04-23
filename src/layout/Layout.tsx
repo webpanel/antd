@@ -1,18 +1,21 @@
-import * as React from 'react';
-import { Layout as LayoutComponent } from 'antd';
-const { Footer, Sider } = LayoutComponent;
-import { ClickParam } from 'antd/lib/menu';
-import { BrowserRouter } from 'react-router-dom';
-import { observer } from 'mobx-react';
-
 import '../../styles/Layout.css';
 
-import { Menu } from './Menu';
+import * as React from 'react';
+
+import { Structure, StructureItem } from './Structure';
+
+import { BrowserRouter } from 'react-router-dom';
+import { ClickParam } from 'antd/lib/menu';
+import { CollapseType } from 'antd/lib/layout/Sider';
 import { Header } from './Header';
 import { HeaderConfig } from './Header';
-import { StructureItem, Structure } from './Structure';
+import { Layout as LayoutComponent } from 'antd';
+import { Menu } from './Menu';
 import { MenuItem } from './Menu';
+import { observer } from 'mobx-react';
 import { searchChildrenWithType } from '../utils';
+
+const { Footer, Sider } = LayoutComponent;
 
 export interface FooterConfig {
   title: string | React.ReactNode;
@@ -41,7 +44,8 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
     collapsed: false
   };
 
-  onCollapse(collapsed: boolean) {
+  onCollapse(collapsed: boolean, type: CollapseType) {
+    global.console.log('???', type);
     this.setState({ collapsed });
   }
 
@@ -68,11 +72,13 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
         <LayoutComponent className="full-height">
           <Sider
             theme="dark"
-            collapsible={true}
-            collapsed={this.state.collapsed}
-            onCollapse={collapsed => {
-              this.onCollapse(collapsed);
-            }}
+            // collapsible={true}
+            // collapsed={this.state.collapsed}
+            breakpoint="md"
+            collapsedWidth="0"
+            // onCollapse={(collapsed, type) => {
+            //   this.onCollapse(collapsed, type);
+            // }}
           >
             <div
               className="logo"

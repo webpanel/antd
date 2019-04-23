@@ -35,3 +35,8 @@ body {
   cursor: pointer;
   display: inline-block;
 }
+
+.ant-layout-sider-zero-width-trigger {
+  top: 12px;
+  z-index: 1;
+}

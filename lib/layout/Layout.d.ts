@@ -1,9 +1,10 @@
-import * as React from 'react';
-import { ClickParam } from 'antd/lib/menu';
 import '../../styles/Layout.css';
-import { Menu } from './Menu';
+import * as React from 'react';
+import { Structure, StructureItem } from './Structure';
+import { ClickParam } from 'antd/lib/menu';
+import { CollapseType } from 'antd/lib/layout/Sider';
 import { HeaderConfig } from './Header';
-import { StructureItem, Structure } from './Structure';
+import { Menu } from './Menu';
 import { MenuItem } from './Menu';
 export interface FooterConfig {
     title: string | React.ReactNode;
@@ -27,7 +28,7 @@ export declare class Layout extends React.Component<LayoutProps, LayoutState> {
     state: {
         collapsed: boolean;
     };
-    onCollapse(collapsed: boolean): void;
+    onCollapse(collapsed: boolean, type: CollapseType): void;
     handleMenuClick(param: ClickParam): void;
     render(): JSX.Element;
 }
