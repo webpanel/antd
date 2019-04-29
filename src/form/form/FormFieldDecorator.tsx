@@ -2,47 +2,15 @@ import * as React from 'react';
 
 import { FormContext } from './Form';
 import { GetFieldDecoratorOptions } from 'antd/lib/form/Form';
-import { Observer } from 'mobx-react';
-import { Subscriber } from 'react-broadcast';
 import { get } from 'lodash';
 
 export interface FormFieldDecoratorProps extends GetFieldDecoratorOptions {
+  formContext: FormContext;
   name: string;
 }
 
-export class FormFieldDecorator<P> extends React.Component<
-  P & FormFieldDecoratorProps
-> {
-  render() {
-    return (
-      <Subscriber channel="form-context">
-        {(context: FormContext) => {
-          return (
-            <Observer>
-              {() => (
-                <FormElementComponent
-                  {...this.props}
-                  formContext={context}
-                  renderElement={this.getElement()}
-                />
-              )}
-            </Observer>
-          );
-        }}
-      </Subscriber>
-    );
-  }
-
-  getElement(): React.ReactNode {
-    return this.props.children;
-  }
-}
-
-export class FormElementComponent extends React.Component<
-  FormFieldDecoratorProps & {
-    formContext?: FormContext;
-    renderElement: React.ReactNode;
-  }
+export class FormFieldDecorator extends React.Component<
+  FormFieldDecoratorProps
 > {
   wrapInFieldDecorator = (elm: React.ReactNode): React.ReactNode => {
     if (!this.props.formContext) {
@@ -64,6 +32,6 @@ export class FormElementComponent extends React.Component<
   };
 
   render() {
-    return this.wrapInFieldDecorator(this.props.renderElement);
+    return this.wrapInFieldDecorator(this.props.children);
   }
 }

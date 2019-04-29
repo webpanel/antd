@@ -45,7 +45,6 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
   };
 
   onCollapse(collapsed: boolean, type: CollapseType) {
-    global.console.log('???', type);
     this.setState({ collapsed });
   }
 
