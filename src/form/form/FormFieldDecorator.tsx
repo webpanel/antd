@@ -1,16 +1,18 @@
 import * as React from 'react';
-import { get } from 'lodash';
-import { Subscriber } from 'react-broadcast';
-import { Observer } from 'mobx-react';
-import { GetFieldDecoratorOptions } from 'antd/lib/form/Form';
 
 import { FormContext } from './Form';
+import { GetFieldDecoratorOptions } from 'antd/lib/form/Form';
+import { Observer } from 'mobx-react';
+import { Subscriber } from 'react-broadcast';
+import { get } from 'lodash';
 
-export interface FormElementProps extends GetFieldDecoratorOptions {
+export interface FormFieldDecoratorProps extends GetFieldDecoratorOptions {
   name: string;
 }
 
-export class FormElementBase<P> extends React.Component<P & FormElementProps> {
+export class FormFieldDecorator<P> extends React.Component<
+  P & FormFieldDecoratorProps
+> {
   render() {
     return (
       <Subscriber channel="form-context">
@@ -37,7 +39,7 @@ export class FormElementBase<P> extends React.Component<P & FormElementProps> {
 }
 
 export class FormElementComponent extends React.Component<
-  FormElementProps & {
+  FormFieldDecoratorProps & {
     formContext?: FormContext;
     renderElement: React.ReactNode;
   }

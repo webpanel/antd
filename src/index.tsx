@@ -10,6 +10,7 @@ export {
   ResourceFormButtons,
   Form,
   FormField,
+  FormFieldDecorator,
   Input
 } from './form/form';
 
