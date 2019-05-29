@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { message } from 'antd';
-import { FormProps } from 'antd/lib/form/Form';
 
-import { observer } from 'mobx-react';
-import { Resource } from 'webpanel-data';
-
+import { Alert, message } from 'antd';
 import { Form, FormContext } from './Form';
+
+import { FormProps } from 'antd/lib/form/Form';
+import { Resource } from 'webpanel-data';
+import { observer } from 'mobx-react';
 
 export interface ResourceFormProps extends FormProps {
   formResource: Resource;
@@ -53,6 +53,17 @@ export class ResourceForm extends React.Component<ResourceFormProps> {
       render,
       ...formProps
     } = this.props;
+
+    if (formResource.error) {
+      return (
+        <Alert
+          message={
+            <div>Failed to load resource {formResource.error.message}</div>
+          }
+          type="error"
+        />
+      );
+    }
 
     return (
       <Form
