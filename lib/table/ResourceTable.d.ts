@@ -18,7 +18,7 @@ export interface ResourceTableProps extends ATableProps<any> {
     actionButtonsTitle?: React.ReactNode;
     actionButtonsFixed?: boolean;
     detailButtonText?: React.ReactNode;
-    customDetailURL?: ((referenceID: string) => string);
+    customDetailURL?: (referenceID: string) => string;
     condensed?: boolean;
     columns?: ResourceTableColumn[];
 }

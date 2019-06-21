@@ -14,6 +14,7 @@ import {
   ResourceTablePropsActionButton
 } from './ResourceTableActionButtons';
 
+import { DataSourceArgumentMap } from 'webpanel-data/lib/DataSource';
 import { PaginationConfig } from 'antd/lib/pagination';
 import { observer } from 'mobx-react';
 
@@ -28,7 +29,7 @@ export interface ResourceTableProps extends ATableProps<any> {
   actionButtonsTitle?: React.ReactNode;
   actionButtonsFixed?: boolean;
   detailButtonText?: React.ReactNode;
-  customDetailURL?: ((referenceID: string) => string);
+  customDetailURL?: (referenceID: string) => string;
   condensed?: boolean;
   columns?: ResourceTableColumn[];
 }
@@ -61,7 +62,7 @@ export class ResourceTable extends React.Component<ResourceTableProps> {
         }
       }
 
-      const _filters = {};
+      let _filters: DataSourceArgumentMap | undefined = {};
       for (let column of this.props.columns || []) {
         const columnKey = column.dataIndex || column.key;
         if (!columnKey) {
@@ -81,6 +82,10 @@ export class ResourceTable extends React.Component<ResourceTableProps> {
             _filters[columnKey + '_lte'] = value[1];
           }
         }
+      }
+
+      if (Object.keys(_filters).length === 0) {
+        _filters = undefined;
       }
 
       resource.updateNamedFilters('table', _filters, false);
@@ -225,7 +230,8 @@ export class ResourceTable extends React.Component<ResourceTableProps> {
         rowSelection={rowSelection}
         loading={
           this.props.resourceCollection
-            ? (this.props.resourceCollection.loading && !this.props.resourceCollection.polling)
+            ? this.props.resourceCollection.loading &&
+              !this.props.resourceCollection.polling
             : false
         }
         columns={this.getColumns()}
