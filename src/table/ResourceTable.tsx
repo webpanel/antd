@@ -123,7 +123,7 @@ export class ResourceTable extends React.Component<ResourceTableProps> {
       resourceCollection.sorting &&
       resourceCollection.sorting.length > 0 &&
       resourceCollection.sorting[0];
-    const filters = resourceCollection.namedFilter('table');
+    const filters = resourceCollection.namedFilter('table') || {};
 
     let _columns: ResourceTableColumn[] = [...(columns || [])];
 
