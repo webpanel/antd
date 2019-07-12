@@ -23,6 +23,6 @@ export declare class Menu extends React.Component<MenuProps> {
     renderItems(items: React.ReactElement<MenuItemProps>[], parentPath: string): JSX.Element[];
     defaultSelectedKeys(match: Match<any> | null): string[];
     defaultOpenKeys(match: Match<any> | null): string[];
-    render(): JSX.Element;
+    render(): JSX.Element | null;
 }
 export {};

@@ -124,6 +124,9 @@ export class Menu extends React.Component<MenuProps> {
 
   render() {
     const items = searchChildrenWithType(this.props.children, MenuItem);
+    if (items.length === 0) {
+      return null;
+    }
     return (
       <Route
         path="*"

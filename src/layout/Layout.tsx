@@ -69,30 +69,32 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
     return (
       <BrowserRouter>
         <LayoutComponent className="full-height">
-          <Sider
-            theme="dark"
-            // collapsible={true}
-            // collapsed={this.state.collapsed}
-            breakpoint="md"
-            collapsedWidth="0"
-            // onCollapse={(collapsed, type) => {
-            //   this.onCollapse(collapsed, type);
-            // }}
-          >
-            <div
-              className="logo"
-              style={{
-                backgroundImage: logoURL ? `url(${logoURL})` : undefined,
-                backgroundColor: logoURL ? 'transparent' : undefined,
-                maxWidth: '168px',
-                maxHeight: '32px',
-                backgroundSize: 'contain',
-                backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'center'
-              }}
-            />
-            {menus}
-          </Sider>
+          {menus.length > 0 && (
+            <Sider
+              theme="dark"
+              // collapsible={true}
+              // collapsed={this.state.collapsed}
+              breakpoint="md"
+              collapsedWidth="0"
+              // onCollapse={(collapsed, type) => {
+              //   this.onCollapse(collapsed, type);
+              // }}
+            >
+              <div
+                className="logo"
+                style={{
+                  backgroundImage: logoURL ? `url(${logoURL})` : undefined,
+                  backgroundColor: logoURL ? 'transparent' : undefined,
+                  maxWidth: '168px',
+                  maxHeight: '32px',
+                  backgroundSize: 'contain',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundPosition: 'center'
+                }}
+              />
+              {menus}
+            </Sider>
+          )}
           <LayoutComponent>
             <Header
               onMenuSelect={param => this.handleMenuClick(param)}
