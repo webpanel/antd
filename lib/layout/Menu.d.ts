@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { match as Match } from 'react-router-dom';
-import { MenuTheme } from 'antd/lib/menu';
+import { MenuTheme } from 'antd/lib/menu/MenuContext';
 export interface MenuItemProps extends React.Props<any> {
     icon?: string;
     title: React.ReactNode;

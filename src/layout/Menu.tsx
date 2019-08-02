@@ -4,7 +4,7 @@ import { Menu as AntdMenu, Icon } from 'antd';
 import { Link, match as Match, Route } from 'react-router-dom';
 import { appendStringPath, searchChildrenWithType } from '../utils';
 
-import { MenuTheme } from 'antd/lib/menu';
+import { MenuTheme } from 'antd/lib/menu/MenuContext';
 
 export interface MenuItemProps extends React.Props<any> {
   icon?: string;
