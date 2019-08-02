@@ -1,13 +1,14 @@
 import * as React from 'react';
+
+import { Button, Icon, Layout } from 'antd';
 import { Link, Route, Switch } from 'react-router-dom';
-import { RouteComponentProps } from 'react-router';
-import { Layout, Icon, Button } from 'antd';
 import PageHeader, { IPageHeaderProps } from 'ant-design-pro/lib/PageHeader';
-import Exception from 'ant-design-pro/lib/Exception';
+// import { Breadcrumbs } from './page/Breadcrumbs';
+import { appendStringPath, searchChildrenWithType } from '../utils';
 
 import { BreadcrumbItem } from './page';
-// import { Breadcrumbs } from './page/Breadcrumbs';
-import { searchChildrenWithType, appendStringPath } from '../utils';
+import Exception from 'ant-design-pro/lib/Exception';
+import { RouteComponentProps } from 'react-router';
 
 export type StructureItemContent =
   | React.ReactNode
@@ -17,7 +18,7 @@ export type StructureHeaderProps =
   | ((props: RouteComponentProps<any>) => IPageHeaderProps);
 
 export interface StructureItemProps extends React.Props<any> {
-  name: string;
+  name: React.ReactNode;
   breadcrumbs?: BreadcrumbItem[];
   content?: StructureItemContent;
   header?: StructureHeaderProps;
@@ -138,9 +139,7 @@ export class Structure extends React.Component<ContentProps, ContentState> {
           desc="Check page address or contact tech assistance"
           actions={
             <Link to="/">
-              <Button type="primary">
-                Home
-              </Button>
+              <Button type="primary">Home</Button>
             </Link>
           }
         />

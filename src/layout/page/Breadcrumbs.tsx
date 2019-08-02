@@ -1,9 +1,11 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+
 import { Breadcrumb, Icon } from 'antd';
 
+import { Link } from 'react-router-dom';
+
 export interface BreadcrumbItem {
-  title: string;
+  title: React.ReactNode;
   href?: string;
 }
 

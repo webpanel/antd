@@ -8,7 +8,7 @@ import { MenuTheme } from 'antd/lib/menu';
 
 export interface MenuItemProps extends React.Props<any> {
   icon?: string;
-  title: string;
+  title: React.ReactNode;
   subitems?: React.ReactElement<MenuItemProps>[];
 }
 interface MenuItemComponentProps extends MenuItemProps {
