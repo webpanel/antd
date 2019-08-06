@@ -105,7 +105,7 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
               </a>
             )}
           </div>
-          <Submit loading={this.props.authorizationInfo.isAuthorizing}>
+          <Submit htmlType="submit" loading={this.props.authorizationInfo.isAuthorizing}>
             Login
           </Submit>
           {/* <div>
