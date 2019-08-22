@@ -61,7 +61,7 @@ export class StructureItem extends React.Component<StructureItemProps> {
 }
 
 export class Structure extends React.Component<ContentProps, ContentState> {
-  state = { error: null };
+  state: ContentState = { error: null };
 
   componentDidCatch(error: Error | null, info: object) {
     this.setState({ error: error || new Error(`empty error`) });
@@ -121,7 +121,7 @@ export class Structure extends React.Component<ContentProps, ContentState> {
     const { error } = this.state;
 
     if (error !== null) {
-      const _error = error as Error;
+      const _error = error;
       return (
         <Layout.Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
           <div style={{ padding: 24, background: '#fff', textAlign: 'center' }}>

@@ -21,9 +21,7 @@ export declare class StructureItem extends React.Component<StructureItemProps> {
     render(): any;
 }
 export declare class Structure extends React.Component<ContentProps, ContentState> {
-    state: {
-        error: null;
-    };
+    state: ContentState;
     componentDidCatch(error: Error | null, info: object): void;
     getRoutes(items: React.ReactElement<StructureItemProps>[], routes?: JSX.Element[] | null, parentPath?: string, breadcrumbs?: BreadcrumbItem[]): JSX.Element[];
     render(): JSX.Element;
