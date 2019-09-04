@@ -22,3 +22,6 @@ td.schrink button {
 .ant-table-column-sorter {
   margin-left: 0;
 }
+.ant-table-small {
+  border-style: none;
+}
