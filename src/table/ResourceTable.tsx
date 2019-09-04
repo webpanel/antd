@@ -30,7 +30,6 @@ export interface ResourceTableProps extends ATableProps<any> {
   actionButtonsFixed?: boolean;
   detailButtonText?: React.ReactNode;
   customDetailURL?: (referenceID: string) => string;
-  condensed?: boolean;
   columns?: ResourceTableColumn[];
 }
 
@@ -142,7 +141,7 @@ export class ResourceTable extends React.Component<ResourceTableProps> {
               buttons={actionButtons || ['detail', 'delete']}
               detailButtonText={detailButtonText}
               customDetailURL={customDetailURL}
-              size={this.props.condensed ? 'small' : undefined}
+              size={this.props.size === 'small' ? 'small' : undefined}
             />
           );
         }
@@ -237,7 +236,7 @@ export class ResourceTable extends React.Component<ResourceTableProps> {
         columns={this.getColumns()}
         dataSource={data}
         onChange={this.handleChange}
-        size={this.props.condensed ? 'small' : undefined}
+        size={this.props.size === 'small' ? 'small' : undefined}
         pagination={{ total: resourceCollection.count, ...pagination }}
         {...restProps}
       />
