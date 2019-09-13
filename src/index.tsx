@@ -15,3 +15,4 @@ export {
 } from './form/form';
 
 export { ResourceSelect } from './resource-select/ResourceSelect';
+export { ResourceCard } from './resource-card/ResourceCard';

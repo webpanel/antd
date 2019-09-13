@@ -5,3 +5,4 @@ export { ResourceTable, ResourceTableActionButtonProps } from './table';
 export { ResourceSearchInput } from './search-input';
 export { ResourceForm, ResourceFormButtons, Form, FormField, FormFieldDecorator, Input } from './form/form';
 export { ResourceSelect } from './resource-select/ResourceSelect';
+export { ResourceCard } from './resource-card/ResourceCard';
