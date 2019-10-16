@@ -42,9 +42,14 @@ export class ResourceTable extends React.Component<ResourceTableProps> {
   ) => {
     const resource = this.props.resourceCollection;
     if (resource) {
-      if (sorter.columnKey) {
+      if (sorter.columnKey && sorter.column.dataIndex) {
         resource.updateSorting(
-          [{ columnKey: sorter.columnKey, order: SortInfoOrder[sorter.order] }],
+          [
+            {
+              columnKey: sorter.column.dataIndex,
+              order: SortInfoOrder[sorter.order]
+            }
+          ],
           false
         );
       } else {
@@ -170,7 +175,7 @@ export class ResourceTable extends React.Component<ResourceTableProps> {
 
       if (sortedInfo) {
         c.sortOrder =
-          sortedInfo && c.key === sortedInfo.columnKey
+          sortedInfo && c.dataIndex === sortedInfo.columnKey
             ? sortedInfo.order
             : undefined;
       } else {
