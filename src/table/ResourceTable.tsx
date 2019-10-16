@@ -19,6 +19,7 @@ import { PaginationConfig } from 'antd/lib/pagination';
 import { observer } from 'mobx-react';
 
 export interface ResourceTableColumn extends ColumnProps<any> {
+  sortColumns?: string[];
   filterNormalize?: (values: any[]) => { [key: string]: any };
   filterDenormalize?: (values: { [key: string]: any }) => any[];
 }
@@ -43,15 +44,20 @@ export class ResourceTable extends React.Component<ResourceTableProps> {
     const resource = this.props.resourceCollection;
     if (resource) {
       if (sorter.columnKey && sorter.column.dataIndex) {
-        resource.updateSorting(
-          [
-            {
-              columnKey: sorter.column.dataIndex,
-              order: SortInfoOrder[sorter.order]
-            }
-          ],
-          false
-        );
+        const c = sorter.column as ResourceTableColumn;
+        const sortColumnKey =
+          (c.sortColumns && c.sortColumns.join(',')) || c.dataIndex;
+        if (sortColumnKey) {
+          resource.updateSorting(
+            [
+              {
+                columnKey: sortColumnKey,
+                order: SortInfoOrder[sorter.order]
+              }
+            ],
+            false
+          );
+        }
       } else {
         resource.updateSorting([], false);
       }
@@ -174,8 +180,10 @@ export class ResourceTable extends React.Component<ResourceTableProps> {
       }
 
       if (sortedInfo) {
+        const sortColumnKey =
+          (c.sortColumns && c.sortColumns.join(',')) || c.dataIndex;
         c.sortOrder =
-          sortedInfo && c.dataIndex === sortedInfo.columnKey
+          sortedInfo && sortColumnKey === sortedInfo.columnKey
             ? sortedInfo.order
             : undefined;
       } else {

@@ -5,6 +5,7 @@ import { ResourceCollection } from 'webpanel-data';
 import { ResourceTablePropsActionButton } from './ResourceTableActionButtons';
 import { PaginationConfig } from 'antd/lib/pagination';
 export interface ResourceTableColumn extends ColumnProps<any> {
+    sortColumns?: string[];
     filterNormalize?: (values: any[]) => {
         [key: string]: any;
     };
