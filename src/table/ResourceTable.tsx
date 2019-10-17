@@ -18,10 +18,17 @@ import { DataSourceArgumentMap } from 'webpanel-data/lib/DataSource';
 import { PaginationConfig } from 'antd/lib/pagination';
 import { observer } from 'mobx-react';
 
+export type ResourceTableFilterNormalizer = (
+  values: any[]
+) => { [key: string]: any };
+export type ResourceTableFilterDenormalizer = (values: {
+  [key: string]: any;
+}) => any[];
+
 export interface ResourceTableColumn extends ColumnProps<any> {
   sortColumns?: string[];
-  filterNormalize?: (values: any[]) => { [key: string]: any };
-  filterDenormalize?: (values: { [key: string]: any }) => any[];
+  filterNormalize?: ResourceTableFilterNormalizer;
+  filterDenormalize?: ResourceTableFilterDenormalizer;
 }
 
 export interface ResourceTableProps extends ATableProps<any> {

@@ -4,14 +4,16 @@ import { TableProps as ATableProps, ColumnProps, SorterResult } from 'antd/lib/t
 import { ResourceCollection } from 'webpanel-data';
 import { ResourceTablePropsActionButton } from './ResourceTableActionButtons';
 import { PaginationConfig } from 'antd/lib/pagination';
+export declare type ResourceTableFilterNormalizer = (values: any[]) => {
+    [key: string]: any;
+};
+export declare type ResourceTableFilterDenormalizer = (values: {
+    [key: string]: any;
+}) => any[];
 export interface ResourceTableColumn extends ColumnProps<any> {
     sortColumns?: string[];
-    filterNormalize?: (values: any[]) => {
-        [key: string]: any;
-    };
-    filterDenormalize?: (values: {
-        [key: string]: any;
-    }) => any[];
+    filterNormalize?: ResourceTableFilterNormalizer;
+    filterDenormalize?: ResourceTableFilterDenormalizer;
 }
 export interface ResourceTableProps extends ATableProps<any> {
     resourceCollection: ResourceCollection;
