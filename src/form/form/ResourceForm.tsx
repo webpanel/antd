@@ -54,32 +54,33 @@ export class ResourceForm extends React.Component<ResourceFormProps> {
       ...formProps
     } = this.props;
 
-    if (formResource.error) {
-      return (
-        <Alert
-          message={
-            <div>Failed to load resource {formResource.error.message}</div>
-          }
-          type="error"
-        />
-      );
-    }
+    const alert = formResource.error && (
+      <Alert
+        message={
+          <div>Failed to load resource {formResource.error.message}</div>
+        }
+        type="error"
+      />
+    );
 
     return (
-      <Form
-        onSave={this.onSave}
-        onValidationError={this.onValidationError}
-        initialValues={formResource.data}
-        {...formProps}
-        render={(context: FormContext) => {
-          return (
-            <>
-              {render(context)}
-              {this.props.children}
-            </>
-          );
-        }}
-      />
+      <>
+        {alert}
+        <Form
+          onSave={this.onSave}
+          onValidationError={this.onValidationError}
+          initialValues={formResource.data}
+          {...formProps}
+          render={(context: FormContext) => {
+            return (
+              <>
+                {render(context)}
+                {this.props.children}
+              </>
+            );
+          }}
+        />
+      </>
     );
   }
 }
