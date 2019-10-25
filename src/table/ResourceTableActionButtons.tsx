@@ -1,39 +1,40 @@
 import * as React from 'react';
-import { Button, Modal, Icon } from 'antd';
-import { observer } from 'mobx-react';
-import { Link } from 'react-router-dom';
 
-import { ResourceCollection } from 'webpanel-data';
+import { Button, Icon, Modal } from 'antd';
+
 import { ButtonSize } from 'antd/lib/button';
+import { Link } from 'react-router-dom';
+import { ResourceCollection } from 'webpanel-data';
+import { observer } from 'mobx-react';
 
-export type ResourceTablePropsActionButton =
+export type ResourceTablePropsActionButton<T> =
   | 'detail'
   | 'delete'
   | React.ReactNode
-  | ((props: ActionButtonProps) => React.ReactNode);
+  | ((props: ActionButtonProps<T>) => React.ReactNode);
 
-interface ResourceTableActionButtonsProps {
-  resourceCollection: ResourceCollection;
+interface ResourceTableActionButtonsProps<T> {
+  resourceCollection: ResourceCollection<T>;
   id: string | number;
   values: { [key: string]: any };
-  onDelete: ((id: string | number) => void);
-  buttons: ResourceTablePropsActionButton[];
+  onDelete: (id: string | number) => void;
+  buttons: ResourceTablePropsActionButton<T>[];
   detailButtonText?: React.ReactNode;
-  customDetailURL?: ((referenceID: string) => string);
+  customDetailURL?: (referenceID: string) => string;
   size?: ButtonSize;
 }
 
-export interface ActionButtonProps {
+export interface ActionButtonProps<T> {
   resourceID: string | number;
   values: { [key: string]: any };
-  resourceCollection: ResourceCollection;
-  type: ResourceTablePropsActionButton;
-  customDetailURL?: ((referenceID: string) => string);
+  resourceCollection: ResourceCollection<T>;
+  type: ResourceTablePropsActionButton<T>;
+  customDetailURL?: (referenceID: string) => string;
 }
 
 @observer
-export class ResourceTableActionButtons extends React.Component<
-  ResourceTableActionButtonsProps
+export class ResourceTableActionButtons<T = any> extends React.Component<
+  ResourceTableActionButtonsProps<T>
 > {
   state = {
     sortedInfo: { columnKey: undefined, order: undefined },
@@ -60,7 +61,7 @@ export class ResourceTableActionButtons extends React.Component<
     });
   };
 
-  getButton(props: ActionButtonProps) {
+  getButton(props: ActionButtonProps<T>) {
     const { size } = this.props;
 
     if (typeof props.type === 'string') {

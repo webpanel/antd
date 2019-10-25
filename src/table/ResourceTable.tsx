@@ -31,9 +31,9 @@ export interface ResourceTableColumn extends ColumnProps<any> {
   filterDenormalize?: ResourceTableFilterDenormalizer;
 }
 
-export interface ResourceTableProps extends ATableProps<any> {
-  resourceCollection: ResourceCollection;
-  actionButtons?: ResourceTablePropsActionButton[] | null;
+export interface ResourceTableProps<T> extends ATableProps<any> {
+  resourceCollection: ResourceCollection<T>;
+  actionButtons?: ResourceTablePropsActionButton<T>[] | null;
   actionButtonsTitle?: React.ReactNode;
   actionButtonsFixed?: boolean;
   detailButtonText?: React.ReactNode;
@@ -42,7 +42,9 @@ export interface ResourceTableProps extends ATableProps<any> {
 }
 
 @observer
-export class ResourceTable extends React.Component<ResourceTableProps> {
+export class ResourceTable<T = any> extends React.Component<
+  ResourceTableProps<T>
+> {
   handleChange = (
     pagination: PaginationConfig,
     filters: Record<any, string[]>,

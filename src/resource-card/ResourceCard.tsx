@@ -7,7 +7,7 @@ import { CardProps } from 'antd/lib/card';
 import { observer } from 'mobx-react';
 
 export interface ResourceCardProps extends CardProps {
-  observedResource: ResourceCollection | Resource;
+  observedResource: ResourceCollection<any> | Resource;
 }
 
 @observer

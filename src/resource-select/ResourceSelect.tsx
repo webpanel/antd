@@ -1,15 +1,18 @@
 import * as React from 'react';
+import * as uuid from 'uuid';
+
+import { Resource, ResourceCollection } from 'webpanel-data';
 import { Select, Spin } from 'antd';
+
 import { SelectProps } from 'antd/lib/select';
 import { observer } from 'mobx-react';
-import { ResourceCollection, Resource } from 'webpanel-data';
-import * as uuid from 'uuid';
+
 // import { FormElementBase } from '../form/form/FormElementBase';
 
 type ResourceSelectKey = string | ((value: any) => string);
 
-export interface ResourceSelectProps {
-  resourceCollection: ResourceCollection;
+export interface ResourceSelectProps<T> {
+  resourceCollection: ResourceCollection<T>;
   valueKey?: ResourceSelectKey;
   labelKey: ResourceSelectKey;
   groupKey?: string;
@@ -21,8 +24,8 @@ interface ResourceSelectState {
 }
 
 @observer
-export class ResourceSelect extends React.Component<
-  SelectProps & ResourceSelectProps,
+export class ResourceSelect<T = any> extends React.Component<
+  SelectProps & ResourceSelectProps<T>,
   ResourceSelectState
 > {
   state: ResourceSelectState = { search: undefined, currentItem: undefined };
@@ -118,7 +121,9 @@ export class ResourceSelect extends React.Component<
         // onSearch={this.onSearch}
         className={className}
         loading={resourceCollection.loading}
-        notFoundContent={resourceCollection.loading ? <Spin size="small" /> : null}
+        notFoundContent={
+          resourceCollection.loading ? <Spin size="small" /> : null
+        }
         showSearch={true}
         allowClear={true}
         optionFilterProp="children"
@@ -142,7 +147,10 @@ export class ResourceSelect extends React.Component<
           currentItem.id &&
           this.optionsIds.indexOf(currentItem.id.toString()) === -1 &&
           currentItem.data && (
-            <Select.Option key={currentItem.id.toString()} value={currentItem.id}>
+            <Select.Option
+              key={currentItem.id.toString()}
+              value={currentItem.id}
+            >
               {this.getValueForKey(currentItem.data, labelKey)}
             </Select.Option>
           )}

@@ -1,29 +1,29 @@
 import * as React from 'react';
-import { ResourceCollection } from 'webpanel-data';
 import { ButtonSize } from 'antd/lib/button';
-export declare type ResourceTablePropsActionButton = 'detail' | 'delete' | React.ReactNode | ((props: ActionButtonProps) => React.ReactNode);
-interface ResourceTableActionButtonsProps {
-    resourceCollection: ResourceCollection;
+import { ResourceCollection } from 'webpanel-data';
+export declare type ResourceTablePropsActionButton<T> = 'detail' | 'delete' | React.ReactNode | ((props: ActionButtonProps<T>) => React.ReactNode);
+interface ResourceTableActionButtonsProps<T> {
+    resourceCollection: ResourceCollection<T>;
     id: string | number;
     values: {
         [key: string]: any;
     };
-    onDelete: ((id: string | number) => void);
-    buttons: ResourceTablePropsActionButton[];
+    onDelete: (id: string | number) => void;
+    buttons: ResourceTablePropsActionButton<T>[];
     detailButtonText?: React.ReactNode;
-    customDetailURL?: ((referenceID: string) => string);
+    customDetailURL?: (referenceID: string) => string;
     size?: ButtonSize;
 }
-export interface ActionButtonProps {
+export interface ActionButtonProps<T> {
     resourceID: string | number;
     values: {
         [key: string]: any;
     };
-    resourceCollection: ResourceCollection;
-    type: ResourceTablePropsActionButton;
-    customDetailURL?: ((referenceID: string) => string);
+    resourceCollection: ResourceCollection<T>;
+    type: ResourceTablePropsActionButton<T>;
+    customDetailURL?: (referenceID: string) => string;
 }
-export declare class ResourceTableActionButtons extends React.Component<ResourceTableActionButtonsProps> {
+export declare class ResourceTableActionButtons<T = any> extends React.Component<ResourceTableActionButtonsProps<T>> {
     state: {
         sortedInfo: {
             columnKey: undefined;
@@ -32,7 +32,7 @@ export declare class ResourceTableActionButtons extends React.Component<Resource
         selectedRowKeys: never[];
     };
     deleteResource: (id: React.ReactText) => void;
-    getButton(props: ActionButtonProps): any;
+    getButton(props: ActionButtonProps<T>): any;
     render(): JSX.Element;
 }
 export {};

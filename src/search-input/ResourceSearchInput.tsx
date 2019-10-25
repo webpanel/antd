@@ -6,8 +6,8 @@ import { ResourceCollection } from 'webpanel-data';
 import { SearchProps } from 'antd/lib/input/Search';
 import { observer } from 'mobx-react';
 
-export interface ResourceSearchInputProps extends SearchProps {
-  resourceCollection: ResourceCollection;
+export interface ResourceSearchInputProps<T> extends SearchProps {
+  resourceCollection: ResourceCollection<T>;
 }
 
 export interface ResourceSearchInputState extends SearchProps {
@@ -15,14 +15,14 @@ export interface ResourceSearchInputState extends SearchProps {
 }
 
 @observer
-export class ResourceSearchInput extends React.Component<
-  ResourceSearchInputProps,
+export class ResourceSearchInput<T = any> extends React.Component<
+  ResourceSearchInputProps<T>,
   ResourceSearchInputState
 > {
   private cancelHandler: any | null = null;
 
   static getDerivedStateFromProps(
-    nextProps: ResourceSearchInputProps,
+    nextProps: ResourceSearchInputProps<any>,
     prevState: ResourceSearchInputState
   ) {
     return {
