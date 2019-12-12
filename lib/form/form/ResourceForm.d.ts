@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { FormContext } from './Form';
-import { FormProps } from 'antd/lib/form/Form';
-import { Resource } from 'webpanel-data';
+import * as React from "react";
+import { FormContext } from "./Form";
+import { FormProps } from "./Form";
+import { Resource } from "webpanel-data";
 export interface ResourceFormProps extends FormProps {
     formResource: Resource;
     render: (context: FormContext) => React.ReactNode;

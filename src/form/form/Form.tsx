@@ -1,18 +1,19 @@
-import * as React from 'react';
-import * as moment from 'moment';
+import * as React from "react";
+import * as moment from "moment";
 
 import {
   FormProps as AFormProps,
   FormComponentProps,
   WrappedFormUtils
-} from 'antd/lib/form/Form';
+} from "antd/lib/form/Form";
 
-import { Form as AForm } from 'antd';
-import { observer } from 'mobx-react';
+import { Form as AForm } from "antd";
+import { observer } from "mobx-react";
 
-interface FormProps extends AFormProps {
+export interface FormProps extends AFormProps {
   render: (context: FormContext) => React.ReactNode;
   initialValues?: { [key: string]: any };
+  valuesTransformFn?: (values: any) => Promise<any>;
   onSave?: (values: any, context: FormContext) => Promise<void>;
   onValidationError?: (err: Error, context: FormContext) => Promise<void>;
 }
@@ -47,18 +48,18 @@ export class FormComponent extends React.Component<
         _values[key] = null;
       } else if (
         value instanceof Date ||
-        (typeof value === 'string' &&
-          moment(value, 'YYYY-MM-DDTHH:mm:ss.SSS[Z]', true).isValid())
+        (typeof value === "string" &&
+          moment(value, "YYYY-MM-DDTHH:mm:ss.SSS[Z]", true).isValid())
       ) {
         // we need to remove milliseconds as it's not possible to store them in some database engines (MySQL)
         // we are also checking by moment because form return dates as strings
         _values[key] =
           moment(value)
             .toISOString()
-            .split('.')[0] + '.000Z';
+            .split(".")[0] + ".000Z";
       } else if (value instanceof Array) {
         _values[key] = value;
-      } else if (typeof value === 'object') {
+      } else if (typeof value === "object") {
         _values[key] = this.sanitizeValues(value);
       } else {
         _values[key] = value;
@@ -79,10 +80,13 @@ export class FormComponent extends React.Component<
       initialValues: initialValues || {}
     };
     return new Promise((resolve, reject) => {
-      if (typeof form === 'undefined') {
+      if (typeof form === "undefined") {
         return resolve();
       }
       form.validateFields(async (err, values) => {
+        if (this.props.valuesTransformFn) {
+          values = await this.props.valuesTransformFn(values);
+        }
         values = this.sanitizeValues(values);
 
         if (err) {
@@ -103,7 +107,7 @@ export class FormComponent extends React.Component<
 
   updateFieldValues(values: any) {
     const { form } = this.props;
-    if (typeof form === 'undefined') {
+    if (typeof form === "undefined") {
       return;
     }
     const keys = Object.keys(form.getFieldsValue());

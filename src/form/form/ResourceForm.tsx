@@ -1,11 +1,12 @@
-import * as React from 'react';
+import * as React from "react";
 
-import { Alert, message } from 'antd';
-import { Form, FormContext } from './Form';
+import { Alert, message } from "antd";
+import { Form, FormContext } from "./Form";
 
-import { FormProps } from 'antd/lib/form/Form';
-import { Resource } from 'webpanel-data';
-import { observer } from 'mobx-react';
+import { FormProps } from "./Form";
+// import { FormProps } from 'antd/lib/form/Form';
+import { Resource } from "webpanel-data";
+import { observer } from "mobx-react";
 
 export interface ResourceFormProps extends FormProps {
   formResource: Resource;
@@ -33,7 +34,7 @@ export class ResourceForm extends React.Component<ResourceFormProps> {
     if (this.props.onSuccess) {
       this.props.onSuccess(context);
     } else {
-      message.success('Form saved!');
+      message.success("Form saved!");
     }
   };
 
@@ -41,7 +42,7 @@ export class ResourceForm extends React.Component<ResourceFormProps> {
     if (this.props.onFailure) {
       this.props.onFailure(err, context);
     } else {
-      message.error(err.message || err || 'Unknown error occurred!');
+      message.error(err.message || err || "Unknown error occurred!");
     }
   };
 
