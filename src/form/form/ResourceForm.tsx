@@ -21,6 +21,7 @@ export class ResourceForm extends React.Component<ResourceFormProps> {
     try {
       await this.props.formResource.save(values);
       this.displaySuccess(context);
+      context.form.resetFields();
     } catch (error) {
       this.displayError(error, context);
     }
