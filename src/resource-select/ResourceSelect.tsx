@@ -1,20 +1,21 @@
-import * as React from 'react';
-import * as uuid from 'uuid';
+import * as React from "react";
+import * as uuid from "uuid";
 
-import { Resource, ResourceCollection } from 'webpanel-data';
-import { Select, Spin } from 'antd';
+import { Resource, ResourceCollection } from "webpanel-data";
+import { Select, Spin } from "antd";
 
-import { SelectProps } from 'antd/lib/select';
-import { observer } from 'mobx-react';
+import { SelectProps } from "antd/lib/select";
+import { observer } from "mobx-react";
 
 // import { FormElementBase } from '../form/form/FormElementBase';
 
 type ResourceSelectKey = string | ((value: any) => string);
+type ResourceLabelKey = React.ReactNode | ((value: any) => React.ReactNode);
 
 export interface ResourceSelectProps<T> {
   resourceCollection: ResourceCollection<T>;
   valueKey?: ResourceSelectKey;
-  labelKey: ResourceSelectKey;
+  labelKey: ResourceLabelKey;
   groupKey?: string;
 }
 
@@ -34,10 +35,10 @@ export class ResourceSelect<T = any> extends React.Component<
   private optionsCache?: JSX.Element[] = undefined;
   private optionsIds?: string[] = undefined;
 
-  getValueForKey = (item: any, key: ResourceSelectKey): string | null => {
-    if (typeof key === 'string') {
+  getValueForKey = (item: any, key: ResourceLabelKey): string | null => {
+    if (typeof key === "string") {
       return item[key];
-    } else if (typeof key === 'function') {
+    } else if (typeof key === "function") {
       return key(item);
     }
     return null;
@@ -83,7 +84,7 @@ export class ResourceSelect<T = any> extends React.Component<
             groups[label] = [];
           }
 
-          const id = this.getValueForKey(item, valueKey || 'id') || index;
+          const id = this.getValueForKey(item, valueKey || "id") || index;
           optionsIds.push(id.toString());
           groups[label].push(
             <Select.Option key={id.toString()} value={id}>
@@ -100,7 +101,7 @@ export class ResourceSelect<T = any> extends React.Component<
       } else {
         this.optionsCache = resourceCollection.data.map(
           (item: any, index: number) => {
-            const id = this.getValueForKey(item, valueKey || 'id') || index;
+            const id = this.getValueForKey(item, valueKey || "id") || index;
             optionsIds.push(id.toString());
             return (
               <Select.Option key={id.toString()} value={id}>
@@ -127,7 +128,7 @@ export class ResourceSelect<T = any> extends React.Component<
         showSearch={true}
         allowClear={true}
         optionFilterProp="children"
-        dropdownStyle={{ position: 'relative' }}
+        dropdownStyle={{ position: "relative" }}
         getPopupContainer={() =>
           document.querySelector(`.${className}`) || document.body
         }
