@@ -16,9 +16,9 @@ td.schrink button {
   font-size: 16px;
 }
 
-.ant-table-thead th span {
+/* .ant-table-thead th span {
   white-space: pre;
-}
+} */
 .ant-table-column-sorter {
   margin-left: 0;
 }
