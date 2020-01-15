@@ -52,7 +52,7 @@ export class ResourceTable<T = any> extends React.Component<
   ) => {
     const resource = this.props.resourceCollection;
     if (resource) {
-      if (sorter.columnKey && sorter.column.dataIndex) {
+      if (sorter.columnKey && sorter.column && sorter.column.dataIndex) {
         const c = sorter.column as ResourceTableColumn;
         const sortColumnKey =
           (c.sortColumns && c.sortColumns.join(',')) || c.dataIndex;
