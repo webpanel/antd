@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as uuid from "uuid";
 
 import { Resource, ResourceCollection } from "webpanel-data";
 import { Select, Spin } from "antd";
@@ -114,13 +113,13 @@ export class ResourceSelect<T = any> extends React.Component<
       this.latestResourceData = resourceCollection.data;
     }
 
-    const className = `resource-select__${uuid.v4()}`;
+    // const className = `resource-select__${uuid.v4()}`;
 
     const options = this.optionsCache || [];
     return (
       <Select
         // onSearch={this.onSearch}
-        className={className}
+        // className={className}
         loading={resourceCollection.loading}
         notFoundContent={
           resourceCollection.loading ? <Spin size="small" /> : null
@@ -129,9 +128,9 @@ export class ResourceSelect<T = any> extends React.Component<
         allowClear={true}
         optionFilterProp="children"
         dropdownStyle={{ position: "relative" }}
-        getPopupContainer={() =>
-          document.querySelector(`.${className}`) || document.body
-        }
+        // getPopupContainer={() =>
+        //   document.querySelector(`.${className}`) || document.body
+        // }
         onSearch={(value: any) => {
           this.setState({ search: value });
         }}
