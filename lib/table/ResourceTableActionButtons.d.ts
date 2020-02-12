@@ -1,8 +1,12 @@
 import * as React from 'react';
 import { ButtonSize } from 'antd/lib/button';
-import { ResourceCollection } from 'webpanel-data';
-export declare type ResourceTablePropsActionButton<T> = 'detail' | 'delete' | React.ReactNode | ((props: ActionButtonProps<T>) => React.ReactNode);
-interface ResourceTableActionButtonsProps<T> {
+import { ResourceCollection, ResourceID } from 'webpanel-data';
+export declare type ResourceTablePropsActionButton<T extends {
+    id: ResourceID;
+}> = 'detail' | 'delete' | React.ReactNode | ((props: ActionButtonProps<T>) => React.ReactNode);
+interface ResourceTableActionButtonsProps<T extends {
+    id: ResourceID;
+}> {
     resourceCollection: ResourceCollection<T>;
     id: string | number;
     values: {
@@ -14,7 +18,9 @@ interface ResourceTableActionButtonsProps<T> {
     customDetailURL?: (referenceID: string) => string;
     size?: ButtonSize;
 }
-export interface ActionButtonProps<T> {
+export interface ActionButtonProps<T extends {
+    id: ResourceID;
+}> {
     resourceID: string | number;
     values: {
         [key: string]: any;
@@ -23,7 +29,9 @@ export interface ActionButtonProps<T> {
     type: ResourceTablePropsActionButton<T>;
     customDetailURL?: (referenceID: string) => string;
 }
-export declare class ResourceTableActionButtons<T = any> extends React.Component<ResourceTableActionButtonsProps<T>> {
+export declare class ResourceTableActionButtons<T extends {
+    id: ResourceID;
+} = any> extends React.Component<ResourceTableActionButtonsProps<T>> {
     state: {
         sortedInfo: {
             columnKey: undefined;

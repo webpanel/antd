@@ -4,16 +4,16 @@ import { Button, Icon, Modal } from 'antd';
 
 import { ButtonSize } from 'antd/lib/button';
 import { Link } from 'react-router-dom';
-import { ResourceCollection } from 'webpanel-data';
+import { ResourceCollection, ResourceID } from 'webpanel-data';
 import { observer } from 'mobx-react';
 
-export type ResourceTablePropsActionButton<T> =
+export type ResourceTablePropsActionButton<T extends {id: ResourceID}> =
   | 'detail'
   | 'delete'
   | React.ReactNode
   | ((props: ActionButtonProps<T>) => React.ReactNode);
 
-interface ResourceTableActionButtonsProps<T> {
+interface ResourceTableActionButtonsProps<T extends {id: ResourceID}> {
   resourceCollection: ResourceCollection<T>;
   id: string | number;
   values: { [key: string]: any };
@@ -24,7 +24,7 @@ interface ResourceTableActionButtonsProps<T> {
   size?: ButtonSize;
 }
 
-export interface ActionButtonProps<T> {
+export interface ActionButtonProps<T extends {id: ResourceID}> {
   resourceID: string | number;
   values: { [key: string]: any };
   resourceCollection: ResourceCollection<T>;
@@ -33,7 +33,7 @@ export interface ActionButtonProps<T> {
 }
 
 @observer
-export class ResourceTableActionButtons<T = any> extends React.Component<
+export class ResourceTableActionButtons<T extends {id: ResourceID} = any> extends React.Component<
   ResourceTableActionButtonsProps<T>
 > {
   state = {

@@ -1,12 +1,13 @@
-import * as React from 'react';
+import * as React from "react";
 
-import { Icon, Input } from 'antd';
+import { Icon, Input } from "antd";
 
-import { ResourceCollection } from 'webpanel-data';
-import { SearchProps } from 'antd/lib/input/Search';
-import { observer } from 'mobx-react';
+import { ResourceCollection, ResourceID } from "webpanel-data";
+import { SearchProps } from "antd/lib/input/Search";
+import { observer } from "mobx-react";
 
-export interface ResourceSearchInputProps<T> extends SearchProps {
+export interface ResourceSearchInputProps<T extends { id: ResourceID }>
+  extends SearchProps {
   resourceCollection: ResourceCollection<T>;
 }
 
@@ -15,7 +16,9 @@ export interface ResourceSearchInputState extends SearchProps {
 }
 
 @observer
-export class ResourceSearchInput<T = any> extends React.Component<
+export class ResourceSearchInput<
+  T extends { id: ResourceID } = any
+> extends React.Component<
   ResourceSearchInputProps<T>,
   ResourceSearchInputState
 > {
@@ -33,7 +36,7 @@ export class ResourceSearchInput<T = any> extends React.Component<
   updateSearch = () => {
     const { resourceCollection } = this.props;
     let _value: string | undefined = this.state.value;
-    if (_value === '') {
+    if (_value === "") {
       _value = undefined;
     }
     resourceCollection.updateSearch(_value);
@@ -65,7 +68,7 @@ export class ResourceSearchInput<T = any> extends React.Component<
         enterButton={
           <a
             onClick={() => {
-              this.handleChange('');
+              this.handleChange("");
             }}
           >
             <Icon type="close" />

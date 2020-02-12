@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Resource, ResourceCollection } from "webpanel-data";
+import { Resource, ResourceCollection, ResourceID } from "webpanel-data";
 import { Select, Spin } from "antd";
 
 import { SelectProps } from "antd/lib/select";
@@ -11,7 +11,7 @@ import { observer } from "mobx-react";
 type ResourceSelectKey = string | ((value: any) => string);
 type ResourceLabelKey = React.ReactNode | ((value: any) => React.ReactNode);
 
-export interface ResourceSelectProps<T> {
+export interface ResourceSelectProps<T extends { id: ResourceID }> {
   resourceCollection: ResourceCollection<T>;
   valueKey?: ResourceSelectKey;
   labelKey: ResourceLabelKey;
@@ -24,7 +24,9 @@ interface ResourceSelectState {
 }
 
 @observer
-export class ResourceSelect<T = any> extends React.Component<
+export class ResourceSelect<
+  T extends { id: ResourceID } = any
+> extends React.Component<
   SelectProps & ResourceSelectProps<T>,
   ResourceSelectState
 > {

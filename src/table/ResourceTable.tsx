@@ -8,7 +8,7 @@ import {
   SorterResult
 } from 'antd/lib/table';
 import { Alert, Table as AntdTable, Button } from 'antd';
-import { ResourceCollection, SortInfoOrder } from 'webpanel-data';
+import { ResourceCollection, SortInfoOrder, ResourceID } from 'webpanel-data';
 import {
   ResourceTableActionButtons,
   ResourceTablePropsActionButton
@@ -31,7 +31,7 @@ export interface ResourceTableColumn extends ColumnProps<any> {
   filterDenormalize?: ResourceTableFilterDenormalizer;
 }
 
-export interface ResourceTableProps<T> extends ATableProps<any> {
+export interface ResourceTableProps<T extends {id: ResourceID}> extends ATableProps<any> {
   resourceCollection: ResourceCollection<T>;
   actionButtons?: ResourceTablePropsActionButton<T>[] | null;
   actionButtonsTitle?: React.ReactNode;
@@ -42,7 +42,7 @@ export interface ResourceTableProps<T> extends ATableProps<any> {
 }
 
 @observer
-export class ResourceTable<T = any> extends React.Component<
+export class ResourceTable<T extends {id: ResourceID} = any> extends React.Component<
   ResourceTableProps<T>
 > {
   handleChange = (
