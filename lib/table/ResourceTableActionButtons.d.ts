@@ -1,9 +1,9 @@
-import * as React from 'react';
-import { ButtonSize } from 'antd/lib/button';
-import { ResourceCollection, ResourceID } from 'webpanel-data';
+import * as React from "react";
+import { ResourceCollection, ResourceID } from "webpanel-data";
+import { ButtonSize } from "antd/lib/button";
 export declare type ResourceTablePropsActionButton<T extends {
     id: ResourceID;
-}> = 'detail' | 'delete' | React.ReactNode | ((props: ActionButtonProps<T>) => React.ReactNode);
+}> = "detail" | "delete" | React.ReactNode | ((props: ActionButtonProps<T>) => React.ReactNode);
 interface ResourceTableActionButtonsProps<T extends {
     id: ResourceID;
 }> {
@@ -39,7 +39,7 @@ export declare class ResourceTableActionButtons<T extends {
         };
         selectedRowKeys: never[];
     };
-    deleteResource: (id: import("csstype").AnimationIterationCountProperty) => void;
+    deleteResource: (id: ResourceID) => void;
     getButton(props: ActionButtonProps<T>): any;
     render(): JSX.Element;
 }
