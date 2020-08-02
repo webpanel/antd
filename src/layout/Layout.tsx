@@ -1,19 +1,19 @@
-import '../../styles/Layout.css';
+import "../../styles/Layout.css";
 
-import * as React from 'react';
+import * as React from "react";
 
-import { Structure, StructureItem } from './Structure';
+import { Structure, StructureItem } from "./Structure";
 
-import { BrowserRouter } from 'react-router-dom';
-import { ClickParam } from 'antd/lib/menu';
-import { CollapseType } from 'antd/lib/layout/Sider';
-import { Header } from './Header';
-import { HeaderConfig } from './Header';
-import { Layout as LayoutComponent } from 'antd';
-import { Menu } from './Menu';
-import { MenuItem } from './Menu';
-import { observer } from 'mobx-react';
-import { searchChildrenWithType } from '../utils';
+import { BrowserRouter } from "react-router-dom";
+import { ClickParam } from "antd/lib/menu";
+import { CollapseType } from "antd/lib/layout/Sider";
+import { Header } from "./Header";
+import { HeaderConfig } from "./Header";
+import { Layout as LayoutComponent } from "antd";
+import { Menu } from "./Menu";
+import { MenuItem } from "./Menu";
+import { observer } from "mobx-react";
+import { searchChildrenWithType } from "../utils";
 
 const { Footer, Sider } = LayoutComponent;
 
@@ -41,7 +41,7 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
   static Structure = Structure;
   static StructureItem = StructureItem;
   state = {
-    collapsed: false
+    collapsed: false,
   };
 
   onCollapse(collapsed: boolean, type: CollapseType) {
@@ -50,7 +50,7 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
 
   handleMenuClick(param: ClickParam) {
     switch (param.key) {
-      case 'logout':
+      case "logout":
         this.props.logout();
         return;
       default:
@@ -79,17 +79,21 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
               // onCollapse={(collapsed, type) => {
               //   this.onCollapse(collapsed, type);
               // }}
+              style={{
+                overflow: "auto",
+                height: "100vh",
+              }}
             >
               <div
                 className="logo"
                 style={{
                   backgroundImage: logoURL ? `url(${logoURL})` : undefined,
-                  backgroundColor: logoURL ? 'transparent' : undefined,
-                  maxWidth: '168px',
-                  maxHeight: '32px',
-                  backgroundSize: 'contain',
-                  backgroundRepeat: 'no-repeat',
-                  backgroundPosition: 'center'
+                  backgroundColor: logoURL ? "transparent" : undefined,
+                  maxWidth: "168px",
+                  maxHeight: "32px",
+                  backgroundSize: "contain",
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "center",
                 }}
               />
               {menus}
@@ -97,12 +101,12 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
           )}
           <LayoutComponent>
             <Header
-              onMenuSelect={param => this.handleMenuClick(param)}
+              onMenuSelect={(param) => this.handleMenuClick(param)}
               username={this.props.userName}
               {...this.props.header}
             />
             {structures}
-            <Footer style={{ textAlign: 'center' }}>
+            <Footer style={{ textAlign: "center" }}>
               {this.props.footer && this.props.footer.title}
             </Footer>
           </LayoutComponent>

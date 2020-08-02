@@ -41,7 +41,7 @@ export class ResourceTableActionButtons<
     selectedRowKeys: [],
   };
 
-  deleteResource = (id: string | number) => {
+  deleteResource = (id: ResourceID) => {
     Modal.confirm({
       title: "Are you sure?",
       content: "Do you want to delete this item?",

@@ -1,8 +1,8 @@
-import * as React from 'react';
+import * as React from "react";
 
-import { Breadcrumb, Icon } from 'antd';
+import { Breadcrumb, Icon } from "antd";
 
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 export interface BreadcrumbItem {
   title: React.ReactNode;
@@ -20,15 +20,15 @@ export class Breadcrumbs extends React.Component<BreadcrumbsProps> {
     const breadcrumbsLinks = items.slice(0, items.length - 1);
     const currentBreadcrumb = items[items.length - 1];
     return (
-      <Breadcrumb style={{ margin: '16px 0' }}>
+      <Breadcrumb style={{ margin: "16px 0" }}>
         <Breadcrumb.Item>
           <Link to="/">
             <Icon type="home" />
           </Link>
         </Breadcrumb.Item>
-        {breadcrumbsLinks.map(i => (
+        {breadcrumbsLinks.map((i) => (
           <Breadcrumb.Item key={i.href}>
-            <Link to={i.href + '/'}>{i.title}</Link>
+            <Link to={i.href + "/"}>{i.title}</Link>
           </Breadcrumb.Item>
         ))}
         {currentBreadcrumb ? (

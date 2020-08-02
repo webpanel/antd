@@ -1,11 +1,11 @@
-import '../../styles/Layout.css';
-import * as React from 'react';
-import { Structure, StructureItem } from './Structure';
-import { ClickParam } from 'antd/lib/menu';
-import { CollapseType } from 'antd/lib/layout/Sider';
-import { HeaderConfig } from './Header';
-import { Menu } from './Menu';
-import { MenuItem } from './Menu';
+import "../../styles/Layout.css";
+import * as React from "react";
+import { Structure, StructureItem } from "./Structure";
+import { ClickParam } from "antd/lib/menu";
+import { CollapseType } from "antd/lib/layout/Sider";
+import { HeaderConfig } from "./Header";
+import { Menu } from "./Menu";
+import { MenuItem } from "./Menu";
 export interface FooterConfig {
     title: string | React.ReactNode;
 }

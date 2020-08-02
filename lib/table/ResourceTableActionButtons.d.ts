@@ -39,7 +39,7 @@ export declare class ResourceTableActionButtons<T extends {
         };
         selectedRowKeys: never[];
     };
-    deleteResource: (id: import("csstype").AnimationIterationCountProperty) => void;
+    deleteResource: (id: ResourceID) => void;
     getButton(props: ActionButtonProps<T>): any;
     render(): JSX.Element;
 }
