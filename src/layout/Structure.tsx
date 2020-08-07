@@ -18,7 +18,7 @@ export type StructureHeaderProps =
   | ((props: RouteComponentProps<any>) => PageHeaderProps);
 
 export interface StructureItemProps extends React.Props<any> {
-  name: string;
+  name: React.ReactNode;
   breadcrumbs?: BreadcrumbItem[];
   content?: StructureItemContent;
   header?: StructureHeaderProps;

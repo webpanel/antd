@@ -5,7 +5,7 @@ import { RouteComponentProps } from "react-router";
 export declare type StructureItemContent = React.ReactNode | ((props: RouteComponentProps<any>) => React.ReactNode);
 export declare type StructureHeaderProps = PageHeaderProps | ((props: RouteComponentProps<any>) => PageHeaderProps);
 export interface StructureItemProps extends React.Props<any> {
-    name: string;
+    name: React.ReactNode;
     breadcrumbs?: BreadcrumbItem[];
     content?: StructureItemContent;
     header?: StructureHeaderProps;
