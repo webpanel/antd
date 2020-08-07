@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { ClickParam } from 'antd/lib/menu';
-import { Thunk } from 'ts-thunk';
+import * as React from "react";
+import { Thunk } from "ts-thunk";
+import { ClickParam } from "antd/lib/menu";
 export interface HeaderProps {
     onMenuSelect: (param: ClickParam) => void;
 }

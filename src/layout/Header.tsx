@@ -1,7 +1,9 @@
-import * as React from 'react';
-import { Layout as AntdLayout, Menu, Icon, Dropdown } from 'antd';
-import { ClickParam } from 'antd/lib/menu';
-import { Thunk, resolveOptionalThunk } from 'ts-thunk';
+import * as React from "react";
+
+import { Layout as AntdLayout, Dropdown, Icon, Menu } from "antd";
+import { Thunk, resolveOptionalThunk } from "ts-thunk";
+
+import { ClickParam } from "antd/lib/menu";
 // import { AuthSession } from '../../../../webana';
 // import { Subscriber } from 'react-broadcast';
 
@@ -32,12 +34,13 @@ export class Header extends React.Component<HeaderProps & HeaderConfig> {
 
     return (
       <AntdLayout.Header>
+        {this.props.children}
         <div className="antd-header-content">
           {resolveOptionalThunk(this.props.items)}
           <Dropdown overlay={menu}>
             <span className="antd-header-content-item">
-              <Icon type="user" style={{ padding: '0 8px 0 0' }} />
-              {this.props.username || 'Me'}
+              <Icon type="user" style={{ padding: "0 8px 0 0" }} />
+              {this.props.username || "Me"}
             </span>
           </Dropdown>
         </div>

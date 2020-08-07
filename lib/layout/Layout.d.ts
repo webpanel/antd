@@ -29,6 +29,7 @@ export declare class Layout extends React.Component<LayoutProps, LayoutState> {
         collapsed: boolean;
     };
     onCollapse(collapsed: boolean, type: CollapseType): void;
+    toggle(): void;
     handleMenuClick(param: ClickParam): void;
     render(): JSX.Element;
 }
