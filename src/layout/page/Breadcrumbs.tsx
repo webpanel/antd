@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { Breadcrumb, Icon } from "antd";
-
+import { Breadcrumb } from "antd";
+import { HomeOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
 export interface BreadcrumbItem {
@@ -23,7 +23,7 @@ export class Breadcrumbs extends React.Component<BreadcrumbsProps> {
       <Breadcrumb style={{ margin: "16px 0" }}>
         <Breadcrumb.Item>
           <Link to="/">
-            <Icon type="home" />
+            <HomeOutlined />
           </Link>
         </Breadcrumb.Item>
         {breadcrumbsLinks.map((i) => (

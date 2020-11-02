@@ -1,8 +1,9 @@
 import * as React from "react";
 
-import { Icon, Input } from "antd";
-
 import { ResourceCollection, ResourceID } from "webpanel-data";
+
+import { CloseOutlined } from "@ant-design/icons";
+import { Input } from "antd";
 import { SearchProps } from "antd/lib/input/Search";
 import { observer } from "mobx-react";
 
@@ -29,7 +30,7 @@ export class ResourceSearchInput<
     prevState: ResourceSearchInputState
   ) {
     return {
-      value: prevState ? prevState.value : nextProps.resourceCollection.search
+      value: prevState ? prevState.value : nextProps.resourceCollection.search,
     };
   }
 
@@ -71,7 +72,7 @@ export class ResourceSearchInput<
               this.handleChange("");
             }}
           >
-            <Icon type="close" />
+            <CloseOutlined />
           </a>
         }
       />

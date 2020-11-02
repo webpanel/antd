@@ -5,7 +5,6 @@ import * as React from "react";
 import { Structure, StructureItem } from "./Structure";
 
 import { BrowserRouter } from "react-router-dom";
-import { ClickParam } from "antd/lib/menu";
 import { CollapseType } from "antd/lib/layout/Sider";
 import { Header } from "./Header";
 import { HeaderConfig } from "./Header";
@@ -50,9 +49,8 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
   toggle() {
     this.setState({ collapsed: !this.state.collapsed });
   }
-
-  handleMenuClick(param: ClickParam) {
-    switch (param.key) {
+  handleMenuClick(key: React.ReactText) {
+    switch (key) {
       case "logout":
         this.props.logout();
         return;
@@ -100,7 +98,7 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
           )}
           <LayoutComponent>
             <Header
-              onMenuSelect={(param) => this.handleMenuClick(param)}
+              onMenuSelect={(info) => this.handleMenuClick(info.key)}
               username={this.props.userName}
               {...this.props.header}
             >

@@ -1,7 +1,6 @@
 import "../../styles/Layout.css";
 import * as React from "react";
 import { Structure, StructureItem } from "./Structure";
-import { ClickParam } from "antd/lib/menu";
 import { CollapseType } from "antd/lib/layout/Sider";
 import { HeaderConfig } from "./Header";
 import { Menu } from "./Menu";
@@ -30,6 +29,6 @@ export declare class Layout extends React.Component<LayoutProps, LayoutState> {
     };
     onCollapse(collapsed: boolean, type: CollapseType): void;
     toggle(): void;
-    handleMenuClick(param: ClickParam): void;
+    handleMenuClick(key: React.ReactText): void;
     render(): JSX.Element;
 }

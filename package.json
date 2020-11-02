@@ -9,6 +9,7 @@
     "test": "react-scripts-ts test --env=jsdom"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.2.2",
     "@types/jsonwebtoken": "^7.2.7",
     "@types/lodash": "^4.14.109",
     "@types/react-broadcast": "^0.6.0",
@@ -20,21 +21,22 @@
     "uuid": "^3.3.2"
   },
   "peerDependencies": {
-    "antd": "*",
+    "antd": "^4.7.3",
     "mobx": "*",
     "mobx-react": "*",
-    "react-router-dom": "^5.1.2"
+    "react": ">=16.9.0",
+    "react-dom": ">=16.9.0"
   },
   "devDependencies": {
     "@types/jest": "^23.1.1",
     "@types/lodash": "^4.14.109",
     "@types/node": "^10.3.2",
     "@types/prop-types": "^15.7.1",
-    "@types/react": "^16.8.14",
-    "@types/react-dom": "^16.8.4",
-    "@types/react-router-dom": "^5.1.3",
+    "@types/react": "^16.9.55",
+    "@types/react-dom": "^16.9.9",
+    "@types/react-router-dom": "^5.1.6",
     "@types/uuid": "^3.4.4",
-    "antd": "^3.26.2",
+    "antd": "^4.7.3",
     "mobx": "^5.0.3",
     "mobx-react": "^5.2.0",
     "react": "^16.8.6",

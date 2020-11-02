@@ -17,7 +17,7 @@ interface ResourceSelectState {
 }
 export declare class ResourceSelect<T extends {
     id: ResourceID;
-} = any> extends React.Component<SelectProps & ResourceSelectProps<T>, ResourceSelectState> {
+} = any> extends React.Component<SelectProps<any> & ResourceSelectProps<T>, ResourceSelectState> {
     state: ResourceSelectState;
     private latestResourceData?;
     private optionsCache?;

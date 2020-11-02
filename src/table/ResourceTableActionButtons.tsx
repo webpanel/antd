@@ -1,6 +1,7 @@
 import * as React from "react";
 
-import { Button, Icon, Modal, message } from "antd";
+import { Button, Modal, message } from "antd";
+import { DeleteOutlined, SearchOutlined } from "@ant-design/icons";
 import { ResourceCollection, ResourceID } from "webpanel-data";
 
 import { ButtonSize } from "antd/lib/button";
@@ -81,7 +82,7 @@ export class ResourceTableActionButtons<
               }
             >
               <Button size={size}>
-                {detailButtonText || <Icon type="search" />}
+                {detailButtonText || <SearchOutlined />}
               </Button>
             </Link>
           );
@@ -90,10 +91,10 @@ export class ResourceTableActionButtons<
             <Button
               key="delete-button-action"
               onClick={() => this.deleteResource(props.resourceID)}
-              type="danger"
+              danger={true}
               size={size}
             >
-              <Icon type="delete" />
+              <DeleteOutlined />
             </Button>
           );
         default:

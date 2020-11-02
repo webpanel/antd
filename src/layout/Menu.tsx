@@ -1,13 +1,14 @@
 import * as React from "react";
 
-import { Menu as AntdMenu, Icon } from "antd";
 import { Link, match as Match, Route } from "react-router-dom";
 import { appendStringPath, searchChildrenWithType } from "../utils";
 
+import { Menu as AntdMenu } from "antd";
+import { FolderOutlined } from "@ant-design/icons";
 import { MenuTheme } from "antd/lib/menu/MenuContext";
 
 export interface MenuItemProps extends React.Props<any> {
-  icon?: string;
+  icon?: React.ReactNode;
   title: React.ReactNode;
   subitems?: React.ReactElement<MenuItemProps>[];
 }
@@ -29,7 +30,7 @@ export class MenuItemComponent extends React.Component<MenuItemComponentProps> {
     const { ...item } = this.props;
     return (
       <Link to={item.path} key={item.path}>
-        {item.icon ? <Icon type={item.icon} /> : null}
+        {item.icon}
         <span className="nav-text">{item.title}</span>
       </Link>
     );
@@ -58,7 +59,7 @@ export class Menu extends React.Component<MenuProps> {
             key={"sub_" + resolvedPath}
             title={
               <span>
-                <Icon type={item.props.icon || "folder"} />
+                {item.props.icon || <FolderOutlined />}
                 <span>{item.props.title}</span>
               </span>
             }

@@ -1,25 +1,25 @@
-import '../../styles/Table.css';
+import "../../styles/Table.css";
 
-import * as React from 'react';
+import * as React from "react";
 
 import {
   TableProps as ATableProps,
   ColumnProps,
-  SorterResult
-} from 'antd/lib/table';
-import { Alert, Table as AntdTable, Button } from 'antd';
-import { ResourceCollection, SortInfoOrder, ResourceID } from 'webpanel-data';
+  TablePaginationConfig,
+} from "antd/lib/table";
+import { Alert, Table as AntdTable, Button } from "antd";
+import { Key, SorterResult } from "antd/lib/table/interface";
+import { ResourceCollection, ResourceID, SortInfoOrder } from "webpanel-data";
 import {
   ResourceTableActionButtons,
-  ResourceTablePropsActionButton
-} from './ResourceTableActionButtons';
+  ResourceTablePropsActionButton,
+} from "./ResourceTableActionButtons";
 
-import { DataSourceArgumentMap } from 'webpanel-data/lib/DataSource';
-import { PaginationConfig } from 'antd/lib/pagination';
-import { observer } from 'mobx-react';
+import { DataSourceArgumentMap } from "webpanel-data/lib/DataSource";
+import { observer } from "mobx-react";
 
 export type ResourceTableFilterNormalizer = (
-  values: any[]
+  values: any[] | null
 ) => { [key: string]: any };
 export type ResourceTableFilterDenormalizer = (values: {
   [key: string]: any;
@@ -31,7 +31,8 @@ export interface ResourceTableColumn extends ColumnProps<any> {
   filterDenormalize?: ResourceTableFilterDenormalizer;
 }
 
-export interface ResourceTableProps<T extends {id: ResourceID}> extends ATableProps<any> {
+export interface ResourceTableProps<T extends { id: ResourceID }>
+  extends ATableProps<any> {
   resourceCollection: ResourceCollection<T>;
   actionButtons?: ResourceTablePropsActionButton<T>[] | null;
   actionButtonsTitle?: React.ReactNode;
@@ -42,12 +43,12 @@ export interface ResourceTableProps<T extends {id: ResourceID}> extends ATablePr
 }
 
 @observer
-export class ResourceTable<T extends {id: ResourceID} = any> extends React.Component<
-  ResourceTableProps<T>
-> {
+export class ResourceTable<
+  T extends { id: ResourceID } = any
+> extends React.Component<ResourceTableProps<T>> {
   handleChange = (
-    pagination: PaginationConfig,
-    filters: Record<any, string[]>,
+    pagination: TablePaginationConfig,
+    filters: Record<any, Key[] | null>,
     sorter: SorterResult<any>
   ) => {
     const resource = this.props.resourceCollection;
@@ -55,14 +56,14 @@ export class ResourceTable<T extends {id: ResourceID} = any> extends React.Compo
       if (sorter.columnKey && sorter.column && sorter.column.dataIndex) {
         const c = sorter.column as ResourceTableColumn;
         const sortColumnKey =
-          (c.sortColumns && c.sortColumns.join(',')) || c.dataIndex;
+          (c.sortColumns && c.sortColumns.join(",")) || c.dataIndex;
         if (sortColumnKey) {
           resource.updateSorting(
             [
               {
-                columnKey: sortColumnKey,
-                order: SortInfoOrder[sorter.order]
-              }
+                columnKey: sortColumnKey.toString(),
+                order: SortInfoOrder[sorter.order || "ascend"],
+              },
             ],
             false
           );
@@ -83,22 +84,22 @@ export class ResourceTable<T extends {id: ResourceID} = any> extends React.Compo
 
       let _filters: DataSourceArgumentMap | undefined = {};
       for (let column of this.props.columns || []) {
-        const columnKey = column.dataIndex || column.key;
+        const columnKey = (column.dataIndex || column.key)?.toString();
         if (!columnKey) {
           continue;
         }
         const value = filters[columnKey];
-        if (typeof value !== 'undefined') {
+        if (typeof value !== "undefined") {
           if (column.filterNormalize) {
             const normalizedValue = column.filterNormalize(value);
             for (let key of Object.keys(normalizedValue)) {
               _filters[key] = normalizedValue[key];
             }
-          } else if (value.length === 1) {
+          } else if (value?.length === 1) {
             _filters[columnKey] = value[0];
-          } else if (value.length === 2) {
-            _filters[columnKey + '_gte'] = value[0];
-            _filters[columnKey + '_lte'] = value[1];
+          } else if (value?.length === 2) {
+            _filters[columnKey + "_gte"] = value[0];
+            _filters[columnKey + "_lte"] = value[1];
           }
         }
       }
@@ -107,7 +108,7 @@ export class ResourceTable<T extends {id: ResourceID} = any> extends React.Compo
         _filters = undefined;
       }
 
-      resource.updateNamedFilters('table', _filters, false);
+      resource.updateNamedFilters("table", _filters, false);
       resource.reload();
     }
   };
@@ -119,9 +120,9 @@ export class ResourceTable<T extends {id: ResourceID} = any> extends React.Compo
   };
 
   getRecordKey = (record: any, index: number) => {
-    const rowKey = this.props.rowKey || 'id';
+    const rowKey = this.props.rowKey || "id";
     const recordKey =
-      typeof rowKey === 'function'
+      typeof rowKey === "function"
         ? rowKey(record, index)
         : (record as any)[rowKey as string];
     return recordKey === undefined ? index : recordKey;
@@ -135,22 +136,22 @@ export class ResourceTable<T extends {id: ResourceID} = any> extends React.Compo
       actionButtonsTitle,
       actionButtonsFixed,
       detailButtonText,
-      customDetailURL
+      customDetailURL,
     } = this.props;
 
     const sortedInfo =
       resourceCollection.sorting &&
       resourceCollection.sorting.length > 0 &&
       resourceCollection.sorting[0];
-    const filters = resourceCollection.namedFilter('table') || {};
+    const filters = resourceCollection.namedFilter("table") || {};
 
     let _columns: ResourceTableColumn[] = [...(columns || [])];
 
     if (actionButtons !== null) {
       const actionsColumn: ResourceTableColumn = {
-        className: 'schrink',
+        className: "schrink",
         title: actionButtonsTitle || null,
-        fixed: actionButtonsFixed ? 'right' : undefined,
+        fixed: actionButtonsFixed ? "right" : undefined,
         render: (value: any, record: any, index: number) => {
           return (
             <ResourceTableActionButtons
@@ -158,39 +159,37 @@ export class ResourceTable<T extends {id: ResourceID} = any> extends React.Compo
               id={this.getRecordKey(record, index)}
               values={record}
               onDelete={this.reloadData}
-              buttons={actionButtons || ['detail', 'delete']}
+              buttons={actionButtons || ["detail", "delete"]}
               detailButtonText={detailButtonText}
               customDetailURL={customDetailURL}
-              size={this.props.size === 'small' ? 'small' : undefined}
+              size={this.props.size === "small" ? "small" : undefined}
             />
           );
-        }
+        },
       };
       _columns.push(actionsColumn);
     }
 
     return _columns.map((c: ResourceTableColumn) => {
-      c.dataIndex = (c.dataIndex || c.key || '').toString();
+      const dataIndex = (c.dataIndex || c.key || "").toString();
+      c.dataIndex = dataIndex;
 
       if (filters) {
         if (c.filterDenormalize) {
           c.filteredValue = c.filterDenormalize(filters);
-        } else if (
-          filters[c.dataIndex + '_gte'] &&
-          filters[c.dataIndex + '_lte']
-        ) {
+        } else if (filters[dataIndex + "_gte"] && filters[dataIndex + "_lte"]) {
           c.filteredValue = [
-            filters[c.dataIndex + '_gte'],
-            filters[c.dataIndex + '_lte']
+            (filters[dataIndex + "_gte"] || "").toString(),
+            (filters[dataIndex + "_lte"] || "").toString(),
           ];
-        } else if (filters[c.dataIndex]) {
-          c.filteredValue = [filters[c.dataIndex]];
+        } else if (filters[dataIndex]) {
+          c.filteredValue = [(filters[dataIndex] || "").toString()];
         }
       }
 
       if (sortedInfo) {
         const sortColumnKey =
-          (c.sortColumns && c.sortColumns.join(',')) || c.dataIndex;
+          (c.sortColumns && c.sortColumns.join(",")) || c.dataIndex;
         c.sortOrder =
           sortedInfo && sortColumnKey === sortedInfo.columnKey
             ? sortedInfo.order
@@ -210,7 +209,7 @@ export class ResourceTable<T extends {id: ResourceID} = any> extends React.Compo
         closable={false}
         message={
           <div>
-            Failed to load resource{' '}
+            Failed to load resource{" "}
             <Button size="small" onClick={() => this.reloadData()}>
               retry
             </Button>
@@ -247,7 +246,7 @@ export class ResourceTable<T extends {id: ResourceID} = any> extends React.Compo
       this.errorReportContent(resourceCollection.error)
     ) : (
       <AntdTable
-        rowKey={rowKey || 'id'}
+        rowKey={rowKey || "id"}
         rowSelection={rowSelection}
         loading={
           this.props.resourceCollection
@@ -258,7 +257,7 @@ export class ResourceTable<T extends {id: ResourceID} = any> extends React.Compo
         columns={this.getColumns()}
         dataSource={data}
         onChange={this.handleChange}
-        size={this.props.size === 'small' ? 'small' : undefined}
+        size={this.props.size === "small" ? "small" : undefined}
         pagination={{ total: resourceCollection.count, ...pagination }}
         {...restProps}
       />

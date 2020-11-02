@@ -1,10 +1,10 @@
-import '../../styles/Table.css';
-import * as React from 'react';
-import { TableProps as ATableProps, ColumnProps, SorterResult } from 'antd/lib/table';
-import { ResourceCollection, ResourceID } from 'webpanel-data';
-import { ResourceTablePropsActionButton } from './ResourceTableActionButtons';
-import { PaginationConfig } from 'antd/lib/pagination';
-export declare type ResourceTableFilterNormalizer = (values: any[]) => {
+import "../../styles/Table.css";
+import * as React from "react";
+import { TableProps as ATableProps, ColumnProps, TablePaginationConfig } from "antd/lib/table";
+import { SorterResult } from "antd/lib/table/interface";
+import { ResourceCollection, ResourceID } from "webpanel-data";
+import { ResourceTablePropsActionButton } from "./ResourceTableActionButtons";
+export declare type ResourceTableFilterNormalizer = (values: any[] | null) => {
     [key: string]: any;
 };
 export declare type ResourceTableFilterDenormalizer = (values: {
@@ -29,7 +29,7 @@ export interface ResourceTableProps<T extends {
 export declare class ResourceTable<T extends {
     id: ResourceID;
 } = any> extends React.Component<ResourceTableProps<T>> {
-    handleChange: (pagination: PaginationConfig, filters: Record<any, string[]>, sorter: SorterResult<any>) => void;
+    handleChange: (pagination: TablePaginationConfig, filters: Record<any, React.ReactText[] | null>, sorter: SorterResult<any>) => void;
     reloadData: () => void;
     getRecordKey: (record: any, index: number) => any;
     getColumns: () => ColumnProps<any>[];

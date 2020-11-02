@@ -27,7 +27,7 @@ interface ResourceSelectState {
 export class ResourceSelect<
   T extends { id: ResourceID } = any
 > extends React.Component<
-  SelectProps & ResourceSelectProps<T>,
+  SelectProps<any> & ResourceSelectProps<T>,
   ResourceSelectState
 > {
   state: ResourceSelectState = { search: undefined, currentItem: undefined };

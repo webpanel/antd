@@ -1,14 +1,16 @@
 import * as React from "react";
 
-import { Layout as AntdLayout, Dropdown, Icon, Menu } from "antd";
+import { Layout as AntdLayout, Dropdown, Menu } from "antd";
+import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import { Thunk, resolveOptionalThunk } from "ts-thunk";
 
-import { ClickParam } from "antd/lib/menu";
+import { MenuClickEventHandler } from "rc-menu/lib/interface";
+
 // import { AuthSession } from '../../../../webana';
 // import { Subscriber } from 'react-broadcast';
 
 export interface HeaderProps {
-  onMenuSelect: (param: ClickParam) => void;
+  onMenuSelect: MenuClickEventHandler;
 }
 
 export interface HeaderConfig {
@@ -17,16 +19,12 @@ export interface HeaderConfig {
 }
 
 export class Header extends React.Component<HeaderProps & HeaderConfig> {
-  handleMenuClick = (param: ClickParam) => {
-    this.props.onMenuSelect(param);
-  };
-
   render() {
     const menu = (
-      <Menu onClick={this.handleMenuClick}>
+      <Menu onClick={this.props.onMenuSelect}>
         {/* <Menu.Divider /> */}
         <Menu.Item key="logout">
-          <Icon type="logout" />
+          <LogoutOutlined />
           Logout
         </Menu.Item>
       </Menu>
@@ -39,7 +37,7 @@ export class Header extends React.Component<HeaderProps & HeaderConfig> {
           {resolveOptionalThunk(this.props.items)}
           <Dropdown overlay={menu}>
             <span className="antd-header-content-item">
-              <Icon type="user" style={{ padding: "0 8px 0 0" }} />
+              <UserOutlined style={{ padding: "0 8px 0 0" }} />
               {this.props.username || "Me"}
             </span>
           </Dropdown>
