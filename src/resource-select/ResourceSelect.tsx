@@ -116,6 +116,8 @@ export const ResourceSelectComponent = <T extends { id: ResourceID } = any>(
 };
 
 // <T extends { id: ResourceID } = any>
-export const ResourceSelect = observer((props: ResourceSelectProps<any>) => (
-  <ResourceSelectComponent {...props} />
-));
+export const ResourceSelect = observer(
+  (props: SelectProps<any> & ResourceSelectProps<any>) => (
+    <ResourceSelectComponent {...props} />
+  )
+);

@@ -15,5 +15,5 @@ export interface ResourceSelectProps<T extends {
 export declare const ResourceSelectComponent: <T extends {
     id: React.ReactText;
 } = any>(props: SelectProps<any> & ResourceSelectProps<T>) => JSX.Element;
-export declare const ResourceSelect: (props: ResourceSelectProps<any>) => JSX.Element;
+export declare const ResourceSelect: (props: SelectProps<any> & ResourceSelectProps<any>) => JSX.Element;
 export {};
