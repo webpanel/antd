@@ -1,10 +1,14 @@
 import * as React from "react";
 
-import { Resource, ResourceCollection, ResourceID } from "webpanel-data";
+import { ResourceID, useResourceCollection } from "webpanel-data";
 import { Select, Spin } from "antd";
 
+import { ResourceCollectionConfig } from "webpanel-data/lib/ResourceCollection";
 import { SelectProps } from "antd/lib/select";
+import debounce from "lodash/debounce";
 import { observer } from "mobx-react";
+
+// import { observer } from "mobx-react";
 
 // import { FormElementBase } from '../form/form/FormElementBase';
 
@@ -12,31 +16,39 @@ type ResourceSelectKey = string | ((value: any) => string);
 type ResourceLabelKey = React.ReactNode | ((value: any) => React.ReactNode);
 
 export interface ResourceSelectProps<T extends { id: ResourceID }> {
-  resourceCollection: ResourceCollection<T>;
+  resource: ResourceCollectionConfig<T>;
   valueKey?: ResourceSelectKey;
   labelKey: ResourceLabelKey;
   groupKey?: string;
 }
 
-interface ResourceSelectState {
-  search?: string;
-  currentItem?: Resource;
-}
+// interface ResourceSelectState {
+//   search?: string;
+//   currentItem?: Resource;
+// }
 
-@observer
-export class ResourceSelect<
-  T extends { id: ResourceID } = any
-> extends React.Component<
-  SelectProps<any> & ResourceSelectProps<T>,
-  ResourceSelectState
-> {
-  state: ResourceSelectState = { search: undefined, currentItem: undefined };
+export const ResourceSelectComponent = <T extends { id: ResourceID } = any>(
+  props: SelectProps<any> & ResourceSelectProps<T>
+) => {
+  const { onChange, value, resource, valueKey, labelKey, ...rest } = props;
+  const [search, setSearch] = React.useState<string | undefined>();
+  const [hasFocus, setHasFocus] = React.useState(false);
+  const [limit, setLimit] = React.useState(30);
 
-  private latestResourceData?: any = undefined;
-  private optionsCache?: JSX.Element[] = undefined;
-  private optionsIds?: string[] = undefined;
+  const drobdownResourceCollection = useResourceCollection({
+    ...resource,
+    initialSearch: search,
+    disabled: !hasFocus,
+    initialLimit: limit,
+  });
+  const ids = value ? (Array.isArray(value) ? value : [value]) : [];
+  const valuesResourceCollection = useResourceCollection({
+    ...resource,
+    initialFilters: { id_in: ids },
+    disabled: ids.length === 0,
+  });
 
-  getValueForKey = (item: any, key: ResourceLabelKey): string | null => {
+  const getValueForKey = (item: any, key: ResourceLabelKey): string | null => {
     if (typeof key === "string") {
       return item[key];
     } else if (typeof key === "function") {
@@ -45,119 +57,65 @@ export class ResourceSelect<
     return null;
   };
 
-  async componentDidUpdate() {
-    const { resourceCollection } = this.props;
-    if (resourceCollection.search !== this.state.search) {
-      resourceCollection.updateSearch(this.state.search);
-    }
-    const value = (this.props.value && this.props.value.toString()) || null;
-    if (value) {
-      if (!this.state.currentItem || this.state.currentItem.id !== value) {
-        const item = await resourceCollection.getItem({ id: value });
-        await item.get();
-        this.setState({ currentItem: item });
-      }
-    } else {
-      if (this.state.currentItem) {
-        this.setState({ currentItem: undefined });
-      }
+  const onSearch = debounce((s: string) => {
+    // resourceCollection.updateSearch(search);
+    setSearch(s);
+  }, 500);
+
+  const data: { [key: string]: React.ReactNode } = {};
+  const allValues = [
+    ...(drobdownResourceCollection?.data || []),
+    ...((!search && valuesResourceCollection.data) || []),
+  ];
+  for (const item of allValues) {
+    const val = getValueForKey(item, valueKey);
+    if (val) {
+      data[val] = getValueForKey(item, labelKey);
     }
   }
 
-  render() {
-    const { labelKey, valueKey, resourceCollection, ...props } = this.props;
-    const { currentItem } = this.state;
-
-    if (this.latestResourceData !== resourceCollection.data) {
-      this.optionsCache = undefined;
-      this.optionsIds = undefined;
-    }
-
-    if (!this.optionsCache && resourceCollection.data) {
-      const optionsIds: string[] = [];
-      this.optionsIds = optionsIds;
-      const groupKey: string | undefined = this.props.groupKey;
-      if (groupKey) {
-        const groups = {};
-        resourceCollection.data.forEach((item: any, index: number) => {
-          const label = item[groupKey];
-          if (!groups[label]) {
-            groups[label] = [];
-          }
-
-          const id = this.getValueForKey(item, valueKey || "id") || index;
-          optionsIds.push(id.toString());
-          groups[label].push(
-            <Select.Option key={id.toString()} value={id}>
-              {this.getValueForKey(item, labelKey)}
-            </Select.Option>
-          );
-        });
-
-        this.optionsCache = Object.keys(groups).map((key: string) => (
-          <Select.OptGroup key={key} label={key}>
-            {groups[key]}
-          </Select.OptGroup>
-        ));
-      } else {
-        this.optionsCache = resourceCollection.data.map(
-          (item: any, index: number) => {
-            const id = this.getValueForKey(item, valueKey || "id") || index;
-            optionsIds.push(id.toString());
-            return (
-              <Select.Option key={id.toString()} value={id}>
-                {this.getValueForKey(item, labelKey)}
-              </Select.Option>
-            );
-          }
-        );
+  return (
+    <Select
+      value={value}
+      loading={
+        drobdownResourceCollection.loading || valuesResourceCollection.loading
       }
-      this.latestResourceData = resourceCollection.data;
-    }
-
-    // const className = `resource-select__${uuid.v4()}`;
-
-    const options = this.optionsCache || [];
-    return (
-      <Select
-        // onSearch={this.onSearch}
-        // className={className}
-        loading={resourceCollection.loading}
-        notFoundContent={
-          resourceCollection.loading ? <Spin size="small" /> : null
+      onSearch={(s) => onSearch(s)}
+      onChange={onChange}
+      onBlur={() => {
+        setHasFocus(false);
+        setSearch(undefined);
+      }}
+      filterOption={false}
+      autoClearSearchValue={false}
+      allowClear={true}
+      optionFilterProp="children"
+      dropdownStyle={{ position: "relative" }}
+      onFocus={() => setHasFocus(true)}
+      notFoundContent={
+        drobdownResourceCollection.loading ? <Spin size="small" /> : null
+      }
+      onPopupScroll={(e) => {
+        const target = e.target as HTMLDivElement;
+        if (
+          !drobdownResourceCollection.loading &&
+          target.scrollTop + target.offsetHeight > target.scrollHeight - 50
+        ) {
+          if (limit < (drobdownResourceCollection.count || 0)) {
+            setLimit(limit + 30);
+          }
         }
-        showSearch={true}
-        allowClear={true}
-        optionFilterProp="children"
-        dropdownStyle={{ position: "relative" }}
-        // getPopupContainer={() =>
-        //   document.querySelector(`.${className}`) || document.body
-        // }
-        onSearch={(value: any) => {
-          this.setState({ search: value });
-        }}
-        onFocus={() => {
-          resourceCollection.get();
-        }}
-        onBlur={() => {
-          this.setState({ search: undefined });
-        }}
-        {...props}
-      >
-        {this.optionsIds &&
-          currentItem &&
-          currentItem.id &&
-          this.optionsIds.indexOf(currentItem.id.toString()) === -1 &&
-          currentItem.data && (
-            <Select.Option
-              key={currentItem.id.toString()}
-              value={currentItem.id}
-            >
-              {this.getValueForKey(currentItem.data, labelKey)}
-            </Select.Option>
-          )}
-        {options}
-      </Select>
-    );
-  }
-}
+      }}
+      {...rest}
+    >
+      {Object.keys(data).map((key) => (
+        <Select.Option value={key}>{data[key]}</Select.Option>
+      ))}
+    </Select>
+  );
+};
+
+// <T extends { id: ResourceID } = any>
+export const ResourceSelect = observer((props: ResourceSelectProps<any>) => (
+  <ResourceSelectComponent {...props} />
+));

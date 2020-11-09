@@ -1,29 +1,19 @@
 import * as React from "react";
-import { Resource, ResourceCollection, ResourceID } from "webpanel-data";
+import { ResourceID } from "webpanel-data";
+import { ResourceCollectionConfig } from "webpanel-data/lib/ResourceCollection";
 import { SelectProps } from "antd/lib/select";
 declare type ResourceSelectKey = string | ((value: any) => string);
 declare type ResourceLabelKey = React.ReactNode | ((value: any) => React.ReactNode);
 export interface ResourceSelectProps<T extends {
     id: ResourceID;
 }> {
-    resourceCollection: ResourceCollection<T>;
+    resource: ResourceCollectionConfig<T>;
     valueKey?: ResourceSelectKey;
     labelKey: ResourceLabelKey;
     groupKey?: string;
 }
-interface ResourceSelectState {
-    search?: string;
-    currentItem?: Resource;
-}
-export declare class ResourceSelect<T extends {
-    id: ResourceID;
-} = any> extends React.Component<SelectProps<any> & ResourceSelectProps<T>, ResourceSelectState> {
-    state: ResourceSelectState;
-    private latestResourceData?;
-    private optionsCache?;
-    private optionsIds?;
-    getValueForKey: (item: any, key: ResourceLabelKey) => string | null;
-    componentDidUpdate(): Promise<void>;
-    render(): JSX.Element;
-}
+export declare const ResourceSelectComponent: <T extends {
+    id: React.ReactText;
+} = any>(props: SelectProps<any> & ResourceSelectProps<T>) => JSX.Element;
+export declare const ResourceSelect: (props: ResourceSelectProps<any>) => JSX.Element;
 export {};
