@@ -81,7 +81,14 @@ export const ResourceSelectComponent = <T extends { id: ResourceID } = any>(
         drobdownResourceCollection.loading || valuesResourceCollection.loading
       }
       onSearch={(s) => onSearch(s)}
-      onChange={onChange}
+      onChange={(val: any, option) => {
+        if (typeof val === "undefined") {
+          val = null;
+        }
+        if (onChange) {
+          onChange(val, option);
+        }
+      }}
       onBlur={() => {
         setHasFocus(false);
         setSearch(undefined);
