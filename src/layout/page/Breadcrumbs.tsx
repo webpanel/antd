@@ -26,8 +26,8 @@ export class Breadcrumbs extends React.Component<BreadcrumbsProps> {
             <HomeOutlined />
           </Link>
         </Breadcrumb.Item>
-        {breadcrumbsLinks.map((i) => (
-          <Breadcrumb.Item key={i.href}>
+        {breadcrumbsLinks.map((i, index) => (
+          <Breadcrumb.Item key={i.href || index}>
             <Link to={i.href + "/"}>{i.title}</Link>
           </Breadcrumb.Item>
         ))}
