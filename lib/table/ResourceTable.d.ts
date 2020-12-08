@@ -4,6 +4,7 @@ import { TableProps as ATableProps, ColumnProps, TablePaginationConfig } from "a
 import { SorterResult } from "antd/lib/table/interface";
 import { ResourceCollection, ResourceID } from "webpanel-data";
 import { ResourceTablePropsActionButton } from "./ResourceTableActionButtons";
+import { Thunk } from "ts-thunk";
 export declare type ResourceTableFilterNormalizer = (values: any[] | null) => {
     [key: string]: any;
 };
@@ -19,7 +20,7 @@ export interface ResourceTableProps<T extends {
     id: ResourceID;
 }> extends ATableProps<any> {
     resourceCollection: ResourceCollection<T>;
-    actionButtons?: ResourceTablePropsActionButton<T>[] | null;
+    actionButtons?: Thunk<ResourceTablePropsActionButton<T>[] | null, T>;
     actionButtonsTitle?: React.ReactNode;
     actionButtonsFixed?: boolean;
     detailButtonText?: React.ReactNode;
@@ -29,7 +30,7 @@ export interface ResourceTableProps<T extends {
 export declare class ResourceTable<T extends {
     id: ResourceID;
 } = any> extends React.Component<ResourceTableProps<T>> {
-    handleChange: (pagination: TablePaginationConfig, filters: Record<any, React.ReactText[] | null>, sorter: SorterResult<any>) => void;
+    handleChange: (pagination: TablePaginationConfig, filters: Record<any, ResourceID[] | null>, sorter: SorterResult<any>) => void;
     reloadData: () => void;
     getRecordKey: (record: any, index: number) => any;
     getColumns: () => ColumnProps<any>[];

@@ -14,6 +14,7 @@ import {
   ResourceTableActionButtons,
   ResourceTablePropsActionButton,
 } from "./ResourceTableActionButtons";
+import { Thunk, resolveOptionalThunk } from "ts-thunk";
 
 import { DataSourceArgumentMap } from "webpanel-data/lib/DataSource";
 import { observer } from "mobx-react";
@@ -34,7 +35,7 @@ export interface ResourceTableColumn extends ColumnProps<any> {
 export interface ResourceTableProps<T extends { id: ResourceID }>
   extends ATableProps<any> {
   resourceCollection: ResourceCollection<T>;
-  actionButtons?: ResourceTablePropsActionButton<T>[] | null;
+  actionButtons?: Thunk<ResourceTablePropsActionButton<T>[] | null, T>;
   actionButtonsTitle?: React.ReactNode;
   actionButtonsFixed?: boolean;
   detailButtonText?: React.ReactNode;
@@ -159,7 +160,12 @@ export class ResourceTable<
               id={this.getRecordKey(record, index)}
               values={record}
               onDelete={this.reloadData}
-              buttons={actionButtons || ["detail", "delete"]}
+              buttons={
+                resolveOptionalThunk(actionButtons, record) || [
+                  "detail",
+                  "delete",
+                ]
+              }
               detailButtonText={detailButtonText}
               customDetailURL={customDetailURL}
               size={this.props.size === "small" ? "small" : undefined}
