@@ -1,3 +1,5 @@
+import "../styles/base.css";
+
 export { Link, RouteComponentProps } from "react-router-dom";
 
 export { Layout } from "./layout";

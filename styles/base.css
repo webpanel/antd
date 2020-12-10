@@ -1,0 +1,4 @@
+.ant-descriptions-bordered.ant-descriptions-small
+  .ant-descriptions-item-content {
+  word-break: normal;
+}
