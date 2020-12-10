@@ -30,7 +30,7 @@ export interface ResourceTableProps<T extends {
 export declare class ResourceTable<T extends {
     id: ResourceID;
 } = any> extends React.Component<ResourceTableProps<T>> {
-    handleChange: (pagination: TablePaginationConfig, filters: Record<any, ResourceID[] | null>, sorter: SorterResult<any>) => void;
+    handleChange: (pagination: TablePaginationConfig, filters: Record<any, React.ReactText[] | null>, sorter: SorterResult<any>) => void;
     reloadData: () => void;
     getRecordKey: (record: any, index: number) => any;
     getColumns: () => ColumnProps<any>[];

@@ -46,6 +46,7 @@ export const ResourceSelectComponent = <T extends { id: ResourceID } = any>(
     ...resource,
     initialFilters: { id_in: ids },
     disabled: ids.length === 0,
+    initialLimit: ids.length,
   });
 
   const getValueForKey = (item: any, key: ResourceLabelKey): string | null => {
