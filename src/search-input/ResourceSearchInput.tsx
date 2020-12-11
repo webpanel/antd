@@ -33,16 +33,16 @@ export const ResourceSearchInputComponent = (
   //   };
   // }
 
-  const updateSearch = debounce(() => {
-    if (value === "") {
+  const updateSearch = debounce((s: string) => {
+    if (s === "") {
       resourceCollection.updateSearch(undefined);
     } else {
-      resourceCollection.updateSearch(value);
+      resourceCollection.updateSearch(s);
     }
   }, 500);
   const onChange = (s: string) => {
     setValue(s);
-    updateSearch();
+    updateSearch(s);
   };
 
   // handleChange = (value: string) => {
