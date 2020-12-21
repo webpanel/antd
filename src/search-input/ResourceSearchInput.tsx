@@ -20,18 +20,8 @@ export interface ResourceSearchInputState extends SearchProps {
 export const ResourceSearchInputComponent = (
   props: ResourceSearchInputProps<any>
 ) => {
-  const [value, setValue] = React.useState("");
   const { resourceCollection, ...rest } = props;
-  // private cancelHandler: any | null = null;
-
-  // static getDerivedStateFromProps(
-  //   nextProps: ResourceSearchInputProps<any>,
-  //   prevState: ResourceSearchInputState
-  // ) {
-  //   return {
-  //     value: prevState ? prevState.value : nextProps.resourceCollection.search,
-  //   };
-  // }
+  const [value, setValue] = React.useState(resourceCollection.search || "");
 
   const updateSearch = debounce((s: string) => {
     if (s === "") {
@@ -45,23 +35,10 @@ export const ResourceSearchInputComponent = (
     updateSearch(s);
   };
 
-  // handleChange = (value: string) => {
-  //   this.setState({ value });
-  //   if (this.cancelHandler) {
-  //     clearInterval(this.cancelHandler);
-  //   }
-  //   this.cancelHandler = setTimeout(() => {
-  //     this.updateSearch();
-  //   }, 300);
-  // };
-
-  // const value = this.state.value;
-
   return (
     <Input.Search
       value={value}
       {...rest}
-      // onSearch={this.handleSearch}
       onChange={({ target }) => {
         onChange(target.value);
       }}
