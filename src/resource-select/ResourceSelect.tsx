@@ -117,7 +117,9 @@ export const ResourceSelectComponent = <T extends { id: ResourceID } = any>(
       {...rest}
     >
       {Object.keys(data).map((key) => (
-        <Select.Option value={key}>{data[key]}</Select.Option>
+        <Select.Option key={key} value={key}>
+          {data[key]}
+        </Select.Option>
       ))}
     </Select>
   );
