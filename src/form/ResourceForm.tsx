@@ -13,7 +13,7 @@ export interface ResourceFormProps extends FormProps {
   onSuccess?: () => void;
   onFailure?: (validationError: ValidateErrorEntity) => void;
   onValuesChange?: (values: any) => void;
-  formRef?: (ref: FormInstance) => void;
+  formRef?: React.MutableRefObject<FormInstance | null>;
 }
 
 export const ResourceFormComponent = (props: ResourceFormProps) => {
@@ -29,7 +29,7 @@ export const ResourceFormComponent = (props: ResourceFormProps) => {
   const [form] = Form.useForm();
 
   if (formRef) {
-    formRef(form);
+    formRef.current = form;
   }
 
   const onFinish = async (values: any) => {
