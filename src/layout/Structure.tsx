@@ -2,26 +2,27 @@ import * as React from "react";
 
 import { Button, Layout, PageHeader, Result } from "antd";
 import { Link, Route, Switch } from "react-router-dom";
+import { Thunk, resolveOptionalThunk, resolveThunk } from "ts-thunk";
 import { appendStringPath, searchChildrenWithType } from "../utils";
 
-import { BreadcrumbItem } from "./page";
-// import PageHeader, { IPageHeaderProps } from 'ant-design-pro/lib/PageHeader';
-import { Breadcrumbs } from "./page/Breadcrumbs";
 import { PageHeaderProps } from "antd/lib/page-header";
 import { RouteComponentProps } from "react-router";
 
-export type StructureItemContent =
-  | React.ReactNode
-  | ((props: RouteComponentProps<any>) => React.ReactNode);
-export type StructureHeaderProps =
-  | PageHeaderProps
-  | ((props: RouteComponentProps<any>) => PageHeaderProps);
+export type StructureItemContent = Thunk<
+  React.ReactNode,
+  Partial<RouteComponentProps>
+>;
+export type StructureHeaderProps = Thunk<
+  PageHeaderProps,
+  Partial<RouteComponentProps>
+>;
 
-export interface StructureItemProps extends React.Props<any> {
+export interface StructureItemProps
+  extends Partial<RouteComponentProps>,
+    React.PropsWithChildren<any> {
   name: React.ReactNode;
-  breadcrumbs?: BreadcrumbItem[];
   content?: StructureItemContent;
-  header?: StructureHeaderProps;
+  header?: Partial<StructureHeaderProps>;
 }
 
 export interface ContentProps {
@@ -33,26 +34,20 @@ export interface ContentState {
 }
 
 export class StructureItem extends React.Component<StructureItemProps> {
-  renderContent(content: StructureItemContent, props: any): React.ReactNode {
-    return typeof content === "function" ? content(props) : content;
-  }
-
   render(): any {
-    const { header, ...item } = this.props;
+    const { header, breadcrumbs, content, ...rest } = this.props;
 
-    let _header =
-      typeof header === "function" ? header(this.props as any) : header;
-    const breadcrumps = [...(item.breadcrumbs || [])];
-    breadcrumps[breadcrumps.length - 1].href = undefined;
-
+    let _header = resolveOptionalThunk(header, rest);
     return (
       <div>
         <div style={{ margin: "-30px 0px 0px" }}>
-          <Breadcrumbs items={breadcrumps} />
-          {_header?.title && <PageHeader {..._header} />}
+          <PageHeader
+            title={rest.name}
+            onBack={() => window.history.back()}
+            {..._header}
+          />
         </div>
-        {/* {item.breadcrumbs && <Breadcrumbs items={item.breadcrumbs} />} */}
-        {this.renderContent(item.content, this.props)}
+        {resolveThunk(content, rest)}
       </div>
     );
   }
@@ -68,8 +63,7 @@ export class Structure extends React.Component<ContentProps, ContentState> {
   getRoutes(
     items: React.ReactElement<StructureItemProps>[],
     routes: JSX.Element[] | null = null,
-    parentPath: string = "",
-    breadcrumbs: BreadcrumbItem[] = []
+    parentPath: string = ""
   ): JSX.Element[] {
     routes = routes || [];
 
@@ -79,11 +73,6 @@ export class Structure extends React.Component<ContentProps, ContentState> {
         continue;
       }
 
-      const itemBreadcrumbs: BreadcrumbItem[] = [
-        ...breadcrumbs,
-        ...[{ title: item.props.name, href: path.toString() }],
-      ];
-
       const resolvedPath = appendStringPath(parentPath, path.toString());
 
       const route = (
@@ -92,11 +81,7 @@ export class Structure extends React.Component<ContentProps, ContentState> {
           exact={true}
           path={resolvedPath}
           render={(renderProps) => (
-            <StructureItem
-              breadcrumbs={itemBreadcrumbs}
-              {...item.props}
-              {...renderProps}
-            />
+            <StructureItem {...item.props} {...renderProps} />
           )}
         />
       );
@@ -109,7 +94,7 @@ export class Structure extends React.Component<ContentProps, ContentState> {
       );
 
       if (subitems && subitems.length > 0) {
-        this.getRoutes(subitems, routes, resolvedPath, itemBreadcrumbs);
+        this.getRoutes(subitems, routes, resolvedPath);
       }
     }
     return routes;

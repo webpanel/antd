@@ -1,5 +1,6 @@
-import * as React from 'react';
-import { resolve } from 'url';
+import * as React from "react";
+
+import { resolve } from "url";
 
 export const searchChildrenWithType = (
   children: React.ReactNode,
@@ -16,18 +17,18 @@ export const appendStringPath = (
   currentPath: string,
   appendPath: string
 ): string => {
-  if (appendPath[0] === '/') {
+  if (appendPath[0] === "/") {
     appendPath = appendPath.substr(1);
   }
-  if (currentPath.substr(-1) !== '/') {
-    currentPath += '/';
+  if (currentPath.substr(-1) !== "/") {
+    currentPath += "/";
   }
   let resolvedPath = resolve(currentPath, appendPath);
-  if (resolvedPath.substr(-1) !== '/') {
-    resolvedPath += '/';
+  if (resolvedPath.substr(-1) !== "/") {
+    resolvedPath += "/";
   }
-  if (resolvedPath[0] !== '/') {
-    resolvedPath = '/' + resolvedPath;
+  if (resolvedPath[0] !== "/") {
+    resolvedPath = "/" + resolvedPath;
   }
   return resolvedPath;
 };

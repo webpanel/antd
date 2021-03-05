@@ -1,2 +1,1 @@
-export { Page } from './Page';
-export { BreadcrumbItem } from './Breadcrumbs';
+export { Page } from "./Page";
