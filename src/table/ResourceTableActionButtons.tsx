@@ -93,9 +93,8 @@ export class ResourceTableActionButtons<
               onClick={() => this.deleteResource(props.resourceID)}
               danger={true}
               size={size}
-            >
-              <DeleteOutlined />
-            </Button>
+              icon={<DeleteOutlined />}
+            />
           );
         default:
       }
