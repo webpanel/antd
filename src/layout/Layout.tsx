@@ -93,7 +93,7 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
               {menus}
             </Sider>
           )}
-          <LayoutComponent>
+          <LayoutComponent style={{ overflowX: "hidden" }}>
             <Header
               onMenuSelect={(info) => this.handleMenuClick(info.key)}
               username={this.props.userName}
