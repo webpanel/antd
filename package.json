@@ -24,7 +24,7 @@
     "antd": "^4.7.3",
     "react": ">=16.9.0",
     "react-dom": ">=16.9.0",
-    "webpanel-data": "github:webpanel/data"
+    "webpanel-data": "^0.3.0"
   },
   "devDependencies": {
     "@types/jest": "^23.1.1",
@@ -41,7 +41,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts-ts": "^2.16.0",
     "typescript": "^3.7.2",
-    "webpanel-data": "github:webpanel/data"
+    "webpanel-data": "0.3.0"
   },
   "repository": {
     "type": "git",

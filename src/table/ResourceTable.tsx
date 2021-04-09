@@ -8,8 +8,13 @@ import {
   TablePaginationConfig,
 } from "antd/lib/table";
 import { Alert, Table as AntdTable, Button } from "antd";
+import {
+  DataSourceAggregationFunction,
+  ResourceCollection,
+  ResourceID,
+  SortInfoOrder,
+} from "webpanel-data";
 import { Key, SorterResult } from "antd/lib/table/interface";
-import { ResourceCollection, ResourceID, SortInfoOrder } from "webpanel-data";
 import {
   ResourceTableActionButtons,
   ResourceTablePropsActionButton,
@@ -25,10 +30,11 @@ export type ResourceTableFilterDenormalizer = (values: {
   [key: string]: any;
 }) => any[];
 
-export interface ResourceTableColumn extends ColumnProps<any> {
+export interface ResourceTableColumn<T> extends ColumnProps<T> {
   sortColumns?: string[];
   filterNormalize?: ResourceTableFilterNormalizer;
   filterDenormalize?: ResourceTableFilterDenormalizer;
+  aggregations?: DataSourceAggregationFunction[];
 }
 
 export interface ResourceTableProps<T extends { id: ResourceID }>
@@ -39,7 +45,7 @@ export interface ResourceTableProps<T extends { id: ResourceID }>
   actionButtonsFixed?: boolean;
   detailButtonText?: React.ReactNode;
   customDetailURL?: (referenceID: string) => string;
-  columns?: ResourceTableColumn[];
+  columns?: ResourceTableColumn<T>[];
 }
 
 export class ResourceTable<
@@ -53,7 +59,7 @@ export class ResourceTable<
     const resource = this.props.resourceCollection;
     if (resource) {
       if (sorter.columnKey && sorter.column && sorter.column.dataIndex) {
-        const c = sorter.column as ResourceTableColumn;
+        const c = sorter.column as ResourceTableColumn<T>;
         const sortColumnKey =
           (c.sortColumns && c.sortColumns.join(",")) || c.dataIndex;
         if (sortColumnKey) {
@@ -144,10 +150,10 @@ export class ResourceTable<
       resourceCollection.sorting[0];
     const filters = resourceCollection.namedFilter("table") || {};
 
-    let _columns: ResourceTableColumn[] = [...(columns || [])];
+    let _columns: ResourceTableColumn<T>[] = [...(columns || [])];
 
     if (actionButtons !== null) {
-      const actionsColumn: ResourceTableColumn = {
+      const actionsColumn: ResourceTableColumn<T> = {
         className: "schrink",
         title: actionButtonsTitle || null,
         fixed: actionButtonsFixed ? "right" : undefined,
@@ -174,35 +180,37 @@ export class ResourceTable<
       _columns.push(actionsColumn);
     }
 
-    return _columns.map((c: ResourceTableColumn) => {
-      const dataIndex = (c.dataIndex || c.key || "").toString();
-      c.dataIndex = dataIndex;
+    return _columns.map((c) => {
+      let column = { ...c };
+      const dataIndex = (column.dataIndex || column.key || "").toString();
+      column.dataIndex = dataIndex;
 
       if (filters) {
-        if (c.filterDenormalize) {
-          c.filteredValue = c.filterDenormalize(filters);
+        if (column.filterDenormalize) {
+          column.filteredValue = column.filterDenormalize(filters);
         } else if (filters[dataIndex + "_gte"] && filters[dataIndex + "_lte"]) {
-          c.filteredValue = [
+          column.filteredValue = [
             (filters[dataIndex + "_gte"] || "").toString(),
             (filters[dataIndex + "_lte"] || "").toString(),
           ];
         } else if (filters[dataIndex]) {
-          c.filteredValue = [(filters[dataIndex] || "").toString()];
+          column.filteredValue = [(filters[dataIndex] || "").toString()];
         }
       }
 
       if (sortedInfo) {
         const sortColumnKey =
-          (c.sortColumns && c.sortColumns.join(",")) || c.dataIndex;
-        c.sortOrder =
+          (column.sortColumns && column.sortColumns.join(",")) ||
+          column.dataIndex;
+        column.sortOrder =
           sortedInfo && sortColumnKey === sortedInfo.columnKey
             ? sortedInfo.order
             : undefined;
       } else {
-        c.sortOrder = undefined;
+        column.sortOrder = undefined;
       }
 
-      return c;
+      return column;
     });
   };
 
