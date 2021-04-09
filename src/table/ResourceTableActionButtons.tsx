@@ -6,7 +6,6 @@ import { ResourceCollection, ResourceID } from "webpanel-data";
 
 import { ButtonSize } from "antd/lib/button";
 import { Link } from "react-router-dom";
-import { observer } from "mobx-react";
 
 export type ResourceTablePropsActionButton<T extends { id: ResourceID }> =
   | "detail"
@@ -33,7 +32,6 @@ export interface ActionButtonProps<T extends { id: ResourceID }> {
   customDetailURL?: (referenceID: string) => string;
 }
 
-@observer
 export class ResourceTableActionButtons<
   T extends { id: ResourceID } = any
 > extends React.Component<ResourceTableActionButtonsProps<T>> {

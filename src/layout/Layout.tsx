@@ -11,7 +11,6 @@ import { HeaderConfig } from "./Header";
 import { Layout as LayoutComponent } from "antd";
 import { Menu } from "./Menu";
 import { MenuItem } from "./Menu";
-import { observer } from "mobx-react";
 import { searchChildrenWithType } from "../utils";
 
 const { Footer, Sider } = LayoutComponent;
@@ -32,8 +31,6 @@ export interface LayoutProps {
 export interface LayoutState {
   collapsed: boolean;
 }
-
-@observer
 export class Layout extends React.Component<LayoutProps, LayoutState> {
   static Menu = Menu;
   static MenuItem = MenuItem;

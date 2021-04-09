@@ -6,7 +6,6 @@ import { CloseOutlined } from "@ant-design/icons";
 import { Input } from "antd";
 import { SearchProps } from "antd/lib/input/Search";
 import { debounce } from "lodash";
-import { observer } from "mobx-react";
 
 export interface ResourceSearchInputProps<T extends { id: ResourceID }>
   extends SearchProps {
@@ -17,9 +16,7 @@ export interface ResourceSearchInputState extends SearchProps {
   value?: string;
 }
 
-export const ResourceSearchInputComponent = (
-  props: ResourceSearchInputProps<any>
-) => {
+export const ResourceSearchInput = (props: ResourceSearchInputProps<any>) => {
   const { resourceCollection, ...rest } = props;
   const [value, setValue] = React.useState(resourceCollection.search || "");
 
@@ -54,9 +51,3 @@ export const ResourceSearchInputComponent = (
     />
   );
 };
-
-export const ResourceSearchInput = observer(
-  (props: ResourceSearchInputProps<any>) => (
-    <ResourceSearchInputComponent {...props} />
-  )
-);

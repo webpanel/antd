@@ -5,7 +5,6 @@ import { FormInstance, FormProps } from "antd/lib/form/Form";
 
 import { Resource } from "webpanel-data";
 import { ValidateErrorEntity } from "rc-field-form/lib/interface";
-import { observer } from "mobx-react";
 
 export interface ResourceFormProps extends FormProps {
   formResource: Resource;
@@ -16,7 +15,7 @@ export interface ResourceFormProps extends FormProps {
   formRef?: React.MutableRefObject<FormInstance | null>;
 }
 
-export const ResourceFormComponent = (props: ResourceFormProps) => {
+export const ResourceForm = (props: ResourceFormProps) => {
   const {
     onSuccess,
     onFailure,
@@ -82,7 +81,3 @@ export const ResourceFormComponent = (props: ResourceFormProps) => {
     </>
   );
 };
-
-export const ResourceForm = observer((props: ResourceFormProps) => (
-  <ResourceFormComponent {...props} />
-));

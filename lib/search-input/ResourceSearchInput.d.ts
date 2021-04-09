@@ -9,5 +9,4 @@ export interface ResourceSearchInputProps<T extends {
 export interface ResourceSearchInputState extends SearchProps {
     value?: string;
 }
-export declare const ResourceSearchInputComponent: (props: ResourceSearchInputProps<any>) => JSX.Element;
 export declare const ResourceSearchInput: (props: ResourceSearchInputProps<any>) => JSX.Element;

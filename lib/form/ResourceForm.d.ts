@@ -9,5 +9,4 @@ export interface ResourceFormProps extends FormProps {
     onValuesChange?: (values: any) => void;
     formRef?: React.MutableRefObject<FormInstance | null>;
 }
-export declare const ResourceFormComponent: (props: ResourceFormProps) => JSX.Element;
 export declare const ResourceForm: (props: ResourceFormProps) => JSX.Element;

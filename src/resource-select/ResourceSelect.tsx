@@ -6,11 +6,6 @@ import { Select, Spin } from "antd";
 import { ResourceCollectionConfig } from "webpanel-data/lib/ResourceCollection";
 import { SelectProps } from "antd/lib/select";
 import debounce from "lodash/debounce";
-import { observer } from "mobx-react";
-
-// import { observer } from "mobx-react";
-
-// import { FormElementBase } from '../form/form/FormElementBase';
 
 type ResourceSelectKey = string | ((value: any) => string);
 type ResourceLabelKey = React.ReactNode | ((value: any) => React.ReactNode);
@@ -22,12 +17,7 @@ export interface ResourceSelectProps<T extends { id: ResourceID }> {
   groupKey?: string;
 }
 
-// interface ResourceSelectState {
-//   search?: string;
-//   currentItem?: Resource;
-// }
-
-export const ResourceSelectComponent = <T extends { id: ResourceID } = any>(
+export const ResourceSelect = <T extends { id: ResourceID } = any>(
   props: SelectProps<any> & ResourceSelectProps<T>
 ) => {
   const { onChange, value, resource, valueKey, labelKey, ...rest } = props;
@@ -35,7 +25,7 @@ export const ResourceSelectComponent = <T extends { id: ResourceID } = any>(
   const [hasFocus, setHasFocus] = React.useState(false);
   const [limit, setLimit] = React.useState(30);
 
-  const drobdownResourceCollection = useResourceCollection({
+  const dropdownResourceCollection = useResourceCollection({
     ...resource,
     initialSearch: search,
     disabled: !hasFocus,
@@ -65,7 +55,7 @@ export const ResourceSelectComponent = <T extends { id: ResourceID } = any>(
 
   const data: { [key: string]: React.ReactNode } = {};
   const allValues = [
-    ...(drobdownResourceCollection?.data || []),
+    ...(dropdownResourceCollection?.data || []),
     ...((!search && valuesResourceCollection.data) || []),
   ];
   for (const item of allValues) {
@@ -79,7 +69,7 @@ export const ResourceSelectComponent = <T extends { id: ResourceID } = any>(
     <Select
       value={value}
       loading={
-        drobdownResourceCollection.loading || valuesResourceCollection.loading
+        dropdownResourceCollection.loading || valuesResourceCollection.loading
       }
       onSearch={(s) => onSearch(s)}
       onChange={(val: any, option) => {
@@ -95,21 +85,21 @@ export const ResourceSelectComponent = <T extends { id: ResourceID } = any>(
         setSearch(undefined);
       }}
       filterOption={false}
-      autoClearSearchValue={false}
+      autoClearSearchValue={true}
       allowClear={true}
       optionFilterProp="children"
       dropdownStyle={{ position: "relative" }}
       onFocus={() => setHasFocus(true)}
       notFoundContent={
-        drobdownResourceCollection.loading ? <Spin size="small" /> : null
+        dropdownResourceCollection.loading ? <Spin size="small" /> : null
       }
       onPopupScroll={(e) => {
         const target = e.target as HTMLDivElement;
         if (
-          !drobdownResourceCollection.loading &&
+          !dropdownResourceCollection.loading &&
           target.scrollTop + target.offsetHeight > target.scrollHeight - 50
         ) {
-          if (limit < (drobdownResourceCollection.count || 0)) {
+          if (limit < (dropdownResourceCollection.count || 0)) {
             setLimit(limit + 30);
           }
         }
@@ -124,10 +114,3 @@ export const ResourceSelectComponent = <T extends { id: ResourceID } = any>(
     </Select>
   );
 };
-
-// <T extends { id: ResourceID } = any>
-export const ResourceSelect = observer(
-  (props: SelectProps<any> & ResourceSelectProps<any>) => (
-    <ResourceSelectComponent {...props} />
-  )
-);

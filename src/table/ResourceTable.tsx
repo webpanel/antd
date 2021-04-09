@@ -17,7 +17,6 @@ import {
 import { Thunk, resolveOptionalThunk } from "ts-thunk";
 
 import { DataSourceArgumentMap } from "webpanel-data/lib/DataSource";
-import { observer } from "mobx-react";
 
 export type ResourceTableFilterNormalizer = (
   values: any[] | null
@@ -43,7 +42,6 @@ export interface ResourceTableProps<T extends { id: ResourceID }>
   columns?: ResourceTableColumn[];
 }
 
-@observer
 export class ResourceTable<
   T extends { id: ResourceID } = any
 > extends React.Component<ResourceTableProps<T>> {
