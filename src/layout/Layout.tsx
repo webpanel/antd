@@ -24,6 +24,8 @@ export interface LayoutProps {
   header?: HeaderConfig;
   logout: () => void;
   userName?: string;
+  logo?: React.ReactNode;
+  logoCollapsed?: React.ReactNode;
   logoURL?: string;
   logoCollapsedURL?: string;
 }
@@ -60,6 +62,9 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
     const logoURL = this.state.collapsed
       ? this.props.logoCollapsedURL
       : this.props.logoURL;
+    const logo = this.state.collapsed
+      ? this.props.logoCollapsed
+      : this.props.logo;
 
     const menus = searchChildrenWithType(this.props.children, Menu);
     const structures = searchChildrenWithType(this.props.children, Structure);
@@ -78,18 +83,31 @@ export class Layout extends React.Component<LayoutProps, LayoutState> {
                 this.onCollapse(collapsed, type);
               }}
             >
-              <div
-                className="logo"
-                style={{
-                  backgroundImage: logoURL ? `url(${logoURL})` : undefined,
-                  backgroundColor: logoURL ? "transparent" : undefined,
-                  maxWidth: "168px",
-                  maxHeight: "64px",
-                  backgroundSize: "contain",
-                  backgroundRepeat: "no-repeat",
-                  backgroundPosition: "center",
-                }}
-              />
+              {logo ? (
+                <div
+                  className="logo"
+                  style={{
+                    backgroundColor: "transparent",
+                    maxWidth: "168px",
+                    maxHeight: "64px",
+                  }}
+                >
+                  {logo}
+                </div>
+              ) : (
+                <div
+                  className="logo"
+                  style={{
+                    backgroundImage: logoURL ? `url(${logoURL})` : undefined,
+                    backgroundColor: logoURL ? "transparent" : undefined,
+                    maxWidth: "168px",
+                    maxHeight: "64px",
+                    backgroundSize: "contain",
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center",
+                  }}
+                />
+              )}
               {menus}
             </Sider>
           )}

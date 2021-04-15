@@ -13,6 +13,8 @@ export interface LayoutProps {
     header?: HeaderConfig;
     logout: () => void;
     userName?: string;
+    logo?: React.ReactNode;
+    logoCollapsed?: React.ReactNode;
     logoURL?: string;
     logoCollapsedURL?: string;
 }
