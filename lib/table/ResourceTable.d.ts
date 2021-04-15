@@ -11,11 +11,10 @@ export declare type ResourceTableFilterNormalizer = (values: any[] | null) => {
 export declare type ResourceTableFilterDenormalizer = (values: {
     [key: string]: any;
 }) => any[];
-export interface ResourceTableColumn<T> extends ColumnProps<T> {
+export interface ResourceTableColumn extends ColumnProps<any> {
     sortColumns?: string[];
     filterNormalize?: ResourceTableFilterNormalizer;
     filterDenormalize?: ResourceTableFilterDenormalizer;
-    aggregations?: ("MIN" | "MAX" | "SUM" | "AVG")[];
 }
 export interface ResourceTableProps<T extends {
     id: ResourceID;
@@ -26,12 +25,12 @@ export interface ResourceTableProps<T extends {
     actionButtonsFixed?: boolean;
     detailButtonText?: React.ReactNode;
     customDetailURL?: (referenceID: string) => string;
-    columns?: ResourceTableColumn<T>[];
+    columns?: ResourceTableColumn[];
 }
 export declare class ResourceTable<T extends {
     id: ResourceID;
 } = any> extends React.Component<ResourceTableProps<T>> {
-    handleChange: (pagination: TablePaginationConfig, filters: Record<any, ResourceID[] | null>, sorter: SorterResult<any>) => void;
+    handleChange: (pagination: TablePaginationConfig, filters: Record<any, React.ReactText[] | null>, sorter: SorterResult<any>) => void;
     reloadData: () => void;
     getRecordKey: (record: any, index: number) => any;
     getColumns: () => ColumnProps<any>[];
