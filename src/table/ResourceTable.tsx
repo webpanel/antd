@@ -18,9 +18,9 @@ import { Thunk, resolveOptionalThunk } from "ts-thunk";
 
 import { DataSourceArgumentMap } from "webpanel-data/lib/DataSource";
 
-export type ResourceTableFilterNormalizer = (
-  values: any[] | null
-) => { [key: string]: any };
+export type ResourceTableFilterNormalizer = (values: any[] | null) => {
+  [key: string]: any;
+};
 export type ResourceTableFilterDenormalizer = (values: {
   [key: string]: any;
 }) => any[];
@@ -40,6 +40,7 @@ export interface ResourceTableProps<T extends { id: ResourceID }>
   detailButtonText?: React.ReactNode;
   customDetailURL?: (referenceID: string) => string;
   columns?: ResourceTableColumn[];
+  onRowDelete?: (id: ResourceID) => void;
 }
 
 export class ResourceTable<
@@ -136,6 +137,7 @@ export class ResourceTable<
       actionButtonsFixed,
       detailButtonText,
       customDetailURL,
+      onRowDelete,
     } = this.props;
 
     const sortedInfo =
@@ -157,7 +159,12 @@ export class ResourceTable<
               resourceCollection={resourceCollection}
               id={this.getRecordKey(record, index)}
               values={record}
-              onDelete={this.reloadData}
+              onDelete={(id) => {
+                this.reloadData();
+                if (onRowDelete) {
+                  onRowDelete(id);
+                }
+              }}
               buttons={
                 resolveOptionalThunk(actionButtons, record) || [
                   "detail",

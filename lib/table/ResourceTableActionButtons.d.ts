@@ -12,7 +12,7 @@ interface ResourceTableActionButtonsProps<T extends {
     values: {
         [key: string]: any;
     };
-    onDelete: (id: string | number) => void;
+    onDelete: (id: ResourceID) => void;
     buttons: ResourceTablePropsActionButton<T>[];
     detailButtonText?: React.ReactNode;
     customDetailURL?: (referenceID: string) => string;

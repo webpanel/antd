@@ -17,7 +17,7 @@ interface ResourceTableActionButtonsProps<T extends { id: ResourceID }> {
   resourceCollection: ResourceCollection<T>;
   id: string | number;
   values: { [key: string]: any };
-  onDelete: (id: string | number) => void;
+  onDelete: (id: ResourceID) => void;
   buttons: ResourceTablePropsActionButton<T>[];
   detailButtonText?: React.ReactNode;
   customDetailURL?: (referenceID: string) => string;
@@ -103,13 +103,8 @@ export class ResourceTableActionButtons<
   }
 
   render() {
-    const {
-      id,
-      values,
-      resourceCollection,
-      buttons,
-      customDetailURL,
-    } = this.props;
+    const { id, values, resourceCollection, buttons, customDetailURL } =
+      this.props;
     return (
       <div>
         {buttons.map((button) => {
