@@ -6,6 +6,7 @@ import { ResourceCollection, ResourceID } from "webpanel-data";
 
 import { ButtonSize } from "antd/lib/button";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export type ResourceTablePropsActionButton<T extends { id: ResourceID }> =
   | "detail"
@@ -32,29 +33,26 @@ export interface ActionButtonProps<T extends { id: ResourceID }> {
   customDetailURL?: (referenceID: string) => string;
 }
 
-export class ResourceTableActionButtons<
-  T extends { id: ResourceID } = any
-> extends React.Component<ResourceTableActionButtonsProps<T>> {
-  state = {
-    sortedInfo: { columnKey: undefined, order: undefined },
-    selectedRowKeys: [],
-  };
+export const ResourceTableActionButtons = <T extends { id: ResourceID } = any>(
+  props: ResourceTableActionButtonsProps<T>
+) => {
+  const { t } = useTranslation("webpanel-antd");
 
-  deleteResource = (id: ResourceID) => {
+  const deleteResource = (id: ResourceID) => {
     Modal.confirm({
-      title: "Are you sure?",
-      content: "Do you want to delete this item?",
-      okText: "Yes",
-      cancelText: "No",
+      title: t("confirmDeleteTitle"),
+      content: t("confirmDeleteContent"),
+      okText: t("yes"),
+      cancelText: t("no"),
       onOk: async () => {
-        const resource = this.props.resourceCollection;
+        const resource = props.resourceCollection;
         if (resource) {
           try {
             await new Promise((resolve: any) => {
               setTimeout(resolve, 2000);
             });
             await resource.delete(id);
-            this.props.onDelete(id);
+            props.onDelete(id);
           } catch (err) {
             message.error(err.message);
           }
@@ -63,20 +61,20 @@ export class ResourceTableActionButtons<
     });
   };
 
-  getButton(props: ActionButtonProps<T>) {
-    const { size } = this.props;
+  const getButton = (_props: ActionButtonProps<T>) => {
+    const { size } = props;
 
-    if (typeof props.type === "string") {
-      switch (props.type) {
+    if (typeof _props.type === "string") {
+      switch (_props.type) {
         case "detail":
-          const { detailButtonText } = this.props;
+          const { detailButtonText } = props;
           return (
             <Link
               key="edit-button-action"
               to={
                 props.customDetailURL
-                  ? props.customDetailURL(props.resourceID.toString())
-                  : props.resourceID.toString()
+                  ? props.customDetailURL(_props.resourceID.toString())
+                  : _props.resourceID.toString()
               }
             >
               <Button size={size}>
@@ -88,7 +86,7 @@ export class ResourceTableActionButtons<
           return (
             <Button
               key="delete-button-action"
-              onClick={() => this.deleteResource(props.resourceID)}
+              onClick={() => deleteResource(_props.resourceID)}
               danger={true}
               size={size}
               icon={<DeleteOutlined />}
@@ -96,27 +94,24 @@ export class ResourceTableActionButtons<
           );
         default:
       }
-    } else if (typeof props.type === "function") {
-      return props.type(props);
+    } else if (typeof _props.type === "function") {
+      return _props.type(_props);
     }
-    return props.type;
-  }
+    return _props.type;
+  };
 
-  render() {
-    const { id, values, resourceCollection, buttons, customDetailURL } =
-      this.props;
-    return (
-      <div>
-        {buttons.map((button) => {
-          return this.getButton({
-            resourceID: id,
-            values,
-            resourceCollection,
-            type: button,
-            customDetailURL,
-          });
-        })}
-      </div>
-    );
-  }
-}
+  const { id, values, resourceCollection, buttons, customDetailURL } = props;
+  return (
+    <div>
+      {buttons.map((button) => {
+        return getButton({
+          resourceID: id,
+          values,
+          resourceCollection,
+          type: button,
+          customDetailURL,
+        });
+      })}
+    </div>
+  );
+};

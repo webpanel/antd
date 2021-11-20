@@ -7,3 +7,4 @@ export { ResourceForm, ResourceFormButtons, Input } from "./form";
 export { ResourceSelect } from "./resource-select/ResourceSelect";
 export { ResourceCard } from "./resource-card/ResourceCard";
 export { FormInstance, FormProps } from "antd/lib/form/Form";
+export { i18nAddResourceBundles } from "./i18n";

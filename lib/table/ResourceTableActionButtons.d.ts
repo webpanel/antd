@@ -29,18 +29,7 @@ export interface ActionButtonProps<T extends {
     type: ResourceTablePropsActionButton<T>;
     customDetailURL?: (referenceID: string) => string;
 }
-export declare class ResourceTableActionButtons<T extends {
+export declare const ResourceTableActionButtons: <T extends {
     id: ResourceID;
-} = any> extends React.Component<ResourceTableActionButtonsProps<T>> {
-    state: {
-        sortedInfo: {
-            columnKey: undefined;
-            order: undefined;
-        };
-        selectedRowKeys: never[];
-    };
-    deleteResource: (id: React.ReactText) => void;
-    getButton(props: ActionButtonProps<T>): any;
-    render(): JSX.Element;
-}
+} = any>(props: ResourceTableActionButtonsProps<T>) => JSX.Element;
 export {};
