@@ -8,6 +8,4 @@ export interface HeaderConfig {
     username?: string;
     items?: Thunk<React.ReactNode>;
 }
-export declare class Header extends React.Component<HeaderProps & HeaderConfig> {
-    render(): JSX.Element;
-}
+export declare const Header: (props: React.PropsWithChildren<HeaderProps & HeaderConfig>) => JSX.Element;
