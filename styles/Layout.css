@@ -1,5 +1,4 @@
-@import '~antd/dist/antd.css';
-@import './Print.css';
+@import "./Print.css";
 
 .logo {
   height: 32px;

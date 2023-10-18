@@ -22,9 +22,9 @@
   },
   "peerDependencies": {
     "antd": "^4.7.3",
+    "i18next": "*",
     "react": ">=16.9.0",
     "react-dom": ">=16.9.0",
-    "i18next": "*",
     "react-i18next": "*",
     "webpanel-data": "^0.3.1"
   },
@@ -37,7 +37,7 @@
     "@types/react-dom": "^16.9.9",
     "@types/react-router-dom": "^5.1.6",
     "@types/uuid": "^3.4.4",
-    "antd": "^4.7.3",
+    "antd": "^5.10.1",
     "i18next": "^21.5.2",
     "react": "^16.8.6",
     "react-dom": "^16.4.1",
